@@ -13,6 +13,7 @@ class Payment extends Model
         'payment_method',
         'reference',
         'notes',
+        'status',
         'receipt_number',
         'created_by',
     ];
@@ -55,8 +56,6 @@ class Payment extends Model
             }
         });
 
-        static::created(function ($payment) {
-            $payment->pilgrim->updateAmounts();
-        });
+        // Les montants sont maintenant calculés dynamiquement
     }
 }

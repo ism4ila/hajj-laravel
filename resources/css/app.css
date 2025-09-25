@@ -1,11 +1,96 @@
-@import 'tailwindcss';
+/* Import Bootstrap */
+@import '~bootstrap/scss/bootstrap.scss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* Custom styles for Hajj Management System */
+:root {
+    --hajj-primary: #2c5aa0;
+    --hajj-secondary: #8b9dc3;
+    --hajj-success: #28a745;
+    --hajj-danger: #dc3545;
+    --hajj-warning: #ffc107;
+    --hajj-info: #17a2b8;
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+.navbar-brand img {
+    height: 40px;
+}
+
+.sidebar {
+    min-height: 100vh;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar .nav-link {
+    color: #6c757d;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: var(--hajj-primary);
+    color: white;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--hajj-primary), var(--hajj-secondary));
+    color: white;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+.btn-hajj-primary {
+    background-color: var(--hajj-primary);
+    border-color: var(--hajj-primary);
+    color: white;
+}
+
+.btn-hajj-primary:hover {
+    background-color: #1e3d6f;
+    border-color: #1e3d6f;
+    color: white;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.document-upload-zone {
+    border: 2px dashed #dee2e6;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.document-upload-zone:hover {
+    border-color: var(--hajj-primary);
+    background-color: rgba(44, 90, 160, 0.05);
+}
+
+.status-badge {
+    font-size: 0.75em;
+    padding: 0.35em 0.65em;
+    border-radius: 0.375rem;
+}
+
+.alert-floating {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    min-width: 300px;
 }
