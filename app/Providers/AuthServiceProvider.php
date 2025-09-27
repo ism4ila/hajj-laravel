@@ -23,81 +23,68 @@ class AuthServiceProvider extends ServiceProvider
     {
         // Define Gates for role-based permissions
 
-        // Admin permissions
+        // Simplified admin permissions using is_admin
         Gate::define('manage-users', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin']);
+            return $user->is_admin;
         });
 
         Gate::define('manage-settings', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin']);
+            return $user->is_admin;
         });
 
         Gate::define('manage-campaigns', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'operator']);
+            return $user->is_admin; // Seuls les admins peuvent gérer les campagnes
         });
 
         Gate::define('manage-pilgrims', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'operator', 'agent']);
+            return true; // Tous les utilisateurs connectés peuvent gérer les pèlerins
         });
 
         Gate::define('manage-payments', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'accountant', 'cashier']);
+            return true; // Tous les utilisateurs connectés peuvent gérer les paiements
         });
 
         Gate::define('manage-documents', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'operator', 'agent']);
+            return true; // Tous les utilisateurs connectés peuvent gérer les documents
         });
 
         Gate::define('view-documents', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'operator', 'agent', 'accountant']);
+            return true; // Tous les utilisateurs connectés peuvent voir les documents
         });
 
         Gate::define('view-reports', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'operator', 'accountant']);
+            return true; // Tous les utilisateurs connectés peuvent voir les rapports
         });
 
         Gate::define('export-data', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'operator']);
+            return $user->is_admin; // Seuls les admins peuvent exporter
         });
 
-        // Super admin only
+        // Admin only
         Gate::define('delete-users', function ($user) {
-            return $user->role && $user->role->name === 'super_admin';
+            return $user->is_admin;
         });
 
         Gate::define('system-settings', function ($user) {
-            return $user->role && $user->role->name === 'super_admin';
+            return $user->is_admin;
         });
 
         // Define a gate to check if user can access admin panel
         Gate::define('access-admin', function ($user) {
-            return $user->role && in_array($user->role->name, ['super_admin', 'admin', 'operator', 'agent', 'accountant', 'cashier']);
+            return true; // Tous les utilisateurs connectés peuvent accéder au panel
         });
 
         // Define gates for specific actions
         Gate::define('create-campaign', function ($user) {
-            return Gate::forUser($user)->allows('manage-campaigns');
+            return $user->is_admin;
         });
 
         Gate::define('edit-campaign', function ($user, $campaign = null) {
-            if (!Gate::forUser($user)->allows('manage-campaigns')) {
-                return false;
-            }
-
-            // Additional logic: only campaign creator or admin can edit
-            if ($campaign && !in_array($user->role->name, ['super_admin', 'admin'])) {
-                return isset($campaign->created_by) && $campaign->created_by === $user->id;
-            }
-
-            return true;
+            return $user->is_admin;
         });
 
         Gate::define('delete-campaign', function ($user, $campaign = null) {
-            if (!in_array($user->role->name, ['super_admin', 'admin'])) {
-                return false;
-            }
-
-            return true;
+            return $user->is_admin;
         });
     }
 

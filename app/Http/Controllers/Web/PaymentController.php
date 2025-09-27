@@ -18,12 +18,19 @@ class PaymentController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Payment::with(['pilgrim.campaign'])
+        $query = Payment::with(['pilgrim.campaign', 'pilgrim.client'])
             ->orderBy('created_at', 'desc');
 
         // Filter by pilgrim
         if ($request->has('pilgrim') && $request->pilgrim !== '') {
             $query->where('pilgrim_id', $request->pilgrim);
+        }
+
+        // Filter by client
+        if ($request->has('client') && $request->client !== '') {
+            $query->whereHas('pilgrim', function ($q) use ($request) {
+                $q->where('client_id', $request->client);
+            });
         }
 
         // Filter by status
@@ -48,16 +55,24 @@ class PaymentController extends Controller
         // Search
         if ($request->has('search') && $request->search !== '') {
             $search = $request->search;
-            $query->whereHas('pilgrim', function ($q) use ($search) {
-                $q->where('firstname', 'like', "%{$search}%")
-                  ->orWhere('lastname', 'like', "%{$search}%");
+            $query->where(function ($mainQuery) use ($search) {
+                $mainQuery->whereHas('pilgrim', function ($q) use ($search) {
+                    $q->where('firstname', 'like', "%{$search}%")
+                      ->orWhere('lastname', 'like', "%{$search}%");
+                })->orWhereHas('pilgrim.client', function ($q) use ($search) {
+                    $q->where('firstname', 'like', "%{$search}%")
+                      ->orWhere('lastname', 'like', "%{$search}%")
+                      ->orWhere('phone', 'like', "%{$search}%");
+                })->orWhere('reference', 'like', "%{$search}%")
+                  ->orWhere('receipt_number', 'like', "%{$search}%");
             });
         }
 
         $payments = $query->paginate(15)->withQueryString();
 
-        // Get pilgrims for filter
+        // Get data for filters
         $pilgrims = Pilgrim::orderBy('firstname')->get();
+        $clients = \App\Models\Client::active()->orderBy('firstname')->get();
 
         // Payment statistics
         $stats = [
@@ -68,7 +83,7 @@ class PaymentController extends Controller
             'count_payments' => Payment::where('status', 'completed')->count(),
         ];
 
-        return view('payments.index', compact('payments', 'pilgrims', 'stats'));
+        return view('payments.index', compact('payments', 'pilgrims', 'clients', 'stats'));
     }
 
     /**
@@ -128,7 +143,7 @@ class PaymentController extends Controller
         if ($validated['amount'] > $pilgrim->remaining_amount) {
             return back()->withErrors([
                 'amount' => 'Le montant ne peut pas dépasser le montant restant à payer (' .
-                           number_format($pilgrim->remaining_amount, 0, ',', ' ') . ' DH).'
+                           number_format($pilgrim->remaining_amount, 0, ',', ' ') . ' FCFA).'
             ])->withInput();
         }
 
@@ -219,9 +234,34 @@ class PaymentController extends Controller
 
         $payment->load(['pilgrim.campaign']);
 
-        $pdf = \App\Facades\PDF::loadView('payments.receipt', compact('payment'));
+        // Get all payments for this pilgrim (payment history)
+        $allPayments = Payment::where('pilgrim_id', $payment->pilgrim_id)
+            ->orderBy('payment_date', 'asc')
+            ->orderBy('created_at', 'asc')
+            ->get();
 
-        return $pdf->download('recu-paiement-' . $payment->id . '.pdf');
+        // Get agency settings for the receipt
+        $agencySettings = \App\Models\SystemSetting::whereIn('setting_key', [
+            'company_name', 'company_slogan', 'company_address', 'company_city', 'company_country',
+            'company_phone', 'company_phone2', 'company_whatsapp',
+            'company_email', 'company_website', 'company_logo', 'default_currency',
+            'company_registration', 'company_license'
+        ])->pluck('setting_value', 'setting_key')->toArray();
+
+        // Get current serving user
+        $servingUser = auth()->user();
+
+        $pdf = \App\Facades\PDF::loadView('payments.receipt-beautiful', compact('payment', 'allPayments', 'agencySettings', 'servingUser'));
+
+        // Generate clean filename without special characters
+        $cleanFirstname = \Str::slug($payment->pilgrim->firstname, '-');
+        $cleanLastname = \Str::slug($payment->pilgrim->lastname, '-');
+        $receiptNumber = str_pad($payment->id, 6, '0', STR_PAD_LEFT);
+        $date = now()->format('Y-m-d');
+
+        $filename = "Recu_Paiement_{$receiptNumber}_{$cleanFirstname}_{$cleanLastname}_{$date}.pdf";
+
+        return $pdf->download($filename);
     }
 
     /**

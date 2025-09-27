@@ -54,14 +54,13 @@
                 </div>
 
                 <!-- Description -->
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                              rows="4" placeholder="Description détaillée de la campagne...">{{ old('description') }}</textarea>
-                    @error('description')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                <x-form.textarea
+                    name="description"
+                    label="Description"
+                    placeholder="Description détaillée de la campagne..."
+                    :value="old('description')"
+                    rows="4"
+                />
 
                 <div class="row">
                     <!-- Year Hijri -->
@@ -132,7 +131,7 @@
                             placeholder="45000"
                             :value="old('price_classic')"
                             required
-                            append="DH"
+                            append="FCFA"
                             step="0.01"
                             min="0"
                         />
@@ -147,7 +146,7 @@
                             placeholder="65000"
                             :value="old('price_vip')"
                             required
-                            append="DH"
+                            append="FCFA"
                             step="0.01"
                             min="0"
                         />
@@ -289,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let html = '';
             if (name) html += `<h6 class="mb-2">${name}</h6>`;
             if (type) html += `<span class="badge bg-${type === 'hajj' ? 'primary' : 'info'} mb-2">${type.charAt(0).toUpperCase() + type.slice(1)}</span><br>`;
-            if (price) html += `<strong class="text-primary">${parseFloat(price).toLocaleString('fr-FR')} DH</strong><br>`;
+            if (price) html += `<strong class="text-primary">${parseFloat(price).toLocaleString('fr-FR')} FCFA</strong><br>`;
             if (startDate && endDate) {
                 const start = new Date(startDate).toLocaleDateString('fr-FR');
                 const end = new Date(endDate).toLocaleDateString('fr-FR');

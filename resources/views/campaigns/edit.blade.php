@@ -19,7 +19,7 @@
         <x-button href="{{ route('campaigns.show', $campaign) }}" variant="outline-secondary" icon="fas fa-arrow-left" class="me-2">
             Retour
         </x-button>
-        @can('delete-campaign', $campaign)
+        
         @if($campaign->pilgrims()->count() === 0)
         <x-button href="#" variant="outline-danger" icon="fas fa-trash"
                   onclick="if(confirm('Êtes-vous sûr de vouloir supprimer cette campagne ?')) { document.getElementById('delete-form').submit(); }">
@@ -30,7 +30,7 @@
             @method('DELETE')
         </form>
         @endif
-        @endcan
+        
     </div>
 </div>
 
@@ -69,94 +69,144 @@
                 </div>
 
                 <!-- Description -->
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                              rows="4" placeholder="Description détaillée de la campagne...">{{ old('description', $campaign->description) }}</textarea>
-                    @error('description')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                <x-form.textarea
+                    name="description"
+                    label="Description"
+                    placeholder="Description détaillée de la campagne..."
+                    :value="old('description', $campaign->description)"
+                    rows="4"
+                />
 
                 <div class="row">
-                    <!-- Start Date -->
+                    <!-- Year Hijri -->
                     <div class="col-md-6">
                         <x-form.input
-                            name="start_date"
-                            type="date"
-                            label="Date de début"
-                            :value="old('start_date', $campaign->start_date)"
-                            required
-                        />
-                    </div>
-
-                    <!-- End Date -->
-                    <div class="col-md-6">
-                        <x-form.input
-                            name="end_date"
-                            type="date"
-                            label="Date de fin"
-                            :value="old('end_date', $campaign->end_date)"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div class="row">
-                    <!-- Price -->
-                    <div class="col-md-4">
-                        <x-form.input
-                            name="price"
+                            name="year_hijri"
                             type="number"
-                            label="Prix total"
-                            placeholder="50000"
-                            :value="old('price', $campaign->price)"
+                            label="Année Hijri"
+                            placeholder="1446"
+                            :value="old('year_hijri', $campaign->year_hijri)"
                             required
-                            append="DH"
+                            min="1400"
+                        />
+                    </div>
+
+                    <!-- Year Gregorian -->
+                    <div class="col-md-6">
+                        <x-form.input
+                            name="year_gregorian"
+                            type="number"
+                            label="Année Grégorienne"
+                            placeholder="2024"
+                            :value="old('year_gregorian', $campaign->year_gregorian)"
+                            required
+                            min="2020"
+                        />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Departure Date -->
+                    <div class="col-md-6">
+                        <x-form.input
+                            name="departure_date"
+                            type="date"
+                            label="Date de départ"
+                            :value="old('departure_date', $campaign->departure_date)"
+                            required
+                        />
+                    </div>
+
+                    <!-- Return Date -->
+                    <div class="col-md-6">
+                        <x-form.input
+                            name="return_date"
+                            type="date"
+                            label="Date de retour"
+                            :value="old('return_date', $campaign->return_date)"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <!-- Tarification par Catégorie -->
+                <div class="row">
+                    <div class="col-12">
+                        <h5 class="mb-3">💰 Tarification par Catégorie</h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Prix Classique -->
+                    <div class="col-md-6">
+                        <x-form.input
+                            name="price_classic"
+                            type="number"
+                            label="Prix Classique"
+                            placeholder="45000"
+                            :value="old('price_classic', $campaign->price_classic)"
+                            required
+                            append="FCFA"
                             step="0.01"
                             min="0"
                         />
                     </div>
 
-                    <!-- Deposit Amount -->
-                    <div class="col-md-4">
+                    <!-- Prix VIP -->
+                    <div class="col-md-6">
                         <x-form.input
-                            name="deposit_amount"
+                            name="price_vip"
                             type="number"
-                            label="Montant d'acompte"
-                            placeholder="15000"
-                            :value="old('deposit_amount', $campaign->deposit_amount)"
-                            append="DH"
+                            label="Prix VIP"
+                            placeholder="65000"
+                            :value="old('price_vip', $campaign->price_vip)"
+                            required
+                            append="FCFA"
                             step="0.01"
                             min="0"
-                            help="Montant à verser lors de l'inscription"
-                        />
-                    </div>
-
-                    <!-- Max Pilgrims -->
-                    <div class="col-md-4">
-                        <x-form.input
-                            name="max_pilgrims"
-                            type="number"
-                            label="Nombre max de pèlerins"
-                            placeholder="100"
-                            :value="old('max_pilgrims', $campaign->max_pilgrims)"
-                            min="1"
-                            help="Laissez vide pour illimité"
                         />
                     </div>
                 </div>
 
-                <!-- Active Status -->
+                <!-- Descriptions des Catégories -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <x-form.textarea
+                            name="classic_description"
+                            label="Description Classique"
+                            placeholder="Services et avantages inclus dans la formule classique..."
+                            :value="old('classic_description', $campaign->classic_description)"
+                            rows="3"
+                        />
+                    </div>
+                    <div class="col-md-6">
+                        <x-form.textarea
+                            name="vip_description"
+                            label="Description VIP"
+                            placeholder="Services et avantages inclus dans la formule VIP..."
+                            :value="old('vip_description', $campaign->vip_description)"
+                            rows="3"
+                        />
+                    </div>
+                </div>
+
+                <!-- Statut de la Campagne -->
                 <div class="mb-4">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1"
-                               {{ old('is_active', $campaign->is_active) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="is_active">
-                            <strong>Campagne active</strong>
-                        </label>
-                        <div class="form-text">Les campagnes actives sont visibles pour l'inscription</div>
-                    </div>
+                    <x-form.select
+                        name="status"
+                        label="Statut de la campagne"
+                        :options="[
+                            'draft' => '📝 Brouillon - En préparation',
+                            'open' => '🟢 Ouverte - Inscriptions acceptées',
+                            'closed' => '🔴 Fermée - Inscriptions terminées',
+                            'active' => '✅ Active - En cours',
+                            'completed' => '🏁 Terminée - Pèlerinage accompli',
+                            'cancelled' => '❌ Annulée'
+                        ]"
+                        :value="old('status', $campaign->status)"
+                        required
+                        help="Statut actuel de la campagne"
+                    />
                 </div>
 
                 <!-- Form Actions -->
@@ -182,9 +232,9 @@
                 </div>
                 <div class="col-6">
                     <div class="h4 mb-0 text-success">
-                        {{ number_format($campaign->pilgrims()->join('payments', 'pilgrims.id', '=', 'payments.pilgrim_id')->sum('payments.amount'), 0, ',', ' ') }}
+                        {{ number_format($campaign->pilgrims()->join('payments', 'pilgrims.id', '=', 'payments.pilgrim_id')->where('payments.status', 'completed')->sum('payments.amount'), 0, ',', ' ') }}
                     </div>
-                    <small class="text-muted">DH collectés</small>
+                    <small class="text-muted">FCFA collectés</small>
                 </div>
             </div>
             @if($campaign->pilgrims()->count() > 0)

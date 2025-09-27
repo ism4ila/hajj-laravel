@@ -32,11 +32,11 @@
         </div>
     </div>
     <div class="d-flex gap-2">
-        @can('manage-pilgrims')
+        
         <x-button href="{{ route('pilgrims.edit', $pilgrim) }}" variant="outline-primary" icon="fas fa-edit">
             Modifier
         </x-button>
-        @endcan
+        
         <x-button href="{{ route('pilgrims.index') }}" variant="outline-secondary" icon="fas fa-arrow-left">
             Retour
         </x-button>
@@ -154,7 +154,7 @@
                     @foreach($payments as $payment)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($payment->payment_date)->format('d/m/Y') }}</td>
-                            <td><strong>{{ number_format($payment->amount, 0, ',', ' ') }} DH</strong></td>
+                            <td><strong>{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</strong></td>
                             <td>
                                 @switch($payment->payment_method)
                                     @case('cash')
@@ -203,11 +203,11 @@
                 <div class="text-center text-muted py-4">
                     <i class="fas fa-credit-card fa-2x mb-3"></i>
                     <p>Aucun paiement enregistré</p>
-                    @can('manage-payments')
+                    
                     <x-button href="{{ route('payments.create', ['pilgrim' => $pilgrim->id]) }}" variant="outline-primary" size="sm">
                         Ajouter un paiement
                     </x-button>
-                    @endcan
+                    
                 </div>
             @endif
         </x-card>
@@ -243,11 +243,11 @@
                 <div class="text-center text-muted py-4">
                     <i class="fas fa-folder-open fa-2x mb-3"></i>
                     <p>Aucun document uploadé</p>
-                    @can('manage-documents')
+                    
                     <x-button href="{{ route('documents.index', $pilgrim) }}" variant="outline-primary" size="sm">
                         Gérer les documents
                     </x-button>
-                    @endcan
+                    
                 </div>
             @endif
         </x-card>
@@ -279,7 +279,7 @@
                 <div class="mb-3">
                     <div class="text-center">
                         <div class="h4 mb-1 {{ $pilgrim->category === 'vip' ? 'text-warning' : 'text-success' }}">
-                            {{ number_format($pilgrim->total_amount, 0, ',', ' ') }} DH
+                            {{ number_format($pilgrim->total_amount, 0, ',', ' ') }} FCFA
                         </div>
                         <small class="text-muted">Tarif {{ $pilgrim->category === 'vip' ? 'VIP' : 'Classique' }}</small>
                     </div>
@@ -323,19 +323,19 @@
             <div class="mb-3">
                 <div class="d-flex justify-content-between">
                     <span>Montant total:</span>
-                    <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between text-success">
                     <span>Montant payé:</span>
-                    <strong>{{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between {{ $pilgrim->remaining_amount > 0 ? 'text-danger' : 'text-success' }}">
                     <span>Montant restant:</span>
-                    <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
 
@@ -354,35 +354,35 @@
                 </div>
             </div>
 
-            @can('manage-payments')
+            
             @if($pilgrim->remaining_amount > 0)
             <x-button href="{{ route('payments.create', ['pilgrim' => $pilgrim->id]) }}" variant="primary" size="sm" class="w-100">
                 <i class="fas fa-plus me-1"></i>Ajouter un paiement
             </x-button>
             @endif
-            @endcan
+            
         </x-card>
 
         <!-- Quick Actions -->
         <x-card title="⚡ Actions Rapides" class="mb-4">
             <div class="d-grid gap-2">
-                @can('manage-pilgrims')
+                
                 <x-button href="{{ route('pilgrims.edit', $pilgrim) }}" variant="outline-primary" size="sm">
                     <i class="fas fa-edit me-1"></i>Modifier les informations
                 </x-button>
-                @endcan
+                
 
-                @can('manage-payments')
+                
                 <x-button href="{{ route('payments.index', ['pilgrim' => $pilgrim->id]) }}" variant="outline-success" size="sm">
                     <i class="fas fa-credit-card me-1"></i>Gérer les paiements
                 </x-button>
-                @endcan
+                
 
-                @can('manage-documents')
+                
                 <x-button href="{{ route('documents.index', $pilgrim) }}" variant="outline-info" size="sm">
                     <i class="fas fa-folder me-1"></i>Gérer les documents
                 </x-button>
-                @endcan
+                
 
                 <hr>
 
@@ -394,7 +394,7 @@
                     <i class="fas fa-download me-1"></i>Exporter en PDF
                 </x-button>
 
-                @can('manage-pilgrims')
+                
                 <hr>
 
                 <form method="POST" action="{{ route('pilgrims.destroy', $pilgrim) }}"
@@ -406,7 +406,7 @@
                         <i class="fas fa-trash me-1"></i>Supprimer le pèlerin
                     </button>
                 </form>
-                @endcan
+                
             </div>
         </x-card>
 

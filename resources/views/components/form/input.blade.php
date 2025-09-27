@@ -60,7 +60,7 @@
                {{ $attributes->merge(['class' => 'form-control' . ($hasError ? ' is-invalid' : '')]) }}>
     @endif
 
-    @if($hasError)
+    @if($hasError && isset($errors))
         <div class="invalid-feedback">
             {{ $errors->first($name) }}
         </div>

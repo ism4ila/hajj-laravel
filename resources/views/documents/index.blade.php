@@ -398,11 +398,11 @@
             </small>
         </div>
         <div class="d-flex gap-2">
-            @can('manage-documents')
+            
             <x-button type="submit" variant="primary" icon="fas fa-save">
                 Sauvegarder les Documents
             </x-button>
-            @endcan
+            
             <x-button href="{{ route('pilgrims.show', $pilgrim) }}" variant="outline-secondary">
                 Annuler
             </x-button>

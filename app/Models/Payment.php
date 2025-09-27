@@ -14,6 +14,11 @@ class Payment extends Model
         'reference',
         'notes',
         'status',
+        'transferred_to_bank',
+        'bank_transfer_date',
+        'bank_transfer_reference',
+        'bank_transfer_notes',
+        'transferred_by',
         'receipt_number',
         'created_by',
     ];
@@ -23,6 +28,8 @@ class Payment extends Model
         return [
             'amount' => 'decimal:2',
             'payment_date' => 'date',
+            'transferred_to_bank' => 'boolean',
+            'bank_transfer_date' => 'date',
         ];
     }
 
@@ -36,6 +43,16 @@ class Payment extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function transferredBy()
+    {
+        return $this->belongsTo(User::class, 'transferred_by');
+    }
+
+    public function client()
+    {
+        return $this->hasOneThrough(Client::class, Pilgrim::class, 'id', 'id', 'pilgrim_id', 'client_id');
+    }
+
     public function scopeByMethod($query, $method)
     {
         return $query->where('payment_method', $method);
@@ -44,6 +61,16 @@ class Payment extends Model
     public function scopeByDateRange($query, $startDate, $endDate)
     {
         return $query->whereBetween('payment_date', [$startDate, $endDate]);
+    }
+
+    public function scopeTransferredToBank($query)
+    {
+        return $query->where('transferred_to_bank', true);
+    }
+
+    public function scopeNotTransferredToBank($query)
+    {
+        return $query->where('transferred_to_bank', false);
     }
 
     protected static function boot()

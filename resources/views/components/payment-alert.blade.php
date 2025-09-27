@@ -34,7 +34,7 @@
 
                 @if($pilgrim->remaining_amount > 0)
                     <div class="mb-2">
-                        Montant restant à payer : <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} DH</strong>
+                        Montant restant à payer : <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} FCFA</strong>
                     </div>
 
                     @php
@@ -60,7 +60,7 @@
                              style="width: {{ $percentage }}%"></div>
                     </div>
 
-                    @can('manage-payments')
+                    
                     <div class="d-flex gap-2">
                         <a href="{{ route('payments.create', ['pilgrim' => $pilgrim->id]) }}"
                            class="btn btn-sm btn-outline-primary">
@@ -71,7 +71,7 @@
                             <i class="fas fa-eye me-1"></i>Voir détails
                         </a>
                     </div>
-                    @endcan
+                    
                 @else
                     <div class="text-success">
                         <i class="fas fa-check-circle me-1"></i>Paiement complet

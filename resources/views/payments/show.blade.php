@@ -24,16 +24,16 @@
         </p>
     </div>
     <div class="d-flex gap-2">
-        @can('manage-payments')
+        
         <x-button href="{{ route('payments.edit', $payment) }}" variant="outline-primary" icon="fas fa-edit">
             Modifier
         </x-button>
-        @endcan
-        @can('view-reports')
+        
+        
         <x-button href="{{ route('payments.receipt', $payment) }}" variant="outline-success" icon="fas fa-receipt">
             Reçu
         </x-button>
-        @endcan
+        
         <x-button href="{{ route('payments.index') }}" variant="outline-secondary" icon="fas fa-arrow-left">
             Retour
         </x-button>
@@ -49,7 +49,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <small class="text-muted">Montant</small>
-                        <div class="h4 text-success mb-0">{{ number_format($payment->amount, 0, ',', ' ') }} DH</div>
+                        <div class="h4 text-success mb-0">{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -194,19 +194,19 @@
             <div class="mb-3">
                 <div class="d-flex justify-content-between">
                     <span>Montant total du voyage:</span>
-                    <strong>{{ number_format($payment->pilgrim->total_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($payment->pilgrim->total_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between text-success">
                     <span>Total payé:</span>
-                    <strong>{{ number_format($payment->pilgrim->paid_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($payment->pilgrim->paid_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between {{ $payment->pilgrim->remaining_amount > 0 ? 'text-danger' : 'text-success' }}">
                     <span>Montant restant:</span>
-                    <strong>{{ number_format($payment->pilgrim->remaining_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($payment->pilgrim->remaining_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
 
@@ -230,7 +230,7 @@
             <div class="alert {{ $payment->status === 'completed' ? 'alert-success' : ($payment->status === 'cancelled' ? 'alert-danger' : 'alert-warning') }}">
                 <div class="d-flex justify-content-between align-items-center">
                     <span>Ce paiement:</span>
-                    <strong>{{ number_format($payment->amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
         </x-card>
@@ -269,7 +269,7 @@
         <!-- Quick Actions -->
         <x-card title="⚡ Actions Rapides" class="mb-4">
             <div class="d-grid gap-2">
-                @can('manage-payments')
+                
                 <x-button href="{{ route('payments.edit', $payment) }}" variant="outline-primary" size="sm">
                     <i class="fas fa-edit me-1"></i>Modifier ce paiement
                 </x-button>
@@ -279,19 +279,19 @@
                     <i class="fas fa-plus me-1"></i>Nouveau paiement
                 </x-button>
                 @endif
-                @endcan
+                
 
-                @can('view-reports')
+                
                 <x-button href="{{ route('payments.receipt', $payment) }}" variant="outline-info" size="sm">
                     <i class="fas fa-receipt me-1"></i>Générer reçu
                 </x-button>
-                @endcan
+                
 
                 <x-button href="#" variant="outline-secondary" size="sm" onclick="window.print()">
                     <i class="fas fa-print me-1"></i>Imprimer
                 </x-button>
 
-                @can('manage-payments')
+                
                 <hr>
 
                 <form method="POST" action="{{ route('payments.destroy', $payment) }}"
@@ -303,7 +303,7 @@
                         <i class="fas fa-trash me-1"></i>Supprimer ce paiement
                     </button>
                 </form>
-                @endcan
+                
             </div>
         </x-card>
 

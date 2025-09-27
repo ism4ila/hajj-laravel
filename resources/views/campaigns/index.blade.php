@@ -13,13 +13,11 @@
         <h1 class="h3 mb-0">Gestion des Campagnes</h1>
         <p class="text-muted mb-0">Gérez vos campagnes Hajj et Omra</p>
     </div>
-    @can('manage-campaigns')
     <div>
         <x-button href="{{ route('campaigns.create') }}" variant="primary" icon="fas fa-plus">
             Nouvelle Campagne
         </x-button>
     </div>
-    @endcan
 </div>
 
 <!-- Filters -->
@@ -95,16 +93,16 @@
                                         <i class="fas fa-eye me-2"></i>Voir détails
                                     </a>
                                 </li>
-                                @can('edit-campaign', $campaign)
+                                
                                 <li>
                                     <a class="dropdown-item" href="{{ route('campaigns.edit', $campaign) }}">
                                         <i class="fas fa-edit me-2"></i>Modifier
                                     </a>
                                 </li>
-                                @endcan
-                                @can('manage-campaigns')
+                                
+                                
                                 <li><hr class="dropdown-divider"></li>
-                                @if($campaign->is_active)
+                                @if($campaign->status === 'active')
                                     <li>
                                         <form method="POST" action="{{ route('campaigns.deactivate', $campaign) }}" class="d-inline">
                                             @csrf
@@ -123,8 +121,8 @@
                                         </form>
                                     </li>
                                 @endif
-                                @endcan
-                                @can('delete-campaign', $campaign)
+                                
+                                
                                 @if($campaign->pilgrims_count === 0)
                                 <li>
                                     <form method="POST" action="{{ route('campaigns.destroy', $campaign) }}"
@@ -138,7 +136,7 @@
                                     </form>
                                 </li>
                                 @endif
-                                @endcan
+                                
                             </ul>
                         </div>
                     </div>
@@ -147,20 +145,29 @@
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span>Statut</span>
-                                <x-badge variant="{{ $campaign->is_active ? 'success' : 'secondary' }}">
-                                    {{ $campaign->is_active ? 'Active' : 'Inactive' }}
+                                <x-badge variant="{{ $campaign->status === 'active' ? 'success' : 'secondary' }}">
+                                    {{ $campaign->status === 'active' ? 'Active' : ucfirst($campaign->status) }}
                                 </x-badge>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span>Période</span>
                                 <small class="text-muted">
-                                    {{ \Carbon\Carbon::parse($campaign->start_date)->format('d/m/Y') }} -
-                                    {{ \Carbon\Carbon::parse($campaign->end_date)->format('d/m/Y') }}
+                                    @if($campaign->departure_date)
+                                        {{ $campaign->departure_date->format('d/m/Y') }}
+                                    @else
+                                        Départ non défini
+                                    @endif
+                                    -
+                                    @if($campaign->return_date)
+                                        {{ $campaign->return_date->format('d/m/Y') }}
+                                    @else
+                                        Retour non défini
+                                    @endif
                                 </small>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span>Prix</span>
-                                <strong class="text-primary">{{ number_format($campaign->price, 0, ',', ' ') }} DH</strong>
+                                <strong class="text-primary">{{ number_format($campaign->price, 0, ',', ' ') }} FCFA</strong>
                             </div>
                         </div>
 
@@ -233,13 +240,13 @@
                 Commencez par créer votre première campagne.
             @endif
         </p>
-        @can('manage-campaigns')
+        
         @if(!request()->hasAny(['search', 'type', 'status']))
             <x-button href="{{ route('campaigns.create') }}" variant="primary" icon="fas fa-plus">
                 Créer une campagne
             </x-button>
         @endif
-        @endcan
+        
     </x-card>
 @endif
 @endsection

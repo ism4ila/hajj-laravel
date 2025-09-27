@@ -63,7 +63,7 @@ class CampaignController extends Controller
     public function show($id): JsonResponse
     {
         $campaign = Campaign::with(['pilgrims' => function ($query) {
-            $query->select('id', 'campaign_id', 'first_name', 'last_name', 'status')
+            $query->select('id', 'campaign_id', 'firstname', 'lastname', 'status')
                   ->orderBy('created_at', 'desc');
         }])->find($id);
 
@@ -93,7 +93,7 @@ class CampaignController extends Controller
                 'pilgrims' => $campaign->pilgrims->map(function ($pilgrim) {
                     return [
                         'id' => $pilgrim->id,
-                        'full_name' => $pilgrim->first_name . ' ' . $pilgrim->last_name,
+                        'full_name' => $pilgrim->firstname . ' ' . $pilgrim->lastname,
                         'status' => $pilgrim->status,
                     ];
                 }),

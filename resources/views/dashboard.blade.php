@@ -59,7 +59,7 @@
         <x-card class="bg-success text-white h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="h4 mb-0">{{ number_format($stats['total_payments'] ?? 0, 0, ',', ' ') }} DH</div>
+                    <div class="h4 mb-0">{{ number_format($stats['total_payments'] ?? 0, 0, ',', ' ') }} FCFA</div>
                     <div class="text-white-75">Total Encaissé</div>
                 </div>
                 <i class="fas fa-money-bill-wave fa-2x text-white-25"></i>
@@ -81,7 +81,7 @@
         <x-card class="bg-info text-white h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="h4 mb-0">{{ number_format($stats['pending_payments'] ?? 0, 0, ',', ' ') }} DH</div>
+                    <div class="h4 mb-0">{{ number_format($stats['pending_payments'] ?? 0, 0, ',', ' ') }} FCFA</div>
                     <div class="text-white-75">En Attente</div>
                 </div>
                 <i class="fas fa-clock fa-2x text-white-25"></i>
@@ -95,37 +95,37 @@
     <div class="col-12">
         <x-card title="⚡ Actions Rapides" class="mb-4">
             <div class="row">
-                @can('manage-pilgrims')
+                
                 <div class="col-md-3 mb-3">
                     <x-button href="{{ route('pilgrims.create') }}" variant="outline-primary" class="w-100">
                         <i class="fas fa-user-plus me-2"></i>Nouveau Pèlerin
                     </x-button>
                 </div>
-                @endcan
+                
 
-                @can('manage-payments')
+                
                 <div class="col-md-3 mb-3">
                     <x-button href="{{ route('payments.create') }}" variant="outline-success" class="w-100">
                         <i class="fas fa-plus me-2"></i>Nouveau Paiement
                     </x-button>
                 </div>
-                @endcan
+                
 
-                @can('manage-campaigns')
+                
                 <div class="col-md-3 mb-3">
                     <x-button href="{{ route('campaigns.create') }}" variant="outline-warning" class="w-100">
                         <i class="fas fa-flag me-2"></i>Nouvelle Campagne
                     </x-button>
                 </div>
-                @endcan
+                
 
-                @can('view-reports')
+                
                 <div class="col-md-3 mb-3">
                     <x-button href="{{ route('reports.index') }}" variant="outline-info" class="w-100">
                         <i class="fas fa-chart-bar me-2"></i>Rapports
                     </x-button>
                 </div>
-                @endcan
+                
             </div>
         </x-card>
     </div>
@@ -154,7 +154,7 @@
                                     </div>
                                     <div>
                                         <div class="fw-semibold">{{ $pilgrim->firstname }} {{ $pilgrim->lastname }}</div>
-                                        <small class="text-muted">{{ $pilgrim->created_at->format('d/m/Y') }}</small>
+                                        <small class="text-muted">{{ $pilgrim->created_at ? $pilgrim->created_at->format('d/m/Y') : 'N/A' }}</small>
                                     </div>
                                 </div>
                             </td>
@@ -183,11 +183,11 @@
                 <div class="text-center text-muted py-4">
                     <i class="fas fa-users fa-2x mb-3"></i>
                     <p>Aucun pèlerin inscrit</p>
-                    @can('manage-pilgrims')
+                    
                     <x-button href="{{ route('pilgrims.create') }}" variant="outline-primary" size="sm">
                         Inscrire le premier pèlerin
                     </x-button>
-                    @endcan
+                    
                 </div>
             @endif
         </x-card>
@@ -207,9 +207,9 @@
                             }} fa-lg"></i>
                         </div>
                         <div class="flex-grow-1">
-                            <div class="fw-semibold">{{ number_format($payment->amount, 0, ',', ' ') }} DH</div>
+                            <div class="fw-semibold">{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</div>
                             <small class="text-muted">{{ $payment->pilgrim->firstname }} {{ $payment->pilgrim->lastname }}</small>
-                            <div class="small text-muted">{{ $payment->created_at->format('d/m/Y H:i') }}</div>
+                            <div class="small text-muted">{{ $payment->created_at ? $payment->created_at->format('d/m/Y H:i') : 'N/A' }}</div>
                         </div>
                         <x-badge variant="{{ $payment->status === 'completed' ? 'success' : 'warning' }}" size="sm">
                             {{ $payment->status === 'completed' ? 'OK' : 'En attente' }}
@@ -225,11 +225,11 @@
                 <div class="text-center text-muted py-4">
                     <i class="fas fa-credit-card fa-2x mb-3"></i>
                     <p>Aucun paiement enregistré</p>
-                    @can('manage-payments')
+                    
                     <x-button href="{{ route('payments.create') }}" variant="outline-primary" size="sm">
                         Premier paiement
                     </x-button>
-                    @endcan
+                    
                 </div>
             @endif
         </x-card>
@@ -267,11 +267,11 @@
             </div>
 
             <div class="text-center mt-3">
-                @can('manage-settings')
+                
                 <x-button href="{{ route('settings.index') }}" variant="outline-secondary" size="sm">
                     <i class="fas fa-cog me-1"></i>Paramètres
                 </x-button>
-                @endcan
+                
             </div>
         </x-card>
     </div>

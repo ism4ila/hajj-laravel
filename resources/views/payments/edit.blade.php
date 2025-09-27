@@ -37,7 +37,7 @@
                         $remaining = $pilgrim->id == $payment->pilgrim_id
                             ? $pilgrim->remaining_amount + $payment->amount
                             : $pilgrim->remaining_amount;
-                        return [$pilgrim->id => $pilgrim->firstname . ' ' . $pilgrim->lastname . ' - ' . number_format($remaining, 0, ',', ' ') . ' DH disponibles'];
+                        return [$pilgrim->id => $pilgrim->firstname . ' ' . $pilgrim->lastname . ' - ' . number_format($remaining, 0, ',', ' ') . ' FCFA disponibles'];
                     })->toArray()"
                     :value="old('pilgrim_id', $payment->pilgrim_id)"
                     required
@@ -55,15 +55,15 @@
                             @endphp
                             <div class="mb-1">
                                 <span class="text-muted">Total:</span>
-                                <strong>{{ number_format($payment->pilgrim->total_amount, 0, ',', ' ') }} DH</strong>
+                                <strong>{{ number_format($payment->pilgrim->total_amount, 0, ',', ' ') }} FCFA</strong>
                             </div>
                             <div class="mb-1">
                                 <span class="text-success">Payé:</span>
-                                <strong>{{ number_format($payment->pilgrim->paid_amount - ($payment->status === 'completed' ? $payment->amount : 0), 0, ',', ' ') }} DH</strong>
+                                <strong>{{ number_format($payment->pilgrim->paid_amount - ($payment->status === 'completed' ? $payment->amount : 0), 0, ',', ' ') }} FCFA</strong>
                             </div>
                             <div>
                                 <span class="text-danger">Disponible:</span>
-                                <strong>{{ number_format($adjustedRemaining, 0, ',', ' ') }} DH</strong>
+                                <strong>{{ number_format($adjustedRemaining, 0, ',', ' ') }} FCFA</strong>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                             placeholder="0"
                             :value="old('amount', $payment->amount)"
                             required
-                            append="DH"
+                            append="FCFA"
                             step="0.01"
                             min="0.01"
                         />
@@ -162,7 +162,7 @@
                         <div class="col-md-6">
                             <h6>Valeurs actuelles :</h6>
                             <ul class="list-unstyled">
-                                <li><strong>Montant :</strong> {{ number_format($payment->amount, 0, ',', ' ') }} DH</li>
+                                <li><strong>Montant :</strong> {{ number_format($payment->amount, 0, ',', ' ') }} FCFA</li>
                                 <li><strong>Date :</strong> {{ \Carbon\Carbon::parse($payment->payment_date)->format('d/m/Y') }}</li>
                                 <li><strong>Mode :</strong>
                                     @switch($payment->payment_method)
@@ -224,7 +224,7 @@
 
             <div class="text-center">
                 <div class="h4 mb-0 text-{{ $payment->status === 'completed' ? 'success' : ($payment->status === 'cancelled' ? 'danger' : 'warning') }}">
-                    {{ number_format($payment->amount, 0, ',', ' ') }} DH
+                    {{ number_format($payment->amount, 0, ',', ' ') }} FCFA
                 </div>
                 <small class="text-muted">Montant actuel</small>
             </div>
@@ -265,19 +265,19 @@
             <div class="mb-2">
                 <div class="d-flex justify-content-between">
                     <span>Total:</span>
-                    <strong>{{ number_format($payment->pilgrim->total_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($payment->pilgrim->total_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-2">
                 <div class="d-flex justify-content-between text-success">
                     <span>Payé (hors ce paiement):</span>
-                    <strong>{{ number_format($adjustedPaid, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($adjustedPaid, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between text-danger">
                     <span>Disponible:</span>
-                    <strong>{{ number_format($adjustedRemaining, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($adjustedRemaining, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
 
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (amount > availableAmount) {
-                amountInput.setCustomValidity(`Le montant ne peut pas dépasser ${availableAmount.toLocaleString('fr-FR')} DH`);
+                amountInput.setCustomValidity(`Le montant ne peut pas dépasser ${availableAmount.toLocaleString('fr-FR')} FCFA`);
             } else {
                 amountInput.setCustomValidity('');
             }

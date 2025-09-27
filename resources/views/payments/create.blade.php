@@ -30,7 +30,7 @@
                     name="pilgrim_id"
                     label="Pèlerin"
                     :options="['' => '-- Sélectionner un pèlerin --'] + $pilgrims->mapWithKeys(function($pilgrim) {
-                        return [$pilgrim->id => $pilgrim->firstname . ' ' . $pilgrim->lastname . ' - ' . number_format($pilgrim->remaining_amount, 0, ',', ' ') . ' DH restants'];
+                        return [$pilgrim->id => $pilgrim->firstname . ' ' . $pilgrim->lastname . ' - ' . number_format($pilgrim->remaining_amount, 0, ',', ' ') . ' FCFA restants'];
                     })->toArray()"
                     :value="$pilgrim?->id ?? old('pilgrim_id')"
                     required
@@ -47,15 +47,15 @@
                             <div class="col-md-6 text-end">
                                 <div class="mb-1">
                                     <span class="text-muted">Total:</span>
-                                    <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} DH</strong>
+                                    <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} FCFA</strong>
                                 </div>
                                 <div class="mb-1">
                                     <span class="text-success">Payé:</span>
-                                    <strong>{{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} DH</strong>
+                                    <strong>{{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} FCFA</strong>
                                 </div>
                                 <div>
                                     <span class="text-danger">Restant:</span>
-                                    <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} DH</strong>
+                                    <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} FCFA</strong>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                             placeholder="0"
                             :value="old('amount')"
                             required
-                            append="DH"
+                            append="FCFA"
                             step="0.01"
                             min="0.01"
                         />
@@ -249,15 +249,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-md-6 text-end">
                             <div class="mb-1">
                                 <span class="text-muted">Total:</span>
-                                <strong>${parseFloat(pilgrim.total_amount).toLocaleString('fr-FR')} DH</strong>
+                                <strong>${parseFloat(pilgrim.total_amount).toLocaleString('fr-FR')} FCFA</strong>
                             </div>
                             <div class="mb-1">
                                 <span class="text-success">Payé:</span>
-                                <strong>${parseFloat(pilgrim.paid_amount).toLocaleString('fr-FR')} DH</strong>
+                                <strong>${parseFloat(pilgrim.paid_amount).toLocaleString('fr-FR')} FCFA</strong>
                             </div>
                             <div>
                                 <span class="text-danger">Restant:</span>
-                                <strong>${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} DH</strong>
+                                <strong>${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} FCFA</strong>
                             </div>
                         </div>
                     </div>
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Set max amount
             amountInput.max = pilgrim.remaining_amount;
-            amountInput.placeholder = `Max: ${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} DH`;
+            amountInput.placeholder = `Max: ${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} FCFA`;
 
             // Show quick stats
             const percentage = pilgrim.total_amount > 0 ? (pilgrim.paid_amount / pilgrim.total_amount) * 100 : 0;
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
                 <div class="text-center">
-                    <div class="h5 mb-0">${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} DH</div>
+                    <div class="h5 mb-0">${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} FCFA</div>
                     <small class="text-muted">Montant restant</small>
                 </div>
             `;
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const pilgrim = pilgrimsData[selectedId];
 
             if (amount > pilgrim.remaining_amount) {
-                amountInput.setCustomValidity(`Le montant ne peut pas dépasser ${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} DH`);
+                amountInput.setCustomValidity(`Le montant ne peut pas dépasser ${parseFloat(pilgrim.remaining_amount).toLocaleString('fr-FR')} FCFA`);
             } else {
                 amountInput.setCustomValidity('');
             }

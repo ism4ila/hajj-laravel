@@ -55,7 +55,7 @@
                                 </x-badge>
                             </div>
                             <div class="text-end">
-                                <div class="h6 mb-0">{{ number_format($pilgrim->campaign->price, 0, ',', ' ') }} DH</div>
+                                <div class="h6 mb-0">{{ number_format($pilgrim->campaign->price, 0, ',', ' ') }} FCFA</div>
                                 <small class="text-muted">Prix campagne</small>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                             placeholder="50000"
                             :value="old('total_amount', $pilgrim->total_amount)"
                             required
-                            append="DH"
+                            append="FCFA"
                             step="0.01"
                             min="0"
                         />
@@ -193,7 +193,7 @@
                             label="Montant déjà payé"
                             placeholder="0"
                             :value="old('paid_amount', $pilgrim->paid_amount)"
-                            append="DH"
+                            append="FCFA"
                             step="0.01"
                             min="0"
                         />
@@ -203,7 +203,7 @@
                 <div id="remaining-amount-display" class="alert alert-info mt-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <span>Montant restant à payer:</span>
-                        <strong id="remaining-amount">{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} DH</strong>
+                        <strong id="remaining-amount">{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} FCFA</strong>
                     </div>
                 </div>
             </x-card>
@@ -301,19 +301,19 @@
             <div class="mb-2">
                 <div class="d-flex justify-content-between">
                     <span>Total:</span>
-                    <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-2">
                 <div class="d-flex justify-content-between text-success">
                     <span>Payé:</span>
-                    <strong>{{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between {{ $pilgrim->remaining_amount > 0 ? 'text-danger' : 'text-success' }}">
                     <span>Restant:</span>
-                    <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} DH</strong>
+                    <strong>{{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} FCFA</strong>
                 </div>
             </div>
         </x-card>
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const paid = parseFloat(paidAmountInput.value) || 0;
         const remaining = total - paid;
 
-        remainingAmount.textContent = remaining.toLocaleString('fr-FR') + ' DH';
+        remainingAmount.textContent = remaining.toLocaleString('fr-FR') + ' FCFA';
 
         // Update alert class based on remaining amount
         remainingDisplay.className = 'alert mt-3 ' + (remaining <= 0 ? 'alert-success' : remaining <= total * 0.5 ? 'alert-warning' : 'alert-info');

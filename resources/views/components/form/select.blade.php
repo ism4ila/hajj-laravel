@@ -12,7 +12,7 @@
 
 @php
     $inputId = 'select_' . $name;
-    $hasError = $errors->has($name);
+    $hasError = isset($errors) ? $errors->has($name) : false;
     $value = old($name, $value);
 @endphp
 
@@ -56,7 +56,7 @@
         @endforeach
     </select>
 
-    @if($hasError)
+    @if($hasError && isset($errors))
         <div class="invalid-feedback">
             {{ $errors->first($name) }}
         </div>

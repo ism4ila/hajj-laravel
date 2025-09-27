@@ -3,13 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Web\CampaignController;
+use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\Web\PilgrimController;
 use App\Http\Controllers\Web\PaymentController;
 use App\Http\Controllers\Web\DocumentController;
 use App\Http\Controllers\Web\ReportController;
 use App\Http\Controllers\Web\UserController;
 use App\Http\Controllers\Web\SystemSettingController;
+use App\Http\Controllers\Web\UserProfileController;
+use App\Http\Controllers\Web\ClientController;
 
 // Public routes
 Route::get('/', function () {
@@ -22,7 +25,7 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 });
 
-Route::middleware(['auth', 'role'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     // Dashboard
@@ -39,6 +42,31 @@ Route::middleware(['auth', 'role'])->group(function () {
         Route::delete('/{campaign}', [CampaignController::class, 'destroy'])->name('destroy');
         Route::post('/{campaign}/activate', [CampaignController::class, 'activate'])->name('activate');
         Route::post('/{campaign}/deactivate', [CampaignController::class, 'deactivate'])->name('deactivate');
+    });
+
+    // Export routes
+    Route::prefix('exports')->name('exports.')->group(function () {
+        Route::get('/campaigns/{campaign}/pilgrims', [ExportController::class, 'campaignPilgrims'])->name('campaign.pilgrims');
+        Route::get('/campaigns/{campaign}/summary', [ExportController::class, 'campaignSummary'])->name('campaign.summary');
+        Route::get('/pilgrims/{pilgrim}/payments', [ExportController::class, 'pilgrimPayments'])->name('pilgrim.payments');
+        Route::get('/campaigns', [ExportController::class, 'allCampaigns'])->name('all.campaigns');
+        Route::get('/clients', [ExportController::class, 'allClients'])->name('clients');
+    });
+
+    // Client management
+    Route::prefix('clients')->name('clients.')->group(function () {
+        Route::get('/', [ClientController::class, 'index'])->name('index');
+        Route::get('/create', [ClientController::class, 'create'])->name('create');
+        Route::post('/', [ClientController::class, 'store'])->name('store');
+        Route::get('/{client}', [ClientController::class, 'show'])->name('show');
+        Route::get('/{client}/edit', [ClientController::class, 'edit'])->name('edit');
+        Route::put('/{client}', [ClientController::class, 'update'])->name('update');
+        Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+        Route::match(['get', 'post'], '/search/ajax', [ClientController::class, 'search'])->name('search');
+        Route::get('/departments/ajax', [ClientController::class, 'getDepartments'])->name('departments');
+        Route::post('/{client}/toggle-status', [ClientController::class, 'toggleStatus'])->name('toggle-status');
+        Route::post('/bulk-action', [ClientController::class, 'bulkAction'])->name('bulk-action');
+        Route::get('/export', [ClientController::class, 'export'])->name('export');
     });
 
     // Pilgrim management
@@ -79,41 +107,26 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::prefix('reports')->name('reports.')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('index');
         Route::get('/campaigns', [ReportController::class, 'campaigns'])->name('campaigns');
+        Route::get('/clients', [ReportController::class, 'clients'])->name('clients');
         Route::get('/payments', [ReportController::class, 'payments'])->name('payments');
         Route::get('/pilgrims', [ReportController::class, 'pilgrims'])->name('pilgrims');
         Route::get('/documents', [ReportController::class, 'documents'])->name('documents');
         Route::post('/export', [ReportController::class, 'export'])->name('export');
     });
 
-    // User management (admin only)
-    Route::prefix('users')->name('users.')->middleware('role:manage-users')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('index');
-        Route::get('/create', [UserController::class, 'create'])->name('create');
-        Route::post('/', [UserController::class, 'store'])->name('store');
-        Route::get('/{user}', [UserController::class, 'show'])->name('show');
-        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
-        Route::put('/{user}', [UserController::class, 'update'])->name('update');
-        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
-    });
-
-    // System settings (admin only)
-    Route::prefix('settings')->name('settings.')->middleware('role:manage-settings')->group(function () {
+    // System settings (admin seulement - simplifié)
+    Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/', [SystemSettingController::class, 'index'])->name('index');
-        Route::get('/{category}', [SystemSettingController::class, 'show'])->name('show');
-        Route::put('/{category}', [SystemSettingController::class, 'update'])->name('update');
+        Route::put('/', [SystemSettingController::class, 'update'])->name('update');
     });
 
     // Profile management
     Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/', function () {
-            return view('profile.show');
-        })->name('show');
-        Route::get('/edit', function () {
-            return view('profile.edit');
-        })->name('edit');
-        Route::put('/', function () {
-            // Handle profile update
-            return redirect()->route('profile.show');
-        })->name('update');
+        Route::get('/', [UserProfileController::class, 'show'])->name('show');
+        Route::get('/edit', [UserProfileController::class, 'edit'])->name('edit');
+        Route::put('/', [UserProfileController::class, 'update'])->name('update');
+        Route::get('/change-password', [UserProfileController::class, 'showChangePasswordForm'])->name('change-password');
+        Route::post('/change-password', [UserProfileController::class, 'changePassword']);
+        Route::delete('/delete', [UserProfileController::class, 'destroy'])->name('destroy');
     });
 });

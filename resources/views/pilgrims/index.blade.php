@@ -13,7 +13,7 @@
         <h1 class="h3 mb-0">Gestion des Pèlerins</h1>
         <p class="text-muted mb-0">Gérez les inscriptions et informations des pèlerins</p>
     </div>
-    @can('manage-pilgrims')
+    
     <div>
         <div class="btn-group me-2">
             <x-button href="{{ route('pilgrims.exportExcel') }}" variant="outline-success" icon="fas fa-file-excel">
@@ -27,7 +27,7 @@
             Nouveau Pèlerin
         </x-button>
     </div>
-    @endcan
+    
 </div>
 
 <!-- Statistics Cards -->
@@ -95,6 +95,13 @@
         </div>
         <div class="col-md-2">
             <x-form.select
+                name="client"
+                :options="['' => 'Tous les clients'] + $clients->mapWithKeys(function($c) { return [$c->id => $c->full_name]; })->toArray()"
+                :value="request('client')"
+            />
+        </div>
+        <div class="col-md-2">
+            <x-form.select
                 name="campaign"
                 :options="['' => 'Toutes les campagnes'] + $campaigns->pluck('name', 'id')->toArray()"
                 :value="request('campaign')"
@@ -129,7 +136,7 @@
                 <x-button type="submit" variant="outline-primary" class="flex-fill">
                     Filtrer
                 </x-button>
-                @if(request()->hasAny(['search', 'campaign', 'status', 'gender']))
+                @if(request()->hasAny(['search', 'client', 'campaign', 'status', 'gender']))
                     <a href="{{ route('pilgrims.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-times"></i>
                     </a>
@@ -144,7 +151,7 @@
     <x-card>
         <x-table.table
             :headers="[
-                ['label' => 'Pèlerin', 'width' => '25%'],
+                ['label' => 'Client / Pèlerin', 'width' => '25%'],
                 ['label' => 'Campagne', 'width' => '20%'],
                 ['label' => 'Contact', 'width' => '20%'],
                 ['label' => 'Paiements', 'width' => '15%'],
@@ -154,16 +161,28 @@
             responsive>
             @foreach($pilgrims as $pilgrim)
                 <tr>
-                    <!-- Pilgrim Info -->
+                    <!-- Client / Pilgrim Info -->
                     <td>
                         <div class="d-flex align-items-center">
                             <div class="avatar bg-primary text-white rounded-circle me-3"
                                  style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                {{ substr($pilgrim->firstname, 0, 1) }}{{ substr($pilgrim->lastname, 0, 1) }}
+                                @if($pilgrim->client)
+                                    {{ substr($pilgrim->client->firstname, 0, 1) }}{{ substr($pilgrim->client->lastname, 0, 1) }}
+                                @else
+                                    {{ substr($pilgrim->firstname, 0, 1) }}{{ substr($pilgrim->lastname, 0, 1) }}
+                                @endif
                             </div>
                             <div>
-                                <div class="fw-semibold">{{ $pilgrim->firstname }} {{ $pilgrim->lastname }}</div>
-                                <small class="text-muted">
+                                @if($pilgrim->client)
+                                    <div class="fw-semibold">
+                                        <i class="fas fa-user text-muted me-1"></i>{{ $pilgrim->client->full_name }}
+                                    </div>
+                                    <small class="text-muted">Pèlerin: {{ $pilgrim->full_name }}</small>
+                                @else
+                                    <div class="fw-semibold">{{ $pilgrim->full_name }}</div>
+                                    <small class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>Client non associé</small>
+                                @endif
+                                <br><small class="text-muted">
                                     {{ $pilgrim->gender === 'male' ? '♂' : '♀' }}
                                     {{ \Carbon\Carbon::parse($pilgrim->date_of_birth)->age }} ans
                                 </small>
@@ -194,10 +213,10 @@
                     <!-- Payments -->
                     <td>
                         <div class="small">
-                            <div>Total: <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} DH</strong></div>
-                            <div class="text-success">Payé: {{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} DH</div>
+                            <div>Total: <strong>{{ number_format($pilgrim->total_amount, 0, ',', ' ') }} FCFA</strong></div>
+                            <div class="text-success">Payé: {{ number_format($pilgrim->paid_amount, 0, ',', ' ') }} FCFA</div>
                             @if($pilgrim->remaining_amount > 0)
-                                <div class="text-danger">Reste: {{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} DH</div>
+                                <div class="text-danger">Reste: {{ number_format($pilgrim->remaining_amount, 0, ',', ' ') }} FCFA</div>
                             @endif
                         </div>
                         @php
@@ -232,7 +251,7 @@
                                         <i class="fas fa-eye me-2"></i>Voir détails
                                     </a>
                                 </li>
-                                @can('manage-pilgrims')
+                                
                                 <li>
                                     <a class="dropdown-item" href="{{ route('pilgrims.edit', $pilgrim) }}">
                                         <i class="fas fa-edit me-2"></i>Modifier
@@ -250,7 +269,7 @@
                                         </button>
                                     </form>
                                 </li>
-                                @endcan
+                                
                             </ul>
                         </div>
                     </td>
@@ -277,13 +296,13 @@
                 Commencez par inscrire votre premier pèlerin.
             @endif
         </p>
-        @can('manage-pilgrims')
+        
         @if(!request()->hasAny(['search', 'campaign', 'status', 'gender']))
             <x-button href="{{ route('pilgrims.create') }}" variant="primary" icon="fas fa-user-plus">
                 Inscrire un pèlerin
             </x-button>
         @endif
-        @endcan
+        
     </x-card>
 @endif
 

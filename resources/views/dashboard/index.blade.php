@@ -47,7 +47,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="text-white-75 small">Total Paiements</div>
-                        <div class="h2 mb-0 font-weight-bold text-white">{{ number_format($stats['total_payments'], 0, ',', ' ') }} DH</div>
+                        <div class="h2 mb-0 font-weight-bold text-white">{{ number_format($stats['total_payments'], 0, ',', ' ') }} FCFA</div>
                     </div>
                     <div class="text-white-25">
                         <i class="fas fa-credit-card fa-2x"></i>
@@ -136,10 +136,10 @@
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <div class="avatar bg-primary text-white rounded-circle me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                    {{ substr($pilgrim->first_name, 0, 1) }}{{ substr($pilgrim->last_name, 0, 1) }}
+                                    {{ substr($pilgrim->firstname, 0, 1) }}{{ substr($pilgrim->lastname, 0, 1) }}
                                 </div>
                                 <div>
-                                    <h6 class="mb-0">{{ $pilgrim->first_name }} {{ $pilgrim->last_name }}</h6>
+                                    <h6 class="mb-0">{{ $pilgrim->firstname }} {{ $pilgrim->lastname }}</h6>
                                     <small class="text-muted">{{ $pilgrim->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>
@@ -172,11 +172,11 @@
                     @foreach($stats['recent_payments'] as $payment)
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="mb-1">{{ $payment->pilgrim->first_name ?? 'N/A' }} {{ $payment->pilgrim->last_name ?? '' }}</h6>
+                                <h6 class="mb-1">{{ $payment->pilgrim->firstname ?? 'N/A' }} {{ $payment->pilgrim->lastname ?? '' }}</h6>
                                 <small class="text-muted">{{ $payment->created_at->diffForHumans() }}</small>
                             </div>
                             <div class="text-end">
-                                <div class="fw-bold">{{ number_format($payment->amount, 0, ',', ' ') }} DH</div>
+                                <div class="fw-bold">{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</div>
                                 <x-badge variant="{{ $payment->status === 'completed' ? 'success' : ($payment->status === 'pending' ? 'warning' : 'danger') }}">
                                     {{ ucfirst($payment->status) }}
                                 </x-badge>
@@ -253,7 +253,7 @@ const paymentsChart = new Chart(paymentsCtx, {
             @endforeach
         ],
         datasets: [{
-            label: 'Montant (DH)',
+            label: 'Montant (FCFA)',
             data: [
                 @foreach($monthlyPayments as $payment)
                     {{ $payment->total }},
@@ -278,7 +278,7 @@ const paymentsChart = new Chart(paymentsCtx, {
                 beginAtZero: true,
                 ticks: {
                     callback: function(value) {
-                        return new Intl.NumberFormat('fr-MA').format(value) + ' DH';
+                        return new Intl.NumberFormat('fr-MA').format(value) + ' FCFA';
                     }
                 }
             }

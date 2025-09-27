@@ -204,7 +204,7 @@
                                        title="Télécharger">
                                         <i class="fas fa-download"></i>
                                     </a>
-                                    @can('manage-documents')
+                                    
                                     <form method="POST"
                                           action="{{ route('documents.delete-file', [$pilgrim, str_replace('_file', '', $key)]) }}"
                                           class="d-inline">
@@ -217,7 +217,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                    @endcan
+                                    
                                 </div>
                             @else
                                 <small class="text-muted">Aucun fichier</small>
@@ -243,11 +243,11 @@
                 @endif
             </ul>
 
-            @can('manage-documents')
+            
             <x-button href="{{ route('documents.index', $pilgrim) }}" variant="warning">
                 <i class="fas fa-plus me-1"></i>Ajouter les Documents Manquants
             </x-button>
-            @endcan
+            
         </x-card>
         @endif
     </div>
@@ -255,11 +255,11 @@
     <div class="col-md-4">
         <x-card title="🎯 Actions Rapides">
             <div class="d-grid gap-2">
-                @can('manage-documents')
+                
                 <x-button href="{{ route('documents.index', $pilgrim) }}" variant="primary">
                     <i class="fas fa-edit me-1"></i>Modifier les Documents
                 </x-button>
-                @endcan
+                
 
                 <x-button href="#" variant="outline-secondary" onclick="window.print()">
                     <i class="fas fa-print me-1"></i>Imprimer la Checklist

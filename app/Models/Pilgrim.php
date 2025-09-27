@@ -8,6 +8,7 @@ class Pilgrim extends Model
 {
     protected $fillable = [
         'campaign_id',
+        'client_id',
         'category',
         'firstname',
         'lastname',
@@ -31,6 +32,11 @@ class Pilgrim extends Model
     public function campaign()
     {
         return $this->belongsTo(Campaign::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 
     public function documents()

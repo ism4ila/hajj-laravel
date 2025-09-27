@@ -1,13 +1,26 @@
 <!-- Sidebar -->
-<nav class="sidebar bg-white position-fixed" style="width: 250px; height: 100vh; top: 0; left: 0; z-index: 1040;">
-    <div class="sidebar-header p-3 border-bottom">
-        <h5 class="mb-0">
+<nav class="sidebar bg-white position-fixed shadow-sm" id="sidebar" style="width: var(--sidebar-width); height: 100vh; top: 0; left: 0; z-index: 1040; transition: transform var(--transition-speed) ease;">
+
+    <!-- Sidebar Header -->
+    <div class="sidebar-header p-3 border-bottom d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
             <i class="fas fa-kaaba text-primary me-2"></i>
-            {{ config('app.name', 'Hajj Management') }}
-        </h5>
+            <h5 class="mb-0 sidebar-brand-text">{{ config('app.name', 'Hajj Management') }}</h5>
+        </div>
+
+        <!-- Sidebar Toggle for Desktop -->
+        <button class="btn btn-sm btn-outline-secondary d-none d-lg-inline-block" id="sidebar-toggle" title="Réduire la sidebar">
+            <i class="fas fa-angle-left"></i>
+        </button>
+
+        <!-- Close Button for Mobile -->
+        <button class="btn btn-sm btn-outline-secondary d-lg-none" onclick="document.getElementById('sidebar').classList.remove('show'); document.getElementById('sidebar-overlay').classList.remove('show');">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
-    <div class="sidebar-content p-3">
+    <!-- Sidebar Content -->
+    <div class="sidebar-content p-3 overflow-auto" style="height: calc(100vh - 140px);">
         <ul class="nav nav-pills flex-column">
             <!-- Dashboard -->
             <li class="nav-item mb-1">
@@ -24,6 +37,15 @@
                    class="nav-link {{ request()->routeIs('campaigns.*') ? 'active' : '' }}">
                     <i class="fas fa-flag me-2"></i>
                     Campagnes
+                </a>
+            </li>
+
+            <!-- Clients -->
+            <li class="nav-item mb-1">
+                <a href="{{ route('clients.index') }}"
+                   class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}">
+                    <i class="fas fa-user-friends me-2"></i>
+                    Clients
                 </a>
             </li>
 
@@ -59,19 +81,8 @@
             <!-- Separator -->
             <hr class="my-3">
 
-            <!-- User Management (Admin only) -->
-            @can('manage-users')
-            <li class="nav-item mb-1">
-                <a href="{{ route('users.index') }}"
-                   class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                    <i class="fas fa-user-cog me-2"></i>
-                    Utilisateurs
-                </a>
-            </li>
-            @endcan
-
-            <!-- System Settings (Admin only) -->
-            @can('manage-settings')
+            <!-- System Settings (Admin seul) -->
+            
             <li class="nav-item mb-1">
                 <a href="{{ route('settings.index') }}"
                    class="nav-link {{ request()->routeIs('settings.*') ? 'active' : '' }}">
@@ -79,7 +90,7 @@
                     Paramètres
                 </a>
             </li>
-            @endcan
+            
         </ul>
     </div>
 
@@ -93,7 +104,7 @@
                 </div>
                 <div class="flex-grow-1">
                     <div class="fw-semibold small">{{ auth()->user()->name }}</div>
-                    <div class="text-muted small">{{ auth()->user()->role->name ?? 'Utilisateur' }}</div>
+                    <div class="text-muted small">{{ auth()->user()->is_admin ? 'Administrateur' : 'Utilisateur' }}</div>
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark shadow">
@@ -113,3 +124,93 @@
         </div>
     </div>
 </nav>
+
+<!-- Sidebar Responsive Styles -->
+<style>
+    /* Mobile sidebar */
+    @media (max-width: 768px) {
+        #sidebar {
+            transform: translateX(-100%);
+        }
+
+        #sidebar.show {
+            transform: translateX(0);
+        }
+    }
+
+    /* Sidebar collapsed state */
+    .sidebar-collapsed #sidebar {
+        width: var(--sidebar-collapsed-width) !important;
+    }
+
+    .sidebar-collapsed .sidebar-brand-text,
+    .sidebar-collapsed .nav-link span:not(.nav-icon) {
+        display: none;
+    }
+
+    .sidebar-collapsed .nav-link {
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    .sidebar-collapsed .sidebar-header h5 {
+        display: none;
+    }
+
+    .sidebar-collapsed .sidebar-footer .dropdown-toggle .flex-grow-1 {
+        display: none;
+    }
+
+    /* Sidebar animations */
+    #sidebar {
+        transition: width var(--transition-speed) ease, transform var(--transition-speed) ease;
+    }
+
+    .nav-link {
+        transition: all 0.2s ease;
+        border-radius: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .nav-link:hover {
+        background-color: rgba(var(--bs-primary-rgb), 0.1);
+        color: var(--bs-primary);
+    }
+
+    .nav-link.active {
+        background-color: var(--bs-primary);
+        color: white;
+    }
+
+    /* Sidebar scrollbar */
+    .sidebar-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .sidebar-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .sidebar-content::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 2px;
+    }
+
+    .sidebar-content::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+
+    /* Responsive sidebar toggle icon */
+    .sidebar-collapsed #sidebar-toggle i {
+        transform: rotate(180deg);
+    }
+
+    #sidebar-toggle i {
+        transition: transform var(--transition-speed) ease;
+    }
+
+    /* User dropdown in collapsed mode */
+    .sidebar-collapsed .sidebar-footer .dropdown-toggle {
+        justify-content: center;
+    }
+</style>

@@ -100,9 +100,37 @@ class CampaignController extends Controller
     {
         $campaign->load(['pilgrims.payments', 'pilgrims.documents']);
 
+        // Calculate financial summary
+        $classicPilgrims = $campaign->pilgrims->where('category', 'classic');
+        $vipPilgrims = $campaign->pilgrims->where('category', 'vip');
+        $totalExpected = ($classicPilgrims->count() * $campaign->price_classic) + ($vipPilgrims->count() * $campaign->price_vip);
+
+        // Calculate total collected more safely
+        $totalCollected = 0;
+        $totalPayments = 0;
+        $pendingPayments = 0;
+
+        foreach ($campaign->pilgrims as $pilgrim) {
+            foreach ($pilgrim->payments as $payment) {
+                $totalPayments += $payment->amount;
+                if ($payment->status === 'completed') {
+                    $totalCollected += $payment->amount;
+                } elseif ($payment->status === 'pending') {
+                    $pendingPayments += $payment->amount;
+                }
+            }
+        }
+
         $stats = [
             'total_pilgrims' => $campaign->pilgrims->count(),
-            'total_payments' => $campaign->pilgrims->flatMap->payments->sum('amount'),
+            'classic_pilgrims' => $classicPilgrims->count(),
+            'vip_pilgrims' => $vipPilgrims->count(),
+            'total_expected' => $totalExpected,
+            'total_collected' => $totalCollected,
+            'remaining_amount' => $totalExpected - $totalCollected,
+            'collection_percentage' => $totalExpected > 0 ? round(($totalCollected / $totalExpected) * 100, 2) : 0,
+            'total_payments' => $totalPayments,
+            'pending_payments' => $pendingPayments,
             'completed_documents' => $campaign->pilgrims->filter(function ($pilgrim) {
                 return $pilgrim->documents->count() >= 4; // Assuming 4 required documents
             })->count(),
@@ -119,7 +147,7 @@ class CampaignController extends Controller
 
         $recentPayments = $campaign->pilgrims()
             ->join('payments', 'pilgrims.id', '=', 'payments.pilgrim_id')
-            ->select('payments.*', 'pilgrims.first_name', 'pilgrims.last_name')
+            ->select('payments.*', 'pilgrims.firstname', 'pilgrims.lastname')
             ->orderBy('payments.created_at', 'desc')
             ->take(5)
             ->get();
@@ -148,8 +176,8 @@ class CampaignController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|in:hajj,omra',
             'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'departure_date' => 'required|date',
+            'return_date' => 'required|date|after:departure_date',
             'max_pilgrims' => 'nullable|integer|min:1',
             'price' => 'required|numeric|min:0',
             'deposit_amount' => 'nullable|numeric|min:0',
@@ -158,9 +186,9 @@ class CampaignController extends Controller
             'name.required' => 'Le nom de la campagne est obligatoire.',
             'type.required' => 'Le type de campagne est obligatoire.',
             'type.in' => 'Le type doit être Hajj ou Omra.',
-            'start_date.required' => 'La date de début est obligatoire.',
-            'end_date.required' => 'La date de fin est obligatoire.',
-            'end_date.after' => 'La date de fin doit être après la date de début.',
+            'departure_date.required' => 'La date de départ est obligatoire.',
+            'return_date.required' => 'La date de retour est obligatoire.',
+            'return_date.after' => 'La date de retour doit être après la date de départ.',
             'max_pilgrims.min' => 'Le nombre maximum de pèlerins doit être au moins 1.',
             'price.required' => 'Le prix est obligatoire.',
             'price.numeric' => 'Le prix doit être un nombre.',

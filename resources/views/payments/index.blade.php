@@ -13,13 +13,13 @@
         <h1 class="h3 mb-0">Gestion des Paiements</h1>
         <p class="text-muted mb-0">Enregistrez et suivez tous les paiements des pèlerins</p>
     </div>
-    @can('manage-payments')
+    
     <div>
         <x-button href="{{ route('payments.create') }}" variant="primary" icon="fas fa-plus">
             Nouveau Paiement
         </x-button>
     </div>
-    @endcan
+    
 </div>
 
 <!-- Statistics Cards -->
@@ -28,7 +28,7 @@
         <x-card class="bg-success text-white h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="h4 mb-0">{{ number_format($stats['total_payments'], 0, ',', ' ') }} DH</div>
+                    <div class="h4 mb-0">{{ number_format($stats['total_payments'], 0, ',', ' ') }} FCFA</div>
                     <div class="text-white-75">Total Encaissé</div>
                 </div>
                 <i class="fas fa-money-bill-wave fa-2x text-white-25"></i>
@@ -39,7 +39,7 @@
         <x-card class="bg-warning text-white h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="h4 mb-0">{{ number_format($stats['pending_payments'], 0, ',', ' ') }} DH</div>
+                    <div class="h4 mb-0">{{ number_format($stats['pending_payments'], 0, ',', ' ') }} FCFA</div>
                     <div class="text-white-75">En Attente</div>
                 </div>
                 <i class="fas fa-clock fa-2x text-white-25"></i>
@@ -50,7 +50,7 @@
         <x-card class="bg-info text-white h-100">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="h4 mb-0">{{ number_format($stats['today_payments'], 0, ',', ' ') }} DH</div>
+                    <div class="h4 mb-0">{{ number_format($stats['today_payments'], 0, ',', ' ') }} FCFA</div>
                     <div class="text-white-75">Aujourd'hui</div>
                 </div>
                 <i class="fas fa-calendar-day fa-2x text-white-25"></i>
@@ -73,12 +73,19 @@
 <!-- Filters -->
 <x-card class="mb-4">
     <form method="GET" action="{{ route('payments.index') }}" class="row g-3">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <x-form.input
                 name="search"
-                placeholder="Rechercher par pèlerin..."
+                placeholder="Rechercher..."
                 :value="request('search')"
                 prepend="search"
+            />
+        </div>
+        <div class="col-md-2">
+            <x-form.select
+                name="client"
+                :options="['' => 'Tous les clients'] + $clients->mapWithKeys(function($c) { return [$c->id => $c->full_name]; })->toArray()"
+                :value="request('client')"
             />
         </div>
         <div class="col-md-2">
@@ -133,7 +140,7 @@
     <x-card>
         <x-table.table
             :headers="[
-                ['label' => 'Pèlerin', 'width' => '25%'],
+                ['label' => 'Client / Pèlerin', 'width' => '25%'],
                 ['label' => 'Montant', 'width' => '15%'],
                 ['label' => 'Mode', 'width' => '15%'],
                 ['label' => 'Date', 'width' => '15%'],
@@ -143,23 +150,35 @@
             responsive>
             @foreach($payments as $payment)
                 <tr>
-                    <!-- Pilgrim -->
+                    <!-- Client / Pilgrim -->
                     <td>
                         <div class="d-flex align-items-center">
                             <div class="avatar bg-primary text-white rounded-circle me-3"
                                  style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                                {{ substr($payment->pilgrim->firstname, 0, 1) }}{{ substr($payment->pilgrim->lastname, 0, 1) }}
+                                @if($payment->pilgrim->client)
+                                    {{ substr($payment->pilgrim->client->firstname, 0, 1) }}{{ substr($payment->pilgrim->client->lastname, 0, 1) }}
+                                @else
+                                    {{ substr($payment->pilgrim->firstname, 0, 1) }}{{ substr($payment->pilgrim->lastname, 0, 1) }}
+                                @endif
                             </div>
                             <div>
-                                <div class="fw-semibold">{{ $payment->pilgrim->firstname }} {{ $payment->pilgrim->lastname }}</div>
-                                <small class="text-muted">{{ $payment->pilgrim->campaign?->name }}</small>
+                                @if($payment->pilgrim->client)
+                                    <div class="fw-semibold">
+                                        <i class="fas fa-user text-muted me-1"></i>{{ $payment->pilgrim->client->full_name }}
+                                    </div>
+                                    <small class="text-muted">Pèlerin: {{ $payment->pilgrim->full_name }}</small>
+                                @else
+                                    <div class="fw-semibold">{{ $payment->pilgrim->full_name }}</div>
+                                    <small class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>Client non associé</small>
+                                @endif
+                                <br><small class="text-muted">{{ $payment->pilgrim->campaign?->name }}</small>
                             </div>
                         </div>
                     </td>
 
                     <!-- Amount -->
                     <td>
-                        <div class="fw-semibold">{{ number_format($payment->amount, 0, ',', ' ') }} DH</div>
+                        <div class="fw-semibold">{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</div>
                         @if($payment->reference)
                             <small class="text-muted">Réf: {{ $payment->reference }}</small>
                         @endif
@@ -218,21 +237,21 @@
                                title="Voir détails">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            @can('manage-payments')
+                            
                             <a href="{{ route('payments.edit', $payment) }}"
                                class="btn btn-sm btn-outline-warning"
                                title="Modifier">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            @endcan
-                            @can('view-reports')
+                            
+                            
                             <a href="{{ route('payments.receipt', $payment) }}"
                                class="btn btn-sm btn-outline-success"
                                title="Reçu">
                                 <i class="fas fa-receipt"></i>
                             </a>
-                            @endcan
-                            @can('manage-payments')
+                            
+                            
                             <form method="POST" action="{{ route('payments.destroy', $payment) }}"
                                   onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce paiement ?')"
                                   class="d-inline">
@@ -242,7 +261,7 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
-                            @endcan
+                            
                         </div>
                     </td>
                 </tr>
@@ -268,13 +287,13 @@
                 Commencez par enregistrer votre premier paiement.
             @endif
         </p>
-        @can('manage-payments')
+        
         @if(!request()->hasAny(['search', 'pilgrim', 'status', 'method']))
             <x-button href="{{ route('payments.create') }}" variant="primary" icon="fas fa-plus">
                 Enregistrer un paiement
             </x-button>
         @endif
-        @endcan
+        
     </x-card>
 @endif
 @endsection
