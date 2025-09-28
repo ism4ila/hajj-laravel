@@ -1,11 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"UPDATE system_settings SET setting_value = ''logo.svg'' WHERE setting_key = ''company_logo'';\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT setting_key, setting_value FROM system_settings WHERE category = ''company'' OR setting_key LIKE ''%company%'' ORDER BY setting_key;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT category, COUNT(*) as count FROM system_settings GROUP BY category;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"UPDATE system_settings SET setting_value = ''logo.png'' WHERE setting_key = ''company_logo'';\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT setting_key, LEFT(setting_value, 50) as value_preview, category FROM system_settings ORDER BY category, setting_key;\")"
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, name, email, is_admin, created_at FROM users ORDER BY id DESC LIMIT 7;\")",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"UPDATE users SET is_admin = 1 WHERE id IN (3, 4, 5, 6, 7);\")",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, name, email, is_admin, created_at FROM users WHERE id IN (3, 4, 5, 6, 7) ORDER BY id;\")",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

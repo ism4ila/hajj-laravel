@@ -1,0 +1,578 @@
+/* ========================================
+   HAJJ MANAGEMENT SYSTEM - RESPONSIVE FRAMEWORK
+   Framework CSS responsive complet pour le système
+   ======================================== */
+
+/* ==========================================
+   1. VARIABLES CSS GLOBALES
+   ========================================== */
+:root {
+    /* Breakpoints */
+    --mobile-xs: 320px;
+    --mobile-sm: 576px;
+    --tablet: 768px;
+    --desktop: 992px;
+    --desktop-lg: 1200px;
+    --desktop-xl: 1400px;
+
+    /* Spacing responsive */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 3rem;
+    --spacing-xxl: 4rem;
+
+    /* Typography responsive */
+    --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+    --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+    --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+    --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+    --font-size-xxl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+    --font-size-xxxl: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+
+    /* Grid et layout */
+    --container-max-width: 1200px;
+    --sidebar-width: 250px;
+    --sidebar-collapsed: 70px;
+    --header-height: 60px;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
+
+    /* Shadows responsive */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+    /* Border radius responsive */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+}
+
+/* ==========================================
+   2. RESET ET BASE RESPONSIVE
+   ========================================== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 13px;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   3. CONTENEURS RESPONSIVE
+   ========================================== */
+.responsive-container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .responsive-container {
+        padding: 0 var(--spacing-sm);
+    }
+}
+
+@media (max-width: 576px) {
+    .responsive-container {
+        padding: 0 var(--spacing-xs);
+    }
+}
+
+/* Conteneurs fluides */
+.fluid-container {
+    width: 100%;
+    padding: 0 var(--spacing-md);
+}
+
+/* ==========================================
+   4. GRILLE RESPONSIVE
+   ========================================== */
+.responsive-grid {
+    display: grid;
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+/* Grilles prédéfinies */
+.grid-1 { grid-template-columns: 1fr; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+.grid-6 { grid-template-columns: repeat(6, 1fr); }
+
+/* Grille automatique */
+.grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-auto-sm {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid-auto-lg {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Responsive breakpoints pour grilles */
+@media (max-width: 1200px) {
+    .grid-6 { grid-template-columns: repeat(4, 1fr); }
+    .grid-5 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 992px) {
+    .grid-4 { grid-template-columns: repeat(3, 1fr); }
+    .grid-6 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .grid-3, .grid-4, .grid-5, .grid-6 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .responsive-grid {
+        gap: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 576px) {
+    .grid-2, .grid-3, .grid-4, .grid-5, .grid-6 {
+        grid-template-columns: 1fr;
+    }
+
+    .responsive-grid {
+        gap: var(--spacing-xs);
+    }
+}
+
+/* ==========================================
+   5. FLEXBOX RESPONSIVE
+   ========================================== */
+.flex-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.flex-responsive-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.flex-responsive-between {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .flex-responsive,
+    .flex-responsive-center,
+    .flex-responsive-between {
+        gap: var(--spacing-sm);
+    }
+
+    .flex-responsive-between {
+        justify-content: center;
+    }
+}
+
+/* ==========================================
+   6. COMPOSANTS RESPONSIVES
+   ========================================== */
+
+/* Cards responsives */
+.responsive-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    transition: all var(--transition-normal);
+}
+
+.responsive-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 768px) {
+    .responsive-card {
+        padding: var(--spacing-md);
+        border-radius: var(--radius-md);
+    }
+}
+
+@media (max-width: 576px) {
+    .responsive-card {
+        padding: var(--spacing-sm);
+        border-radius: var(--radius-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+/* Boutons responsives */
+.btn-responsive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    min-height: 44px; /* Touch target */
+}
+
+@media (max-width: 768px) {
+    .btn-responsive {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-xs);
+        width: 100%;
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
+/* Tables responsives */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.table-responsive table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+@media (max-width: 768px) {
+    .table-responsive th,
+    .table-responsive td {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* ==========================================
+   7. TYPOGRAPHY RESPONSIVE
+   ========================================== */
+.text-responsive-xs { font-size: var(--font-size-xs); }
+.text-responsive-sm { font-size: var(--font-size-sm); }
+.text-responsive-base { font-size: var(--font-size-base); }
+.text-responsive-lg { font-size: var(--font-size-lg); }
+.text-responsive-xl { font-size: var(--font-size-xl); }
+.text-responsive-xxl { font-size: var(--font-size-xxl); }
+.text-responsive-xxxl { font-size: var(--font-size-xxxl); }
+
+/* Titres responsives */
+.heading-responsive-1 {
+    font-size: var(--font-size-xxxl);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-lg);
+}
+
+.heading-responsive-2 {
+    font-size: var(--font-size-xxl);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: var(--spacing-md);
+}
+
+.heading-responsive-3 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ==========================================
+   8. SPACING RESPONSIVE
+   ========================================== */
+.p-responsive-xs { padding: var(--spacing-xs); }
+.p-responsive-sm { padding: var(--spacing-sm); }
+.p-responsive-md { padding: var(--spacing-md); }
+.p-responsive-lg { padding: var(--spacing-lg); }
+.p-responsive-xl { padding: var(--spacing-xl); }
+
+.m-responsive-xs { margin: var(--spacing-xs); }
+.m-responsive-sm { margin: var(--spacing-sm); }
+.m-responsive-md { margin: var(--spacing-md); }
+.m-responsive-lg { margin: var(--spacing-lg); }
+.m-responsive-xl { margin: var(--spacing-xl); }
+
+/* ==========================================
+   9. UTILITAIRES RESPONSIVE
+   ========================================== */
+
+/* Visibilité responsive */
+.show-mobile { display: none; }
+.show-tablet { display: none; }
+.show-desktop { display: block; }
+
+@media (max-width: 576px) {
+    .hide-mobile { display: none !important; }
+    .show-mobile { display: block !important; }
+}
+
+@media (max-width: 768px) {
+    .hide-tablet { display: none !important; }
+    .show-tablet { display: block !important; }
+}
+
+@media (min-width: 769px) {
+    .hide-desktop { display: none !important; }
+}
+
+/* Centrage responsive */
+.center-responsive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Largeurs responsive */
+.w-responsive-25 { width: 25%; }
+.w-responsive-50 { width: 50%; }
+.w-responsive-75 { width: 75%; }
+.w-responsive-100 { width: 100%; }
+
+@media (max-width: 768px) {
+    .w-responsive-25,
+    .w-responsive-50,
+    .w-responsive-75 {
+        width: 100%;
+    }
+}
+
+/* ==========================================
+   10. FORMULAIRES RESPONSIVES
+   ========================================== */
+.form-responsive .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-responsive .form-control {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid #ced4da;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    transition: all var(--transition-fast);
+    min-height: 44px; /* Touch target */
+}
+
+.form-responsive .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .form-responsive .form-control {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+}
+
+/* ==========================================
+   11. NAVIGATION RESPONSIVE
+   ========================================== */
+.nav-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.nav-responsive .nav-item {
+    flex: 1;
+    min-width: 120px;
+}
+
+.nav-responsive .nav-link {
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .nav-responsive {
+        flex-direction: column;
+    }
+
+    .nav-responsive .nav-item {
+        width: 100%;
+    }
+}
+
+/* ==========================================
+   12. IMAGES RESPONSIVES
+   ========================================== */
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+}
+
+.img-responsive-cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+}
+
+@media (max-width: 768px) {
+    .img-responsive-cover {
+        height: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .img-responsive-cover {
+        height: 120px;
+    }
+}
+
+/* ==========================================
+   13. MODALES RESPONSIVES
+   ========================================== */
+.modal-responsive {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    padding: var(--spacing-md);
+}
+
+.modal-responsive .modal-content {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .modal-responsive {
+        padding: var(--spacing-sm);
+    }
+
+    .modal-responsive .modal-content {
+        padding: var(--spacing-md);
+        border-radius: var(--radius-md);
+    }
+}
+
+/* ==========================================
+   14. ANIMATIONS RESPONSIVES
+   ========================================== */
+@media (prefers-reduced-motion: no-preference) {
+    .animate-responsive {
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-responsive,
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ==========================================
+   15. PRINT RESPONSIVE
+   ========================================== */
+@media print {
+    .no-print { display: none !important; }
+
+    .responsive-container,
+    .responsive-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .btn-responsive {
+        display: none;
+    }
+
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+}

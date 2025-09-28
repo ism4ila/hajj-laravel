@@ -7,115 +7,113 @@
 @endsection
 
 @section('content')
-<!-- Page Header avec design moderne -->
-<div class="row align-items-center mb-4">
-    <div class="col-lg-8">
-        <div class="d-flex align-items-center">
-            <div class="bg-primary rounded-3 p-3 me-3">
-                <i class="fas fa-users text-white fa-lg"></i>
+<div class="client-management">
+    <!-- Page Header responsive -->
+    <div class="row align-items-center mb-4 g-3">
+        <div class="col-lg-8 col-md-7">
+            <div class="d-flex align-items-center flex-wrap gap-3">
+                <div class="bg-primary rounded-3 p-3 d-flex align-items-center justify-content-center" style="min-width: 60px; min-height: 60px;">
+                    <i class="fas fa-users text-white fa-lg"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h1 class="text-responsive-xl mb-1 fw-bold">Gestion des Clients</h1>
+                    <p class="text-muted mb-0 text-responsive-sm">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Gérez vos clients et suivez leur parcours pèlerin
+                    </p>
+                </div>
             </div>
-            <div>
-                <h1 class="h3 mb-1 fw-bold">Gestion des Clients</h1>
-                <p class="text-muted mb-0">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Gérez vos clients et suivez leur parcours pèlerin
-                </p>
+        </div>
+        <div class="col-lg-4 col-md-5">
+            <div class="d-flex justify-content-end justify-content-md-end justify-content-sm-center gap-2 flex-wrap">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exportModal">
+                    <i class="fas fa-download me-1"></i>
+                    <span class="d-none d-md-inline">Exporter</span>
+                    <span class="d-md-none">Export</span>
+                </button>
+                <a href="{{ route('clients.create') }}" class="btn btn-primary">
+                    <i class="fas fa-user-plus me-1"></i>
+                    <span class="d-none d-sm-inline">Nouveau Client</span>
+                    <span class="d-sm-none">Nouveau</span>
+                </a>
             </div>
         </div>
     </div>
-    <div class="col-lg-4 text-end">
-        <div class="btn-group" role="group">
-            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exportModal">
-                <i class="fas fa-download me-2"></i>
-                <span class="d-none d-md-inline">Exporter</span>
-            </button>
-            <a href="{{ route('clients.create') }}" class="btn btn-primary btn-lg">
-                <i class="fas fa-user-plus me-2"></i>
-                <span class="d-none d-sm-inline">Nouveau Client</span>
-            </a>
-        </div>
-    </div>
-</div>
 
-<!-- Statistics Cards avec animations -->
-<div class="row mb-4" id="statsCards">
-    <div class="col-lg-3 col-md-6 mb-3">
+    <!-- Statistics Cards responsive -->
+    <div class="stats-grid mb-4" id="statsCards">
         <div class="card border-0 shadow-sm h-100 stat-card" data-aos="fade-up" data-aos-delay="100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-muted small mb-1">TOTAL CLIENTS</div>
-                        <div class="h3 mb-0 fw-bold text-primary counter" data-target="{{ $clients->total() }}">0</div>
-                        <div class="small text-success">
+                    <div class="flex-grow-1">
+                        <div class="text-muted text-responsive-xs mb-1 text-uppercase fw-semibold">TOTAL CLIENTS</div>
+                        <div class="text-responsive-xl mb-0 fw-bold text-primary counter" data-target="{{ $clients->total() }}">0</div>
+                        <div class="text-responsive-xs text-success">
                             <i class="fas fa-arrow-up me-1"></i>
                             <span>Registres clients</span>
                         </div>
                     </div>
-                    <div class="bg-primary bg-opacity-10 rounded-3 p-3">
+                    <div class="bg-primary bg-opacity-10 rounded-3 p-3 d-flex align-items-center justify-content-center" style="min-width: 50px; min-height: 50px;">
                         <i class="fas fa-users fa-lg text-primary"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6 mb-3">
+
         <div class="card border-0 shadow-sm h-100 stat-card" data-aos="fade-up" data-aos-delay="200">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-muted small mb-1">CLIENTS ACTIFS</div>
-                        <div class="h3 mb-0 fw-bold text-success counter" data-target="{{ $clients->where('is_active', true)->count() }}">0</div>
-                        <div class="small text-success">
+                    <div class="flex-grow-1">
+                        <div class="text-muted text-responsive-xs mb-1 text-uppercase fw-semibold">CLIENTS ACTIFS</div>
+                        <div class="text-responsive-xl mb-0 fw-bold text-success counter" data-target="{{ $clients->where('is_active', true)->count() }}">0</div>
+                        <div class="text-responsive-xs text-success">
                             <i class="fas fa-check-circle me-1"></i>
                             <span>En activité</span>
                         </div>
                     </div>
-                    <div class="bg-success bg-opacity-10 rounded-3 p-3">
+                    <div class="bg-success bg-opacity-10 rounded-3 p-3 d-flex align-items-center justify-content-center" style="min-width: 50px; min-height: 50px;">
                         <i class="fas fa-user-check fa-lg text-success"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6 mb-3">
+
         <div class="card border-0 shadow-sm h-100 stat-card" data-aos="fade-up" data-aos-delay="300">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-muted small mb-1">PÈLERINAGES</div>
-                        <div class="h3 mb-0 fw-bold text-info counter" data-target="{{ $clients->sum(function($c) { return $c->pilgrims->count(); }) }}">0</div>
-                        <div class="small text-info">
+                    <div class="flex-grow-1">
+                        <div class="text-muted text-responsive-xs mb-1 text-uppercase fw-semibold">PÈLERINAGES</div>
+                        <div class="text-responsive-xl mb-0 fw-bold text-info counter" data-target="{{ $clients->sum(function($c) { return $c->pilgrims->count(); }) }}">0</div>
+                        <div class="text-responsive-xs text-info">
                             <i class="fas fa-route me-1"></i>
                             <span>Voyages sacrés</span>
                         </div>
                     </div>
-                    <div class="bg-info bg-opacity-10 rounded-3 p-3">
+                    <div class="bg-info bg-opacity-10 rounded-3 p-3 d-flex align-items-center justify-content-center" style="min-width: 50px; min-height: 50px;">
                         <i class="fas fa-route fa-lg text-info"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6 mb-3">
+
         <div class="card border-0 shadow-sm h-100 stat-card" data-aos="fade-up" data-aos-delay="400">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-muted small mb-1">FIDÉLITÉ</div>
-                        <div class="h3 mb-0 fw-bold text-warning counter" data-target="{{ number_format($clients->filter(function($c) { return $c->pilgrims->count() > 1; })->count() / max($clients->count(), 1) * 100, 1) }}">0</div>
-                        <div class="small text-warning">
+                    <div class="flex-grow-1">
+                        <div class="text-muted text-responsive-xs mb-1 text-uppercase fw-semibold">FIDÉLITÉ</div>
+                        <div class="text-responsive-xl mb-0 fw-bold text-warning counter" data-target="{{ number_format($clients->filter(function($c) { return $c->pilgrims->count() > 1; })->count() / max($clients->count(), 1) * 100, 1) }}">0</div>
+                        <div class="text-responsive-xs text-warning">
                             <i class="fas fa-star me-1"></i>
                             <span>% clients fidèles</span>
                         </div>
                     </div>
-                    <div class="bg-warning bg-opacity-10 rounded-3 p-3">
+                    <div class="bg-warning bg-opacity-10 rounded-3 p-3 d-flex align-items-center justify-content-center" style="min-width: 50px; min-height: 50px;">
                         <i class="fas fa-star fa-lg text-warning"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 <!-- Filtres avec design moderne -->
 <div class="card border-0 shadow-sm mb-4">
@@ -404,20 +402,22 @@
                                 </div>
                             </td>
 
-                            <!-- Actions -->
+                            <!-- Actions responsive -->
                             <td class="align-middle">
-                                <div class="d-flex justify-content-center gap-1">
+                                <div class="d-flex justify-content-center action-buttons">
                                     <a href="{{ route('clients.show', $client) }}"
                                        class="btn btn-sm btn-outline-primary"
                                        data-bs-toggle="tooltip"
                                        title="Voir le profil">
                                         <i class="fas fa-eye"></i>
+                                        <span class="d-none d-xl-inline ms-1">Voir</span>
                                     </a>
                                     <a href="{{ route('clients.edit', $client) }}"
                                        class="btn btn-sm btn-outline-warning"
                                        data-bs-toggle="tooltip"
                                        title="Modifier">
                                         <i class="fas fa-edit"></i>
+                                        <span class="d-none d-xl-inline ms-1">Modifier</span>
                                     </a>
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-outline-secondary"
@@ -426,27 +426,31 @@
                                                 data-bs-toggle="tooltip"
                                                 title="Plus d'actions">
                                             <i class="fas fa-ellipsis-v"></i>
+                                            <span class="d-none d-xl-inline ms-1">Plus</span>
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                                        <ul class="dropdown-menu dropdown-menu-end shadow border-0">
                                             <li>
-                                                <h6 class="dropdown-header">
-                                                    <i class="fas fa-user me-2"></i>{{ $client->full_name }}
+                                                <h6 class="dropdown-header text-primary">
+                                                    <i class="fas fa-user me-2"></i>{{ Str::limit($client->full_name, 20) }}
                                                 </h6>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
-                                                <a class="dropdown-item" href="{{ route('clients.show', $client) }}">
-                                                    <i class="fas fa-eye me-2 text-primary"></i>Voir le profil complet
+                                                <a class="dropdown-item d-flex align-items-center" href="{{ route('clients.show', $client) }}">
+                                                    <i class="fas fa-eye me-2 text-primary"></i>
+                                                    <span>Voir le profil complet</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="{{ route('clients.edit', $client) }}">
-                                                    <i class="fas fa-edit me-2 text-warning"></i>Modifier les informations
+                                                <a class="dropdown-item d-flex align-items-center" href="{{ route('clients.edit', $client) }}">
+                                                    <i class="fas fa-edit me-2 text-warning"></i>
+                                                    <span>Modifier les informations</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="{{ route('pilgrims.create', ['client_id' => $client->id]) }}">
-                                                    <i class="fas fa-plus me-2 text-success"></i>Nouveau pèlerinage
+                                                <a class="dropdown-item d-flex align-items-center" href="{{ route('pilgrims.create', ['client_id' => $client->id]) }}">
+                                                    <i class="fas fa-plus me-2 text-success"></i>
+                                                    <span>Nouveau pèlerinage</span>
                                                 </a>
                                             </li>
                                             @if($client->pilgrims->count() === 0)
@@ -457,8 +461,9 @@
                                                           class="d-inline w-100">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="dropdown-item text-danger">
-                                                            <i class="fas fa-trash me-2"></i>Supprimer définitivement
+                                                        <button type="submit" class="dropdown-item text-danger d-flex align-items-center">
+                                                            <i class="fas fa-trash me-2"></i>
+                                                            <span>Supprimer définitivement</span>
                                                         </button>
                                                     </form>
                                                 </li>
@@ -557,42 +562,291 @@
 <!-- AOS Animation Library -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <style>
-    .stat-card {
-        transition: all 0.3s ease;
-        cursor: pointer;
+    /* RESPONSIVE STYLES POUR GESTION CLIENTS */
+    .client-management {
+        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     }
+
+    /* Header responsive */
+    @media (max-width: 768px) {
+        .col-lg-8, .col-lg-4 {
+            text-align: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .btn-group {
+            width: 100%;
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+    }
+
+    /* Stats cards responsive */
+    .stat-card {
+        transition: all var(--transition-normal);
+        cursor: pointer;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        position: relative;
+    }
+
     .stat-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+        box-shadow: var(--shadow-lg) !important;
     }
+
+    @media (max-width: 992px) {
+        .stat-card .card-body {
+            padding: var(--spacing-sm);
+        }
+
+        .stat-card .h3 {
+            font-size: var(--font-size-lg);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .stat-card .d-flex {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .stat-card .bg-opacity-10 {
+            align-self: center;
+            margin-top: var(--spacing-xs);
+        }
+    }
+
+    /* Filtres responsive */
+    .filters-section {
+        border-radius: 0.75rem;
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        .filters-section .row.g-3 {
+            --bs-gutter-x: 0.5rem;
+        }
+
+        .filters-section .col-lg-5,
+        .filters-section .col-lg-2,
+        .filters-section .col-lg-3 {
+            margin-bottom: var(--spacing-sm);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .filters-section .input-group .btn {
+            min-width: 44px;
+        }
+    }
+
+    /* Table responsive améliorée */
     .client-row {
-        transition: all 0.2s ease;
+        transition: all var(--transition-fast);
     }
+
     .client-row:hover {
         background-color: rgba(13, 110, 253, 0.05);
-        transform: scale(1.01);
+        transform: scale(1.005);
     }
+
+    @media (max-width: 768px) {
+        .client-row:hover {
+            transform: none; /* Pas de scale sur mobile */
+        }
+
+        .table-responsive {
+            border-radius: 0.75rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table th,
+        .table td {
+            padding: var(--spacing-xs);
+            font-size: var(--font-size-sm);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .avatar {
+            width: 35px !important;
+            height: 35px !important;
+            font-size: var(--font-size-xs);
+        }
+
+        .table th,
+        .table td {
+            padding: 0.25rem;
+            font-size: var(--font-size-xs);
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: var(--font-size-xs);
+        }
+    }
+
+    /* Actions responsive */
+    .action-buttons {
+        gap: 0.25rem;
+    }
+
+    @media (max-width: 576px) {
+        .action-buttons {
+            flex-direction: column;
+            gap: 0.125rem;
+        }
+
+        .action-buttons .btn {
+            width: 100%;
+            min-height: 44px;
+        }
+
+        .dropdown-menu {
+            min-width: auto;
+            width: 100%;
+        }
+    }
+
+    /* Bulk actions responsive */
+    .bulk-actions-bar {
+        border-radius: 0.5rem;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
+
+    @media (max-width: 768px) {
+        .bulk-actions-bar .d-flex {
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .bulk-actions-bar .d-flex.gap-2 {
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
+
+    /* Modal responsive */
+    @media (max-width: 576px) {
+        .modal-dialog {
+            margin: 0.5rem;
+        }
+
+        .modal-content {
+            border-radius: 0.75rem;
+        }
+    }
+
+    /* Hover effects */
     .hover-primary:hover {
         color: var(--bs-primary) !important;
+        transition: color var(--transition-fast);
     }
+
     .bg-gradient-primary {
         background: linear-gradient(135deg, var(--bs-primary), #4dabf7);
     }
+
+    /* Animations */
     .fade-in {
         animation: fadeIn 0.5s ease-in;
     }
+
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
+
     .loading-skeleton {
         background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
         background-size: 200% 100%;
         animation: loading 1.5s infinite;
     }
+
     @keyframes loading {
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
+    }
+
+    /* Toast notifications responsive */
+    @media (max-width: 576px) {
+        .toast {
+            width: calc(100vw - 2rem) !important;
+            max-width: none !important;
+        }
+    }
+
+    /* Print styles */
+    @media print {
+        .no-print,
+        .btn,
+        .dropdown,
+        .bulk-actions-bar {
+            display: none !important;
+        }
+
+        .card {
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+
+        .table {
+            font-size: 10pt;
+        }
+    }
+
+    /* Dark mode support (si nécessaire) */
+    @media (prefers-color-scheme: dark) {
+        .stat-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .client-row:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    }
+
+    /* Touch improvements */
+    @media (pointer: coarse) {
+        .btn {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .form-check-input {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+        }
+    }
+
+    /* High contrast mode */
+    @media (prefers-contrast: high) {
+        .card {
+            border: 2px solid #000;
+        }
+
+        .btn-outline-primary {
+            border-width: 2px;
+        }
+
+        .badge {
+            border: 1px solid currentColor;
+        }
     }
 </style>
 @endpush

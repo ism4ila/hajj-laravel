@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Utilisateur - Système de Gestion Hajj</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+            @bottom-center {
+                content: "Page " counter(page) " sur " counter(pages);
+                font-size: 10px;
+                color: #666;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h3 {
+            color: #444;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+            padding-left: 20px;
+            border-left: 4px solid #f39c12;
+        }
+
+        .icon {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .login-card {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .login-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .credentials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .credentials-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .credentials-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .credentials-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #27ae60;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #f39c12;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .success-box strong {
+            color: #155724;
+        }
+
+        .url-box {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            text-align: center;
+            color: #1565c0;
+            font-weight: bold;
+        }
+
+        .navigation-steps {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .navigation-steps ol {
+            padding-left: 20px;
+        }
+
+        .navigation-steps li {
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8e6cf 0%, #dcedc1 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 2px solid #eee;
+            color: #666;
+        }
+
+        .contact-info {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .print-break {
+            page-break-before: always;
+        }
+
+        @media print {
+            .header {
+                background: #667eea !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            .feature-card {
+                break-inside: avoid;
+            }
+
+            .step-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <div class="header">
+            <h1>🕌 Système de Gestion Hajj</h1>
+            <p>Guide d'Utilisation Complet</p>
+        </div>
+
+        <!-- Section Connexion -->
+        <div class="section">
+            <h2><span class="icon">🔐</span>Connexion au Système</h2>
+
+            <div class="url-box">
+                http://localhost/hajj/hajj-laravel/login
+            </div>
+
+            <div class="login-card">
+                <h4>Accès Administrateur</h4>
+                <p>Utilisez l'un des comptes ci-dessous pour accéder au système avec tous les privilèges.</p>
+            </div>
+
+            <table class="credentials-table">
+                <thead>
+                    <tr>
+                        <th>👤 Nom Utilisateur</th>
+                        <th>📧 Email</th>
+                        <th>🔑 Mot de Passe</th>
+                        <th>⚡ Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ahmed El Mansouri</strong></td>
+                        <td>ahmed.mansouri@email.com</td>
+                        <td><span class="highlight">password</span></td>
+                        <td>✅ Administrateur</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fatima Zahra</strong></td>
+                        <td>fatima.zahra@email.com</td>
+                        <td><span class="highlight">password</span></td>
+                        <td>✅ Administrateur</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hassan Ben Ali</strong></td>
+                        <td>hassan.benali@email.com</td>
+                        <td><span class="highlight">password</span></td>
+                        <td>✅ Administrateur</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Khadija Bennani</strong></td>
+                        <td>khadija.bennani@email.com</td>
+                        <td><span class="highlight">password</span></td>
+                        <td>✅ Administrateur</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Omar El Fassi</strong></td>
+                        <td>omar.elfassi@email.com</td>
+                        <td><span class="highlight">password</span></td>
+                        <td>✅ Administrateur</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Important :</strong> Ces comptes sont configurés pour la démonstration. En production, modifiez immédiatement les mots de passe.
+            </div>
+        </div>
+
+        <!-- Section Premiers Pas -->
+        <div class="section print-break">
+            <h2><span class="icon">🚀</span>Premiers Pas</h2>
+
+            <div class="step-card">
+                <span class="step-number">1</span>
+                <strong>Ouvrez votre navigateur</strong> et accédez à l'URL du système
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">2</span>
+                <strong>Saisissez vos identifiants</strong> (email et mot de passe) depuis le tableau ci-dessus
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">3</span>
+                <strong>Cliquez sur "Se connecter"</strong> pour accéder au dashboard principal
+            </div>
+
+            <div class="step-card">
+                <span class="step-number">4</span>
+                <strong>Explorez le dashboard</strong> pour découvrir toutes les fonctionnalités disponibles
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Connexion réussie !</strong> Après connexion, vous serez automatiquement redirigé vers le tableau de bord principal.
+            </div>
+        </div>
+
+        <!-- Section Fonctionnalités -->
+        <div class="section print-break">
+            <h2><span class="icon">🎯</span>Fonctionnalités Principales</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h4>Gestion des Clients</h4>
+                    <p>Créez, modifiez et gérez vos clients avec recherche avancée et export Excel.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🕌</div>
+                    <h4>Campagnes Hajj/Omra</h4>
+                    <p>Organisez vos campagnes avec gestion des quotas et suivi des inscriptions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧑‍🤝‍🧑</div>
+                    <h4>Gestion des Pèlerins</h4>
+                    <p>Inscrivez les pèlerins, gérez leurs documents et suivez leurs dossiers.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h4>Paiements & Reçus</h4>
+                    <p>Enregistrez les paiements et générez des reçus professionnels automatiquement.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h4>Documents</h4>
+                    <p>Uploadez et validez tous les documents requis avec checklist complète.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Rapports</h4>
+                    <p>Générez des rapports détaillés avec exports Excel et PDF.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Navigation -->
+        <div class="section">
+            <h2><span class="icon">🧭</span>Navigation dans le Système</h2>
+
+            <h3>📋 Menu Principal</h3>
+            <div class="navigation-steps">
+                <ol>
+                    <li><strong>Dashboard</strong> - Vue d'ensemble avec statistiques générales</li>
+                    <li><strong>Clients</strong> - Gestion complète de votre clientèle</li>
+                    <li><strong>Campagnes</strong> - Organisation des voyages Hajj/Omra</li>
+                    <li><strong>Pèlerins</strong> - Dossiers individuels des voyageurs</li>
+                    <li><strong>Paiements</strong> - Suivi financier et génération de reçus</li>
+                    <li><strong>Rapports</strong> - Analyses et exports de données</li>
+                    <li><strong>Paramètres</strong> - Configuration du système</li>
+                </ol>
+            </div>
+
+            <h3>📱 Interface Responsive</h3>
+            <p>Le système s'adapte automatiquement à tous les écrans :</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>✅ <strong>Ordinateur</strong> : Interface complète avec toutes les fonctionnalités</li>
+                <li>✅ <strong>Tablette</strong> : Navigation optimisée avec menus adaptatifs</li>
+                <li>✅ <strong>Smartphone</strong> : Version mobile avec gestes tactiles</li>
+            </ul>
+        </div>
+
+        <!-- Section Utilisation -->
+        <div class="section print-break">
+            <h2><span class="icon">💡</span>Guide d'Utilisation Pratique</h2>
+
+            <h3>👥 Créer un Nouveau Client</h3>
+            <div class="navigation-steps">
+                <ol>
+                    <li>Cliquez sur <span class="highlight">"Clients"</span> dans le menu</li>
+                    <li>Appuyez sur le bouton <span class="highlight">"+ Nouveau Client"</span></li>
+                    <li>Remplissez le formulaire avec les informations personnelles</li>
+                    <li>Sauvegardez pour créer le profil client</li>
+                </ol>
+            </div>
+
+            <h3>🕌 Organiser une Campagne</h3>
+            <div class="navigation-steps">
+                <ol>
+                    <li>Accédez à la section <span class="highlight">"Campagnes"</span></li>
+                    <li>Cliquez sur <span class="highlight">"Créer une Campagne"</span></li>
+                    <li>Définissez les dates, tarifs et quotas</li>
+                    <li>Activez la campagne pour les inscriptions</li>
+                </ol>
+            </div>
+
+            <h3>💰 Enregistrer un Paiement</h3>
+            <div class="navigation-steps">
+                <ol>
+                    <li>Naviguez vers <span class="highlight">"Paiements"</span></li>
+                    <li>Sélectionnez <span class="highlight">"Nouveau Paiement"</span></li>
+                    <li>Choisissez le client et le montant</li>
+                    <li>Générez automatiquement le reçu</li>
+                </ol>
+            </div>
+
+            <h3>📊 Consulter les Rapports</h3>
+            <div class="navigation-steps">
+                <ol>
+                    <li>Cliquez sur <span class="highlight">"Rapports"</span></li>
+                    <li>Sélectionnez le type de rapport souhaité</li>
+                    <li>Appliquez les filtres si nécessaire</li>
+                    <li>Exportez en Excel ou PDF</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Section Avantages -->
+        <div class="section">
+            <h2><span class="icon">⭐</span>Avantages du Système</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h4>Performance</h4>
+                    <p>Interface rapide avec auto-sauvegarde et recherche instantanée.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h4>Sécurité</h4>
+                    <p>Protection Laravel complète avec authentification sécurisée.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h4>Mobilité</h4>
+                    <p>Accès depuis n'importe quel appareil avec design responsive.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h4>Évolutivité</h4>
+                    <p>Système conçu pour grandir avec votre activité.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Support -->
+        <div class="section">
+            <h2><span class="icon">🆘</span>Support et Assistance</h2>
+
+            <div class="contact-info">
+                <h4>📞 Contact Support Technique</h4>
+                <p><strong>Email :</strong> admin@hajj.com</p>
+                <p><strong>Assistance :</strong> Disponible pour toute question ou problème technique</p>
+                <p><strong>Documentation :</strong> Guide complet disponible dans le système</p>
+            </div>
+
+            <div class="warning-box">
+                <strong>💡 Conseil :</strong> Pour une première utilisation, nous recommandons de tester toutes les fonctionnalités avec les comptes de démonstration avant de traiter de vraies données.
+            </div>
+        </div>
+
+        <!-- Pied de page -->
+        <div class="footer">
+            <p><strong>Système de Gestion Hajj - Version 1.0.0</strong></p>
+            <p>Guide d'utilisation généré le 28 septembre 2025</p>
+            <p>Tous droits réservés - Confidentiel</p>
+        </div>
+    </div>
+</body>
+</html>

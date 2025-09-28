@@ -5,16 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reçu - {{ $payment->pilgrim->firstname }} {{ $payment->pilgrim->lastname }}</title>
     <style>
-        /* CSS SPÉCIFIQUE AU REÇU - Préfixe safir-receipt pour éviter conflits */
+        /* CSS SPÉCIFIQUE AU REÇU - RESPONSIVE OPTIMISÉ */
         .safir-receipt {
-            font-family: DejaVu Sans, Arial, sans-serif;
+            font-family: 'Inter', 'Segoe UI', DejaVu Sans, Arial, sans-serif;
             margin: 0;
-            padding: 8px;
-            font-size: 8px;
+            padding: clamp(8px, 2vw, 16px);
+            font-size: clamp(8px, 1.5vw, 12px);
             color: #333;
-            line-height: 1.2;
+            line-height: 1.4;
             position: relative;
             background: #fff;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* Responsive breakpoints */
+        @media (max-width: 768px) {
+            .safir-receipt {
+                padding: 12px;
+                font-size: 10px;
+                line-height: 1.5;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .safir-receipt {
+                padding: 8px;
+                font-size: 9px;
+                line-height: 1.6;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .safir-receipt {
+                padding: 6px;
+                font-size: 8px;
+            }
         }
 
         /* Watermark amélioré mais discret */
@@ -29,36 +55,56 @@
             max-height: 280px;
         }
 
-        /* Header avec légère amélioration */
+        /* Header responsive */
         .safir-receipt .receipt-header {
-            display: table;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: clamp(8px, 2vw, 16px);
             width: 100%;
-            margin-bottom: 8px;
+            margin-bottom: clamp(8px, 2vw, 16px);
             border-bottom: 2px solid #007bff;
-            padding-bottom: 8px;
+            padding-bottom: clamp(8px, 2vw, 16px);
             background: linear-gradient(to right, #f8f9fa, #fff, #f8f9fa);
+            align-items: start;
         }
 
         .safir-receipt .header-left {
-            display: table-cell;
-            width: 42%;
-            vertical-align: top;
-            padding-right: 8px;
+            justify-self: start;
         }
 
         .safir-receipt .header-center {
-            display: table-cell;
-            width: 33%;
+            justify-self: center;
             text-align: center;
-            vertical-align: top;
         }
 
         .safir-receipt .header-right {
-            display: table-cell;
-            width: 25%;
+            justify-self: end;
             text-align: right;
-            vertical-align: top;
-            font-size: 7px;
+            font-size: clamp(7px, 1.2vw, 10px);
+        }
+
+        /* Mobile responsive header */
+        @media (max-width: 768px) {
+            .safir-receipt .receipt-header {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .safir-receipt .header-left,
+            .safir-receipt .header-center,
+            .safir-receipt .header-right {
+                justify-self: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .safir-receipt .receipt-header {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
         }
 
         /* Logo avec bordure améliorée */
@@ -115,26 +161,41 @@
             box-shadow: 0 2px 4px rgba(40,167,69,0.2);
         }
 
-        /* Contenu principal avec grid CSS simple */
+        /* Contenu principal responsive */
         .safir-receipt .main-content {
-            display: table;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: clamp(10px, 3vw, 20px);
             width: 100%;
-            margin-bottom: 8px;
+            margin-bottom: clamp(8px, 2vw, 16px);
         }
 
         .safir-receipt .left-column {
-            display: table-cell;
-            width: 55%;
-            vertical-align: top;
-            padding-right: 10px;
+            padding-right: clamp(5px, 1.5vw, 10px);
         }
 
         .safir-receipt .right-column {
-            display: table-cell;
-            width: 45%;
-            vertical-align: top;
-            padding-left: 10px;
+            padding-left: clamp(5px, 1.5vw, 10px);
             border-left: 2px solid #e9ecef;
+        }
+
+        /* Mobile responsive content */
+        @media (max-width: 768px) {
+            .safir-receipt .main-content {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .safir-receipt .left-column,
+            .safir-receipt .right-column {
+                padding: 0;
+            }
+
+            .safir-receipt .right-column {
+                border-left: none;
+                border-top: 2px solid #e9ecef;
+                padding-top: 16px;
+            }
         }
 
         /* Sections d'informations améliorées */
@@ -180,13 +241,15 @@
 
         .safir-receipt .info-row {
             display: flex;
-            margin-bottom: 3px;
-            font-size: 8px;
+            flex-wrap: wrap;
+            margin-bottom: clamp(3px, 1vw, 6px);
+            font-size: clamp(8px, 1.5vw, 12px);
             align-items: center;
+            gap: 4px;
         }
 
         .safir-receipt .info-label {
-            width: 65px;
+            min-width: 65px;
             font-weight: bold;
             color: #666;
             flex-shrink: 0;
@@ -196,6 +259,26 @@
             flex: 1;
             color: #333;
             font-weight: 500;
+            word-break: break-word;
+        }
+
+        /* Mobile responsive info rows */
+        @media (max-width: 576px) {
+            .safir-receipt .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+            }
+
+            .safir-receipt .info-label {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .safir-receipt .info-value {
+                width: 100%;
+                padding-left: 8px;
+            }
         }
 
         /* Résumé de paiement mis en valeur */
@@ -221,25 +304,33 @@
             opacity: 0.9;
         }
 
-        /* Mini résumé financier */
+        /* Mini résumé financier responsive */
         .safir-receipt .financial-summary {
-            display: table;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(2px, 1vw, 6px);
             width: 100%;
-            margin-top: 8px;
-            font-size: 7px;
+            margin-top: clamp(8px, 2vw, 16px);
+            font-size: clamp(7px, 1.2vw, 10px);
         }
 
         .safir-receipt .financial-item {
-            display: table-cell;
-            width: 33.33%;
             text-align: center;
-            padding: 4px;
+            padding: clamp(4px, 1vw, 8px);
             background: rgba(255,255,255,0.2);
             border-radius: 4px;
         }
 
-        .safir-receipt .financial-item:not(:last-child) {
-            margin-right: 2px;
+        /* Mobile responsive financial summary */
+        @media (max-width: 576px) {
+            .safir-receipt .financial-summary {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .safir-receipt .financial-item {
+                padding: 6px;
+            }
         }
 
         .safir-receipt .financial-value {
@@ -317,22 +408,29 @@
             border: 1px solid #f5c6cb;
         }
 
-        /* Section signatures */
+        /* Section signatures responsive */
         .safir-receipt .signature-section {
-            margin-top: 10px;
-            display: table;
+            margin-top: clamp(10px, 3vw, 20px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(10px, 3vw, 20px);
             width: 100%;
-            padding: 8px;
+            padding: clamp(8px, 2vw, 16px);
             background: #f8f9fa;
             border-radius: 6px;
         }
 
         .safir-receipt .signature-left,
         .safir-receipt .signature-right {
-            display: table-cell;
-            width: 50%;
             text-align: center;
-            padding: 0 10px;
+        }
+
+        /* Mobile responsive signatures */
+        @media (max-width: 576px) {
+            .safir-receipt .signature-section {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
         }
 
         .safir-receipt .signature-box {
