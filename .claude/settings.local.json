@@ -1,24 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"UPDATE payments SET created_at = payment_date, updated_at = payment_date WHERE created_at IS NULL;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"DESCRIBE pilgrims;\")",
-      "Bash(php artisan make:migration:*)",
-      "Bash(php artisan:*)",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"ALTER TABLE clients MODIFY nationality VARCHAR(255) DEFAULT ''Cameroun'', ADD COLUMN region VARCHAR(255) NULL AFTER nationality, ADD COLUMN department VARCHAR(255) NULL AFTER region;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"DESCRIBE clients;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"ALTER TABLE payments ADD COLUMN transferred_to_bank BOOLEAN NOT NULL DEFAULT FALSE AFTER status, ADD COLUMN bank_transfer_date DATE NULL AFTER transferred_to_bank, ADD COLUMN bank_transfer_reference VARCHAR(255) NULL AFTER bank_transfer_date, ADD COLUMN bank_transfer_notes TEXT NULL AFTER bank_transfer_reference, ADD COLUMN transferred_by BIGINT UNSIGNED NULL AFTER bank_transfer_notes;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"DESCRIBE payments;\")",
-      "Bash(curl:*)",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT COUNT(*) as client_count FROM clients;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, firstname, lastname, phone, email, is_active FROM clients LIMIT 3;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, firstname, lastname, date_of_birth, passport_expiry_date FROM clients WHERE id = 2;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, firstname, lastname, date_of_birth FROM clients WHERE id = 2;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT p.id, p.client_id, p.campaign_id, c.name, c.start_date FROM pilgrims p LEFT JOIN campaigns c ON p.campaign_id = c.id WHERE p.client_id = 2;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"DESCRIBE campaigns;\")",
-      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT p.id, p.client_id, p.campaign_id, c.name, c.departure_date FROM pilgrims p LEFT JOIN campaigns c ON p.campaign_id = c.id WHERE p.client_id = 2;\")",
-      "Bash(php:*)",
-      "Bash(find:*)"
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"UPDATE system_settings SET setting_value = ''logo.svg'' WHERE setting_key = ''company_logo'';\")",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT setting_key, setting_value FROM system_settings WHERE category = ''company'' OR setting_key LIKE ''%company%'' ORDER BY setting_key;\")",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT category, COUNT(*) as count FROM system_settings GROUP BY category;\")",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"UPDATE system_settings SET setting_value = ''logo.png'' WHERE setting_key = ''company_logo'';\")",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT setting_key, LEFT(setting_value, 50) as value_preview, category FROM system_settings ORDER BY category, setting_key;\")"
     ],
     "deny": [],
     "ask": []

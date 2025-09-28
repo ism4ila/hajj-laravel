@@ -14,13 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UserRoleSeeder::class,
-        ]);
-
-        User::factory()->create([
-            'name' => 'Admin Test',
-            'email' => 'admin@hajj.com',
-            'role_id' => 1, // Super Admin
+            UserSeeder::class,
+            CampaignSeeder::class,
+            ClientSeeder::class,
+            PilgrimSeeder::class,
+            PaymentSeeder::class,
         ]);
     }
 }

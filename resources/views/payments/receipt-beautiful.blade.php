@@ -3,615 +3,569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reçu de Paiement</title>
+    <title>Reçu Complet - {{ $payment->pilgrim->firstname }} {{ $payment->pilgrim->lastname }}</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Arial', 'Helvetica', sans-serif;
-            font-size: 14px;
-            line-height: 1.5;
+            font-family: DejaVu Sans, Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            font-size: 9px;
             color: #333;
-            background: #fff;
-            padding: 30px;
-        }
-
-        .receipt-container {
-            max-width: 210mm;
-            margin: 0 auto;
-            background: #fff;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            overflow: hidden;
+            line-height: 1.2;
             position: relative;
         }
 
-        /* En-tête élégant */
-        .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
+        .watermark {
+            position: fixed;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 20px solid #3498db;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            opacity: 0.1;
+            z-index: -1;
+            max-width: 300px;
+            max-height: 300px;
         }
 
-        .company-logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px auto;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.3);
-            display: block;
+        .header {
+            display: table;
+            width: 100%;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .header-left {
+            display: table-cell;
+            width: 40%;
+            vertical-align: top;
+        }
+
+        .header-center {
+            display: table-cell;
+            width: 35%;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .header-right {
+            display: table-cell;
+            width: 25%;
+            text-align: right;
+            vertical-align: top;
+            font-size: 9px;
+        }
+
+        .logo {
+            max-height: 60px;
+            max-width: 180px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            padding: 3px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.8);
         }
 
         .company-name {
-            font-size: 28px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            color: #007bff;
+            margin-bottom: 3px;
         }
 
-        .company-details {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 20px;
+        .company-info {
+            font-size: 9px;
+            color: #666;
+            line-height: 1.2;
         }
 
-        .receipt-title {
-            font-size: 24px;
-            font-weight: bold;
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 25px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        /* Corps du reçu */
-        .receipt-body {
-            padding: 40px 30px;
-        }
-
-        /* Section montant - LA STAR */
-        .amount-section {
-            text-align: center;
-            background: #f8f9fa;
-            border: 3px solid #28a745;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            position: relative;
-        }
-
-        .amount-section::before {
-            content: '✓';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #28a745;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+        .document-title {
             font-size: 18px;
-        }
-
-        .amount-label {
-            font-size: 18px;
-            color: #6c757d;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-        }
-
-        .amount-value {
-            font-size: 48px;
-            font-weight: 900;
-            color: #28a745;
+            font-weight: bold;
+            color: #333;
             margin-bottom: 5px;
-            font-family: 'Courier New', monospace;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .amount-currency {
-            font-size: 20px;
-            color: #6c757d;
-            font-weight: 600;
+        .receipt-number {
+            font-size: 12px;
+            color: #666;
         }
 
-        /* Informations principales */
-        .info-grid {
+        .served-by {
+            font-size: 9px;
+            color: #666;
+            border: 1px solid #ddd;
+            padding: 8px;
+            background: #f8f9fa;
+        }
+
+        .main-content {
             display: table;
             width: 100%;
-            margin: 30px 0;
+            margin-bottom: 10px;
         }
 
-        .info-column {
+        .left-column {
             display: table-cell;
             width: 50%;
             vertical-align: top;
-            padding: 0 15px;
+            padding-right: 15px;
         }
 
-        .info-column:first-child {
-            border-right: 2px solid #e9ecef;
-            padding-left: 0;
+        .right-column {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding-left: 15px;
+            border-left: 1px solid #eee;
         }
 
-        .info-column:last-child {
-            padding-right: 0;
+        .info-section {
+            margin-bottom: 8px;
         }
 
-        .section-title {
-            font-size: 16px;
+        .info-title {
+            font-size: 11px;
             font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
-            display: inline-block;
+            color: #007bff;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 3px;
+            margin-bottom: 8px;
         }
 
-        /* Nom du client/pèlerin - TRÈS VISIBLE */
-        .client-name {
-            font-size: 24px;
-            font-weight: 900;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 5px solid #ffc107;
-            text-align: center;
-        }
-
-        .info-item {
-            margin-bottom: 12px;
+        .info-row {
             display: flex;
-            align-items: center;
+            margin-bottom: 4px;
+            font-size: 9px;
         }
 
         .info-label {
-            font-weight: 600;
-            color: #6c757d;
-            width: 120px;
-            font-size: 13px;
+            width: 80px;
+            font-weight: bold;
+            color: #666;
         }
 
         .info-value {
             flex: 1;
-            color: #2c3e50;
-            font-weight: 500;
+            color: #333;
         }
 
-        /* Détails du paiement */
-        .payment-details {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            margin: 30px 0;
-        }
-
-        .payment-grid {
-            display: table;
-            width: 100%;
-        }
-
-        .payment-item {
-            display: table-cell;
-            text-align: center;
+        .payment-summary {
+            background-color: #f8f9fa;
+            border: 2px solid #28a745;
+            border-radius: 6px;
             padding: 15px;
-            width: 25%;
+            text-align: center;
+            margin: 15px 0;
         }
 
-        .payment-item-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .payment-item-label {
-            font-size: 12px;
-            color: #6c757d;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .payment-item-value {
-            font-size: 16px;
+        .total-amount {
+            font-size: 20px;
             font-weight: bold;
-            color: #2c3e50;
+            color: #28a745;
+            margin-bottom: 5px;
         }
 
-        /* Statut avec style */
+        .currency {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 5px 0;
+            font-size: 7px;
+        }
+
+        .payments-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #495057;
+            padding: 4px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .payments-table td {
+            padding: 3px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
         .status-badge {
             display: inline-block;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-size: 7px;
             font-weight: bold;
-            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .status-completed {
-            background: #d4edda;
+            background-color: #d4edda;
             color: #155724;
-            border: 2px solid #28a745;
         }
 
         .status-pending {
-            background: #fff3cd;
+            background-color: #fff3cd;
             color: #856404;
-            border: 2px solid #ffc107;
         }
 
         .status-cancelled {
-            background: #f8d7da;
+            background-color: #f8d7da;
             color: #721c24;
-            border: 2px solid #dc3545;
         }
 
-        /* Pied de page élégant */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 25px 30px;
-            text-align: center;
-        }
-
-        .footer-content {
-            margin-bottom: 15px;
-        }
-
-        .footer-line {
-            margin: 8px 0;
-            font-size: 13px;
-            opacity: 0.9;
-        }
-
-        .footer-highlight {
-            font-weight: bold;
-            color: #3498db;
-        }
-
-        /* Signatures */
-        .signatures {
+        .signature-section {
+            margin-top: 20px;
             display: table;
             width: 100%;
-            margin: 40px 0 20px 0;
         }
 
-        .signature-block {
+        .signature-left {
             display: table-cell;
+            width: 40%;
             text-align: center;
-            width: 50%;
-            padding: 0 20px;
+        }
+
+        .signature-right {
+            display: table-cell;
+            width: 60%;
+            text-align: center;
         }
 
         .signature-line {
-            height: 60px;
-            border-bottom: 2px solid #2c3e50;
-            margin-bottom: 10px;
-            position: relative;
+            border-bottom: 1px solid #333;
+            margin-bottom: 3px;
+            height: 30px;
         }
 
         .signature-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #2c3e50;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 9px;
+            color: #666;
         }
 
-        /* Numéro de reçu */
-        .receipt-number {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #fff;
-            padding: 10px 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border: 2px solid #3498db;
+        .footer {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #666;
+            font-size: 8px;
         }
 
-        .receipt-number-label {
-            font-size: 12px;
-            color: #6c757d;
-            margin-bottom: 3px;
-            text-transform: uppercase;
+        .text-right {
+            text-align: right;
         }
 
-        .receipt-number-value {
-            font-size: 16px;
+        .text-center {
+            text-align: center;
+        }
+
+        .highlight-payment {
+            background-color: #fff3cd !important;
             font-weight: bold;
-            color: #2c3e50;
-        }
-
-        /* Note importante */
-        .important-note {
-            background: #e3f2fd;
-            border-left: 5px solid #2196f3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .important-note-title {
-            font-weight: bold;
-            color: #1976d2;
-            margin-bottom: 5px;
-        }
-
-        .important-note-text {
-            color: #424242;
-            font-size: 13px;
-        }
-
-        /* Responsive pour impression */
-        @media print {
-            body {
-                padding: 0;
-            }
-
-            .receipt-container {
-                box-shadow: none;
-                border-radius: 0;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="receipt-container">
-        <!-- Numéro de reçu -->
-        <div class="receipt-number">
-            <div class="receipt-number-label">Reçu N°</div>
-            <div class="receipt-number-value">{{ str_pad($payment->id, 6, '0', STR_PAD_LEFT) }}</div>
-        </div>
+    {{-- Logo Watermark (Filigrane) --}}
+    @if($agencySettings['company_logo'] ?? null)
+        @php
+            $logoPath = storage_path('app/public/logos/' . $agencySettings['company_logo']);
+            if (file_exists($logoPath)) {
+                $logoContent = file_get_contents($logoPath);
+                $logoBase64 = base64_encode($logoContent);
+                $logoExtension = pathinfo($logoPath, PATHINFO_EXTENSION);
+                $watermarkSrc = 'data:image/' . $logoExtension . ';base64,' . $logoBase64;
+            }
+        @endphp
+        @if(isset($watermarkSrc))
+            <img src="{{ $watermarkSrc }}" alt="Logo Watermark" class="watermark">
+        @endif
+    @endif
 
-        <!-- En-tête -->
-        <div class="header">
+    {{-- Header with Agency Info, Logo and Serving User --}}
+    <div class="header">
+        <div class="header-left">
             @if($agencySettings['company_logo'] ?? null)
                 @php
                     $logoPath = storage_path('app/public/logos/' . $agencySettings['company_logo']);
-                    if (file_exists($logoPath)) {
+                    $logoExists = file_exists($logoPath);
+                    if ($logoExists) {
                         $logoContent = file_get_contents($logoPath);
                         $logoBase64 = base64_encode($logoContent);
                         $logoExtension = pathinfo($logoPath, PATHINFO_EXTENSION);
                         $logoSrc = 'data:image/' . $logoExtension . ';base64,' . $logoBase64;
                     }
                 @endphp
-                @if(isset($logoSrc))
-                    <img src="{{ $logoSrc }}" alt="Logo" class="company-logo">
+
+                @if(isset($logoExists) && $logoExists)
+                    <img src="{{ $logoSrc }}" alt="Logo" class="logo">
                 @endif
             @endif
-
-            <div class="company-name">{{ $agencySettings['company_name'] ?? 'Agence Hajj & Omra' }}</div>
-            <div class="company-details">
-                @if($agencySettings['company_address'] ?? null)
-                    📍 {{ $agencySettings['company_address'] }}<br>
-                @endif
-                📞 {{ $agencySettings['company_phone'] ?? 'N/A' }} |
-                ✉️ {{ $agencySettings['company_email'] ?? 'N/A' }}
+            <div class="company-name">{{ $agencySettings['company_name'] ?? config('app.name', 'Hajj Management') }}</div>
+            @if($agencySettings['company_slogan'] ?? null)
+                <div class="company-info" style="font-style: italic;">{{ $agencySettings['company_slogan'] }}</div>
+            @endif
+            <div class="company-info">
+                @if($agencySettings['company_address'] ?? null){{ $agencySettings['company_address'] }}@endif<br>
+                @if($agencySettings['company_city'] ?? null){{ $agencySettings['company_city'] }}, @endif
+                @if($agencySettings['company_country'] ?? null){{ $agencySettings['company_country'] }}@endif<br>
+                @if($agencySettings['company_phone'] ?? null)Tél: {{ $agencySettings['company_phone'] }}@endif<br>
+                @if($agencySettings['company_email'] ?? null)Email: {{ $agencySettings['company_email'] }}@endif<br>
+                @if($agencySettings['company_website'] ?? null)Web: {{ $agencySettings['company_website'] }}@endif
             </div>
-            <div class="receipt-title">REÇU DE PAIEMENT</div>
         </div>
 
-        <!-- Corps du reçu -->
-        <div class="receipt-body">
-            <!-- Montant - SECTION PRINCIPALE -->
-            <div class="amount-section">
-                <div class="amount-label">Montant Encaissé</div>
-                <div class="amount-value">{{ number_format($payment->amount, 0, ',', ' ') }}</div>
-                <div class="amount-currency">{{ $agencySettings['default_currency'] ?? 'FCFA' }}</div>
+        <div class="header-center">
+            <div class="document-title">REÇU COMPLET DE PAIEMENT</div>
+            <div class="receipt-number">
+                @if($payment->pilgrim->client)
+                    Client: {{ $payment->pilgrim->client->full_name }}
+                @else
+                    Client: {{ $payment->pilgrim->full_name }}
+                @endif
+            </div>
+            <div class="receipt-number">Reçu N° {{ str_pad($payment->id, 6, '0', STR_PAD_LEFT) }}</div>
+        </div>
+
+        <div class="header-right">
+            <div class="served-by">
+                <strong>Servi par:</strong><br>
+                {{ $servingUser->name }}<br>
+                {{ $servingUser->email }}<br>
+                Le: {{ now()->format('d/m/Y à H:i') }}
+                @if($agencySettings['company_registration'] ?? null)
+                    <br><br><strong>N° Enreg:</strong><br>{{ $agencySettings['company_registration'] }}
+                @endif
+                @if($agencySettings['company_license'] ?? null)
+                    <br><strong>Licence:</strong><br>{{ $agencySettings['company_license'] }}
+                @endif
+            </div>
+        </div>
+    </div>
+
+    {{-- Main Content in Two Columns --}}
+    <div class="main-content">
+        <div class="left-column">
+            {{-- Client Information --}}
+            <div class="info-section">
+                <div class="info-title">INFORMATIONS CLIENT</div>
+                @if($payment->pilgrim->client)
+                    <div class="info-row">
+                        <div class="info-label">Client:</div>
+                        <div class="info-value"><strong>{{ $payment->pilgrim->client->full_name }}</strong></div>
+                    </div>
+                    @if($payment->pilgrim->client->email)
+                    <div class="info-row">
+                        <div class="info-label">Email:</div>
+                        <div class="info-value">{{ $payment->pilgrim->client->email }}</div>
+                    </div>
+                    @endif
+                    @if($payment->pilgrim->client->phone)
+                    <div class="info-row">
+                        <div class="info-label">Téléphone:</div>
+                        <div class="info-value">{{ $payment->pilgrim->client->phone }}</div>
+                    </div>
+                    @endif
+                    @if($payment->pilgrim->client->nationality)
+                    <div class="info-row">
+                        <div class="info-label">Nationalité:</div>
+                        <div class="info-value">{{ $payment->pilgrim->client->nationality }}</div>
+                    </div>
+                    @endif
+                    <div class="info-row">
+                        <div class="info-label">Pèlerin:</div>
+                        <div class="info-value">{{ $payment->pilgrim->full_name }}</div>
+                    </div>
+                @else
+                    <div class="info-row">
+                        <div class="info-label">Nom:</div>
+                        <div class="info-value">{{ $payment->pilgrim->firstname }} {{ $payment->pilgrim->lastname }}</div>
+                    </div>
+                    @if($payment->pilgrim->email)
+                    <div class="info-row">
+                        <div class="info-label">Email:</div>
+                        <div class="info-value">{{ $payment->pilgrim->email }}</div>
+                    </div>
+                    @endif
+                    @if($payment->pilgrim->phone)
+                    <div class="info-row">
+                        <div class="info-label">Téléphone:</div>
+                        <div class="info-value">{{ $payment->pilgrim->phone }}</div>
+                    </div>
+                    @endif
+                    <div style="color: #dc3545; font-size: 8px; font-style: italic;">⚠️ Client non associé</div>
+                @endif
+                <div class="info-row">
+                    <div class="info-label">Catégorie:</div>
+                    <div class="info-value">{{ ucfirst($payment->pilgrim->category ?? 'Standard') }}</div>
+                </div>
             </div>
 
-            <!-- Nom du client - TRÈS VISIBLE -->
-            @if($payment->pilgrim->client)
-                <div class="client-name">{{ $payment->pilgrim->client->full_name }}</div>
-            @else
-                <div class="client-name">{{ $payment->pilgrim->full_name }}</div>
+            {{-- Campaign Information --}}
+            @if($payment->pilgrim->campaign)
+            <div class="info-section">
+                <div class="info-title">CAMPAGNE</div>
+                <div class="info-row">
+                    <div class="info-label">Nom:</div>
+                    <div class="info-value">{{ $payment->pilgrim->campaign->name }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Type:</div>
+                    <div class="info-value">{{ ucfirst($payment->pilgrim->campaign->type) }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Départ:</div>
+                    <div class="info-value">{{ \Carbon\Carbon::parse($payment->pilgrim->campaign->departure_date)->format('d/m/Y') }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Retour:</div>
+                    <div class="info-value">{{ \Carbon\Carbon::parse($payment->pilgrim->campaign->return_date)->format('d/m/Y') }}</div>
+                </div>
+            </div>
             @endif
 
-            <!-- Informations principales -->
-            <div class="info-grid">
-                <div class="info-column">
-                    <div class="section-title">👤 Informations Client</div>
-
-                    @if($payment->pilgrim->client)
-                        <div class="info-item">
-                            <div class="info-label">Client :</div>
-                            <div class="info-value">{{ $payment->pilgrim->client->full_name }}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Pèlerin :</div>
-                            <div class="info-value">{{ $payment->pilgrim->full_name }}</div>
-                        </div>
-                        @if($payment->pilgrim->client->phone)
-                        <div class="info-item">
-                            <div class="info-label">Téléphone :</div>
-                            <div class="info-value">{{ $payment->pilgrim->client->phone }}</div>
-                        </div>
-                        @endif
-                        @if($payment->pilgrim->client->email)
-                        <div class="info-item">
-                            <div class="info-label">Email :</div>
-                            <div class="info-value">{{ $payment->pilgrim->client->email }}</div>
-                        </div>
-                        @endif
-                    @else
-                        <div class="info-item">
-                            <div class="info-label">Nom :</div>
-                            <div class="info-value">{{ $payment->pilgrim->full_name }}</div>
-                        </div>
-                        @if($payment->pilgrim->phone)
-                        <div class="info-item">
-                            <div class="info-label">Téléphone :</div>
-                            <div class="info-value">{{ $payment->pilgrim->phone }}</div>
-                        </div>
-                        @endif
-                        <div style="color: #dc3545; font-weight: bold; margin-top: 10px;">
-                            ⚠️ Client non associé
-                        </div>
-                    @endif
-
-                    <div class="info-item">
-                        <div class="info-label">Catégorie :</div>
-                        <div class="info-value">{{ ucfirst($payment->pilgrim->category ?? 'Standard') }}</div>
-                    </div>
+            {{-- Payment Summary --}}
+            <div class="payment-summary">
+                <div class="info-title">RÉSUMÉ FINANCIER</div>
+                <div class="info-row">
+                    <div class="info-label">Total voyage:</div>
+                    <div class="info-value">{{ number_format($payment->pilgrim->total_amount, 0, ',', ' ') }} {{ $agencySettings['default_currency'] ?? 'FCFA' }}</div>
                 </div>
-
-                <div class="info-column">
-                    <div class="section-title">🕋 Informations Voyage</div>
-
-                    @if($payment->pilgrim->campaign)
-                        <div class="info-item">
-                            <div class="info-label">Campagne :</div>
-                            <div class="info-value">{{ $payment->pilgrim->campaign->name }}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Type :</div>
-                            <div class="info-value">{{ ucfirst($payment->pilgrim->campaign->type) }}</div>
-                        </div>
-                        @if($payment->pilgrim->campaign->departure_date)
-                        <div class="info-item">
-                            <div class="info-label">Départ :</div>
-                            <div class="info-value">{{ \Carbon\Carbon::parse($payment->pilgrim->campaign->departure_date)->format('d/m/Y') }}</div>
-                        </div>
-                        @endif
-                        @if($payment->pilgrim->campaign->return_date)
-                        <div class="info-item">
-                            <div class="info-label">Retour :</div>
-                            <div class="info-value">{{ \Carbon\Carbon::parse($payment->pilgrim->campaign->return_date)->format('d/m/Y') }}</div>
-                        </div>
-                        @endif
-                    @else
-                        <div style="color: #6c757d; font-style: italic;">
-                            Aucune campagne associée
-                        </div>
-                    @endif
+                <div class="info-row">
+                    <div class="info-label">Total payé:</div>
+                    <div class="info-value">{{ number_format($payment->pilgrim->paid_amount, 0, ',', ' ') }} {{ $agencySettings['default_currency'] ?? 'FCFA' }}</div>
                 </div>
+                <div class="info-row">
+                    <div class="info-label">Restant:</div>
+                    <div class="info-value"><strong>{{ number_format($payment->pilgrim->remaining_amount, 0, ',', ' ') }} {{ $agencySettings['default_currency'] ?? 'FCFA' }}</strong></div>
+                </div>
+                <div class="total-amount">{{ number_format($payment->pilgrim->paid_amount, 0, ',', ' ') }} {{ $agencySettings['default_currency'] ?? 'FCFA' }}</div>
+                <div class="currency">Total Payé à ce jour</div>
             </div>
+        </div>
 
-            <!-- Détails du paiement -->
-            <div class="payment-details">
-                <div class="section-title">💳 Détails du Paiement</div>
-                <div class="payment-grid">
-                    <div class="payment-item">
-                        <div class="payment-item-icon">💵</div>
-                        <div class="payment-item-label">Mode</div>
-                        <div class="payment-item-value">
-                            @switch($payment->payment_method)
-                                @case('cash') Espèces @break
-                                @case('check') Chèque @break
-                                @case('bank_transfer') Virement @break
-                                @case('card') Carte @break
-                                @default {{ $payment->payment_method }}
-                            @endswitch
-                        </div>
-                    </div>
-
-                    <div class="payment-item">
-                        <div class="payment-item-icon">📅</div>
-                        <div class="payment-item-label">Date</div>
-                        <div class="payment-item-value">{{ \Carbon\Carbon::parse($payment->payment_date)->format('d/m/Y') }}</div>
-                    </div>
-
-                    <div class="payment-item">
-                        <div class="payment-item-icon">🔖</div>
-                        <div class="payment-item-label">Référence</div>
-                        <div class="payment-item-value">{{ $payment->reference ?? 'N/A' }}</div>
-                    </div>
-
-                    <div class="payment-item">
-                        <div class="payment-item-icon">✅</div>
-                        <div class="payment-item-label">Statut</div>
-                        <div class="payment-item-value">
-                            <span class="status-badge status-{{ $payment->status }}">
-                                @switch($payment->status)
-                                    @case('completed') Terminé @break
-                                    @case('cancelled') Annulé @break
-                                    @default En Attente
+        <div class="right-column">
+            {{-- Complete Payment History --}}
+            <div class="info-section">
+                <div class="info-title">HISTORIQUE COMPLET DES PAIEMENTS</div>
+                <table class="payments-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Montant</th>
+                            <th>Mode</th>
+                            <th>Référence</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($allPayments as $paymentItem)
+                        <tr class="{{ $paymentItem->id == $payment->id ? 'highlight-payment' : '' }}">
+                            <td>{{ \Carbon\Carbon::parse($paymentItem->payment_date)->format('d/m/Y') }}</td>
+                            <td>{{ number_format($paymentItem->amount, 0, ',', ' ') }}</td>
+                            <td>
+                                @switch($paymentItem->payment_method)
+                                    @case('cash') Espèces @break
+                                    @case('check') Chèque @break
+                                    @case('bank_transfer') Virement @break
+                                    @case('card') Carte @break
+                                    @default {{ $paymentItem->payment_method }}
                                 @endswitch
-                            </span>
-                        </div>
+                            </td>
+                            <td>{{ $paymentItem->reference ?? '-' }}</td>
+                            <td>
+                                <span class="status-badge status-{{ $paymentItem->status }}">
+                                    @switch($paymentItem->status)
+                                        @case('completed') OK @break
+                                        @case('cancelled') ANN @break
+                                        @default ATT
+                                    @endswitch
+                                </span>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div style="font-size: 7px; margin-top: 5px; color: #666;">
+                    <strong>Légende:</strong> OK=Terminé, ATT=En attente, ANN=Annulé |
+                    La ligne en surbrillance correspond au paiement de ce reçu
+                </div>
+            </div>
+
+            {{-- Current Payment Details --}}
+            <div class="info-section">
+                <div class="info-title">DÉTAILS DU PAIEMENT ACTUEL (N°{{ $payment->id }})</div>
+                <div class="info-row">
+                    <div class="info-label">Date:</div>
+                    <div class="info-value">{{ \Carbon\Carbon::parse($payment->payment_date)->format('d/m/Y') }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Montant:</div>
+                    <div class="info-value"><strong>{{ number_format($payment->amount, 0, ',', ' ') }} {{ $agencySettings['default_currency'] ?? 'FCFA' }}</strong></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Mode:</div>
+                    <div class="info-value">
+                        @switch($payment->payment_method)
+                            @case('cash') Espèces @break
+                            @case('check') Chèque @break
+                            @case('bank_transfer') Virement bancaire @break
+                            @case('card') Carte bancaire @break
+                            @default {{ $payment->payment_method }}
+                        @endswitch
                     </div>
                 </div>
-
+                @if($payment->reference)
+                <div class="info-row">
+                    <div class="info-label">Référence:</div>
+                    <div class="info-value">{{ $payment->reference }}</div>
+                </div>
+                @endif
+                <div class="info-row">
+                    <div class="info-label">Statut:</div>
+                    <div class="info-value">
+                        <span class="status-badge status-{{ $payment->status }}">
+                            @switch($payment->status)
+                                @case('completed') TERMINÉ @break
+                                @case('cancelled') ANNULÉ @break
+                                @default EN ATTENTE
+                            @endswitch
+                        </span>
+                    </div>
+                </div>
                 @if($payment->notes)
-                <div style="margin-top: 20px; padding: 15px; background: #fff; border-radius: 8px; border-left: 4px solid #ffc107;">
-                    <strong style="color: #856404;">📝 Notes :</strong>
-                    <div style="color: #6c757d; margin-top: 5px;">{{ $payment->notes }}</div>
+                <div class="info-row">
+                    <div class="info-label">Notes:</div>
+                    <div class="info-value">{{ $payment->notes }}</div>
                 </div>
                 @endif
             </div>
-
-            <!-- Note importante -->
-            <div class="important-note">
-                <div class="important-note-title">📋 Important</div>
-                <div class="important-note-text">
-                    Conservez ce reçu comme preuve de paiement. En cas de réclamation, présentez ce document.
-                </div>
-            </div>
-
-            <!-- Signatures -->
-            <div class="signatures">
-                <div class="signature-block">
-                    <div class="signature-line"></div>
-                    <div class="signature-label">Signature du Client</div>
-                </div>
-                <div class="signature-block">
-                    <div class="signature-line"></div>
-                    <div class="signature-label">Cachet de l'Agence</div>
-                </div>
-            </div>
         </div>
+    </div>
 
-        <!-- Pied de page -->
-        <div class="footer">
-            <div class="footer-content">
-                <div class="footer-line">
-                    <span class="footer-highlight">{{ $agencySettings['company_name'] ?? 'Agence Hajj & Omra' }}</span> - Système de Gestion
-                </div>
-                <div class="footer-line">
-                    Reçu généré le {{ now()->format('d/m/Y à H:i') }} par {{ $servingUser->name ?? 'Système' }}
-                </div>
-                <div class="footer-line">
-                    📞 {{ $agencySettings['company_phone'] ?? 'N/A' }} |
-                    ✉️ {{ $agencySettings['company_email'] ?? 'N/A' }}
-                </div>
-                <div class="footer-line" style="margin-top: 10px; font-size: 12px; opacity: 0.8;">
-                    Merci pour votre confiance 🙏
-                </div>
-            </div>
+    {{-- Signature Section --}}
+    <div class="signature-section">
+        <div class="signature-left">
+            <div class="signature-line"></div>
+            <div class="signature-label">Signature du Client</div>
         </div>
+        <div class="signature-right">
+            <div class="signature-line"></div>
+            <div class="signature-label">Cachet et Signature de l'Agence</div>
+        </div>
+    </div>
+
+    {{-- Footer --}}
+    <div class="footer">
+        <div><strong>{{ $agencySettings['company_name'] ?? config('app.name', 'Hajj Management') }}</strong> - Système de Gestion des Pèlerins</div>
+        <div>Reçu généré le {{ now()->format('d/m/Y à H:i') }} par {{ $servingUser->name }}</div>
+        <div>Pour toute réclamation, veuillez présenter ce reçu complet.</div>
+        @if($agencySettings['company_phone'] ?? null)
+            <div>Contact: {{ $agencySettings['company_phone'] }} | {{ $agencySettings['company_email'] ?? '' }}</div>
+        @endif
     </div>
 </body>
 </html>

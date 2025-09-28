@@ -244,14 +244,15 @@ class PaymentController extends Controller
         $agencySettings = \App\Models\SystemSetting::whereIn('setting_key', [
             'company_name', 'company_slogan', 'company_address', 'company_city', 'company_country',
             'company_phone', 'company_phone2', 'company_whatsapp',
-            'company_email', 'company_website', 'company_logo', 'default_currency',
-            'company_registration', 'company_license'
+            'company_email', 'company_website', 'company_logo', 'default_currency', 'currency_symbol',
+            'company_registration', 'company_license', 'legal_notice', 'terms_conditions',
+            'payment_terms', 'timezone', 'language'
         ])->pluck('setting_value', 'setting_key')->toArray();
 
         // Get current serving user
         $servingUser = auth()->user();
 
-        $pdf = \App\Facades\PDF::loadView('payments.receipt-beautiful', compact('payment', 'allPayments', 'agencySettings', 'servingUser'));
+        $pdf = \App\Facades\PDF::loadView('payments.receipt', compact('payment', 'allPayments', 'agencySettings', 'servingUser'));
 
         // Generate clean filename without special characters
         $cleanFirstname = \Str::slug($payment->pilgrim->firstname, '-');
