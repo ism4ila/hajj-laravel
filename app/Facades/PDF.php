@@ -11,6 +11,6 @@ class PDF extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'dompdf.wrapper';
+        return 'dompdf';
     }
 }

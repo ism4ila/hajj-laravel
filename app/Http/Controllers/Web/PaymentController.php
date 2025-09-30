@@ -252,17 +252,7 @@ class PaymentController extends Controller
         // Get current serving user
         $servingUser = auth()->user();
 
-        // Utiliser le template compact par défaut
-        $template = request()->get('template', 'compact'); // Options: compact, premium, receipt
-
-        $viewName = match($template) {
-            'compact' => 'payments.receipt-compact',
-            'premium' => 'payments.receipt-premium',
-            'receipt' => 'payments.receipt',
-            default => 'payments.receipt-compact',
-        };
-
-        $pdf = \App\Facades\PDF::loadView($viewName, compact('payment', 'allPayments', 'agencySettings', 'servingUser'));
+        $pdf = \App\Facades\PDF::loadView('payments.receipt', compact('payment', 'allPayments', 'agencySettings', 'servingUser'));
 
         // Generate clean filename without special characters
         $cleanFirstname = \Str::slug($payment->pilgrim->firstname, '-');

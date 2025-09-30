@@ -30,27 +30,9 @@
         </x-button>
         
         
-        <!-- Dropdown pour choisir le template de reçu -->
-        <div class="btn-group">
-            <x-button href="{{ route('payments.receipt', $payment) }}" variant="success" icon="fas fa-receipt">
-                Télécharger Reçu
-            </x-button>
-            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="{{ route('payments.receipt', ['payment' => $payment, 'template' => 'compact']) }}">
-                    <i class="fas fa-file-pdf me-2 text-danger"></i>Compact (1 page)
-                </a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{{ route('payments.receipt', ['payment' => $payment, 'template' => 'premium']) }}">
-                    <i class="fas fa-star me-2 text-warning"></i>Premium
-                </a></li>
-                <li><a class="dropdown-item" href="{{ route('payments.receipt', ['payment' => $payment, 'template' => 'receipt']) }}">
-                    <i class="fas fa-file-alt me-2 text-info"></i>Standard
-                </a></li>
-            </ul>
-        </div>
+        <x-button href="{{ route('payments.receipt', $payment) }}" variant="outline-success" icon="fas fa-receipt">
+            Reçu
+        </x-button>
         
         <x-button href="{{ route('payments.index') }}" variant="outline-secondary" icon="fas fa-arrow-left">
             Retour

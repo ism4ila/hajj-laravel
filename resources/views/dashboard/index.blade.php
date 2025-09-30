@@ -7,60 +7,66 @@
 @endsection
 
 @section('content')
-<div class="container-responsive">
+<div class="row">
     <!-- Statistics Cards -->
-    <div class="stats-grid">
-        <div class="card-responsive stat-card h-100">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="text-responsive-xs text-muted mb-1">TOTAL PÈLERINS</div>
-                        <div class="text-responsive-xxl fw-bold text-primary">{{ number_format($stats['total_pilgrims']) }}</div>
+                        <div class="text-white-75 small">Total Pèlerins</div>
+                        <div class="h2 mb-0 font-weight-bold text-white">{{ number_format($stats['total_pilgrims']) }}</div>
                     </div>
-                    <div class="bg-primary bg-opacity-10 rounded-3 p-3">
-                        <i class="fas fa-users fa-lg text-primary"></i>
+                    <div class="text-white-25">
+                        <i class="fas fa-users fa-2x"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="card-responsive bg-gradient-to-br from-green-500 to-green-600 text-white h-100">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-success text-white h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="text-responsive-xs text-light opacity-75 mb-1">CAMPAGNES ACTIVES</div>
-                        <div class="text-responsive-xxl fw-bold text-white">{{ $stats['active_campaigns'] }}</div>
+                        <div class="text-white-75 small">Campagnes Actives</div>
+                        <div class="h2 mb-0 font-weight-bold text-white">{{ $stats['active_campaigns'] }}</div>
                     </div>
-                    <div class="bg-white bg-opacity-20 rounded-3 p-3">
-                        <i class="fas fa-flag fa-lg text-white"></i>
+                    <div class="text-white-25">
+                        <i class="fas fa-flag fa-2x"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="card-responsive bg-gradient-to-br from-blue-500 to-blue-600 text-white h-100">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-info text-white h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="text-responsive-xs text-light opacity-75 mb-1">TOTAL PAIEMENTS</div>
-                        <div class="text-responsive-lg fw-bold text-white">{{ number_format($stats['total_payments'], 0, ',', ' ') }} FCFA</div>
+                        <div class="text-white-75 small">Total Paiements</div>
+                        <div class="h2 mb-0 font-weight-bold text-white">{{ number_format($stats['total_payments'], 0, ',', ' ') }} FCFA</div>
                     </div>
-                    <div class="bg-white bg-opacity-20 rounded-3 p-3">
-                        <i class="fas fa-credit-card fa-lg text-white"></i>
+                    <div class="text-white-25">
+                        <i class="fas fa-credit-card fa-2x"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="card-responsive bg-gradient-to-br from-yellow-500 to-yellow-600 text-white h-100">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-warning text-white h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="text-responsive-xs text-light opacity-75 mb-1">DOCUMENTS MANQUANTS</div>
-                        <div class="text-responsive-xxl fw-bold text-white">{{ $stats['pending_documents'] }}</div>
+                        <div class="text-white-75 small">Documents Manquants</div>
+                        <div class="h2 mb-0 font-weight-bold text-white">{{ $stats['pending_documents'] }}</div>
                     </div>
-                    <div class="bg-white bg-opacity-20 rounded-3 p-3">
-                        <i class="fas fa-exclamation-triangle fa-lg text-white"></i>
+                    <div class="text-white-25">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
                     </div>
                 </div>
             </div>
@@ -69,29 +75,26 @@
 </div>
 
 <!-- Quick Actions -->
-<div class="mb-responsive-lg">
-    <div class="card-responsive">
-        <div class="card-body">
-            <h5 class="card-title text-responsive-lg fw-bold mb-responsive-md">
-                <i class="fas fa-bolt text-primary me-2"></i>Actions Rapides
-            </h5>
-            <div class="grid-responsive grid-auto-fit">
-                <div>
-                    <a href="{{ route('pilgrims.create') }}" class="btn-responsive btn-primary text-center p-responsive-md">
+<div class="row mb-4">
+    <div class="col-12">
+        <x-card title="Actions Rapides" class="h-100">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <a href="{{ route('pilgrims.create') }}" class="btn btn-primary w-100 py-3">
                         <i class="fas fa-user-plus fa-2x d-block mb-2"></i>
-                        <strong class="text-responsive-sm">Nouveau Pèlerin</strong>
+                        <strong>Nouveau Pèlerin</strong>
                     </a>
                 </div>
-                <div>
-                    <a href="{{ route('campaigns.create') }}" class="btn-responsive btn-success text-center p-responsive-md">
+                <div class="col-md-3">
+                    <a href="{{ route('campaigns.create') }}" class="btn btn-success w-100 py-3">
                         <i class="fas fa-flag fa-2x d-block mb-2"></i>
-                        <strong class="text-responsive-sm">Nouvelle Campagne</strong>
+                        <strong>Nouvelle Campagne</strong>
                     </a>
                 </div>
-                <div>
-                    <a href="{{ route('payments.create') }}" class="btn-responsive btn-info text-center p-responsive-md">
+                <div class="col-md-3">
+                    <a href="{{ route('payments.create') }}" class="btn btn-info w-100 py-3">
                         <i class="fas fa-credit-card fa-2x d-block mb-2"></i>
-                        <strong class="text-responsive-sm">Nouveau Paiement</strong>
+                        <strong>Nouveau Paiement</strong>
                     </a>
                 </div>
                 <div class="col-md-3">
@@ -318,65 +321,4 @@ const statusChart = new Chart(statusCtx, {
     }
 });
 </script>
-@endpush
-
-@push('styles')
-<style>
-    /* Styles spécifiques pour le dashboard responsive */
-    .stats-grid .card-responsive {
-        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .stats-grid .card-responsive:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .bg-gradient-to-br {
-        background: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
-    }
-
-    .from-green-500 { --tw-gradient-from: #10b981; }
-    .to-green-600 { --tw-gradient-to: #059669; }
-    .from-blue-500 { --tw-gradient-from: #3b82f6; }
-    .to-blue-600 { --tw-gradient-to: #2563eb; }
-    .from-yellow-500 { --tw-gradient-from: #f59e0b; }
-    .to-yellow-600 { --tw-gradient-to: #d97706; }
-
-    .btn-responsive.text-center {
-        flex-direction: column;
-        text-decoration: none;
-        border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-
-    .btn-responsive.text-center:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-responsive.btn-info {
-        background: linear-gradient(135deg, #0dcaf0, #0bb5d6);
-        color: white;
-    }
-
-    @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        }
-    }
-
-    @media (max-width: 576px) {
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .text-responsive-lg {
-            font-size: 1rem !important;
-        }
-    }
-</style>
 @endpush
