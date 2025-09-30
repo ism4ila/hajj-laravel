@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test DataTables - Hajj Management System</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.7.0/css/select.bootstrap5.min.css" rel="stylesheet">
+
+    <!-- Nos CSS personnalisés -->
+    <link href="css/responsive-framework.css" rel="stylesheet">
+    <link href="css/icons-fix.css" rel="stylesheet">
+    <link href="css/datatables-responsive.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <!-- Header -->
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h1 class="text-responsive-xxxl fw-bold text-primary mb-3">
+                            <i class="fas fa-table me-3"></i>
+                            Test DataTables Responsive
+                        </h1>
+                        <p class="text-responsive-base text-muted mb-0">
+                            Démonstration des tableaux DataTables avec icônes corrigées et responsive design
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Clients Table -->
+            <div class="col-12 mb-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-users me-2"></i>
+                            Tableau Clients (DataTables Responsive)
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-hover" id="clientsTable">
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-check-square me-1"></i> Sélection</th>
+                                    <th><i class="fas fa-user me-1"></i> Client</th>
+                                    <th><i class="fas fa-envelope me-1"></i> Contact</th>
+                                    <th><i class="fas fa-route me-1"></i> Pèlerinages</th>
+                                    <th><i class="fas fa-toggle-on me-1"></i> Statut</th>
+                                    <th class="no-export"><i class="fas fa-cogs me-1"></i> Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-primary text-white rounded-circle me-3">AB</div>
+                                            <div>
+                                                <strong>Ahmed Ben Mohamed</strong>
+                                                <br><small class="text-muted">35 ans, Masculin</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <i class="fas fa-phone text-success me-1"></i> +237 612 345 678
+                                            <br><i class="fas fa-envelope text-primary me-1"></i> ahmed@email.com
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-info">3 voyages</span></td>
+                                    <td><span class="badge bg-success">Actif</span></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-success text-white rounded-circle me-3">FM</div>
+                                            <div>
+                                                <strong>Fatima Mohamed Ali</strong>
+                                                <br><small class="text-muted">42 ans, Féminin</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <i class="fas fa-phone text-success me-1"></i> +237 698 765 432
+                                            <br><i class="fas fa-envelope text-primary me-1"></i> fatima@email.com
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-warning">1 voyage</span></td>
+                                    <td><span class="badge bg-warning">En attente</span></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-info text-white rounded-circle me-3">OS</div>
+                                            <div>
+                                                <strong>Omar Sadiq Hassan</strong>
+                                                <br><small class="text-muted">28 ans, Masculin</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <i class="fas fa-phone text-success me-1"></i> +237 677 123 456
+                                            <br><i class="fas fa-envelope text-primary me-1"></i> omar@email.com
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-primary">5 voyages</span></td>
+                                    <td><span class="badge bg-success">Actif</span></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-warning text-dark rounded-circle me-3">AI</div>
+                                            <div>
+                                                <strong>Aisha Ibrahim Yusuf</strong>
+                                                <br><small class="text-muted">38 ans, Féminin</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <i class="fas fa-phone text-success me-1"></i> +237 690 987 654
+                                            <br><i class="fas fa-envelope text-primary me-1"></i> aisha@email.com
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-success">2 voyages</span></td>
+                                    <td><span class="badge bg-secondary">Inactif</span></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input"></td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-danger text-white rounded-circle me-3">KM</div>
+                                            <div>
+                                                <strong>Khalid Moubarak Said</strong>
+                                                <br><small class="text-muted">45 ans, Masculin</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <i class="fas fa-phone text-success me-1"></i> +237 654 321 987
+                                            <br><i class="fas fa-envelope text-primary me-1"></i> khalid@email.com
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-info">4 voyages</span></td>
+                                    <td><span class="badge bg-success">Actif</span></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Paiements Table -->
+            <div class="col-12 mb-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-credit-card me-2"></i>
+                            Tableau Paiements (DataTables Responsive)
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-hover" id="paymentsTable">
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-calendar me-1"></i> Date</th>
+                                    <th><i class="fas fa-user me-1"></i> Pèlerin</th>
+                                    <th><i class="fas fa-money-bill me-1"></i> Montant</th>
+                                    <th><i class="fas fa-tag me-1"></i> Type</th>
+                                    <th><i class="fas fa-check-circle me-1"></i> Statut</th>
+                                    <th class="no-export"><i class="fas fa-tools me-1"></i> Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>29/09/2025</td>
+                                    <td>Ahmed Ben Mohamed</td>
+                                    <td class="text-end"><strong>500,000 FCFA</strong></td>
+                                    <td><span class="badge bg-primary">Acompte</span></td>
+                                    <td><span class="badge bg-success">Validé</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>28/09/2025</td>
+                                    <td>Fatima Mohamed Ali</td>
+                                    <td class="text-end"><strong>250,000 FCFA</strong></td>
+                                    <td><span class="badge bg-warning">Partiel</span></td>
+                                    <td><span class="badge bg-warning">En attente</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>27/09/2025</td>
+                                    <td>Omar Sadiq Hassan</td>
+                                    <td class="text-end"><strong>1,200,000 FCFA</strong></td>
+                                    <td><span class="badge bg-success">Complet</span></td>
+                                    <td><span class="badge bg-success">Validé</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-receipt"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Instructions de Test
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-check me-2 text-success"></i> Fonctionnalités Testées</h5>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-mobile-alt me-2 text-primary"></i> Responsive design</li>
+                                    <li><i class="fas fa-sort me-2 text-primary"></i> Tri des colonnes</li>
+                                    <li><i class="fas fa-search me-2 text-primary"></i> Recherche globale</li>
+                                    <li><i class="fas fa-list-ol me-2 text-primary"></i> Pagination</li>
+                                    <li><i class="fas fa-download me-2 text-primary"></i> Export (Excel, PDF, Print)</li>
+                                    <li><i class="fas fa-eye me-2 text-primary"></i> Colonnes cachées/visibles</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-bug me-2 text-warning"></i> Problèmes Corrigés</h5>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-times-circle me-2 text-danger"></i> Icônes surdimensionnées</li>
+                                    <li><i class="fas fa-times-circle me-2 text-danger"></i> Conflits CSS Bootstrap</li>
+                                    <li><i class="fas fa-times-circle me-2 text-danger"></i> Layout mobile cassé</li>
+                                    <li><i class="fas fa-times-circle me-2 text-danger"></i> Tri non fonctionnel</li>
+                                    <li><i class="fas fa-times-circle me-2 text-danger"></i> Export non responsive</li>
+                                    <li><i class="fas fa-times-circle me-2 text-danger"></i> Icônes de tri manquantes</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="alert alert-success">
+                            <h6><i class="fas fa-lightbulb me-2"></i> Comment Tester</h6>
+                            <ol>
+                                <li><strong>Responsive :</strong> Redimensionnez la fenêtre ou utilisez F12 → mode mobile</li>
+                                <li><strong>Tri :</strong> Cliquez sur les en-têtes de colonnes pour trier</li>
+                                <li><strong>Recherche :</strong> Utilisez la zone de recherche en haut à droite</li>
+                                <li><strong>Export :</strong> Utilisez les boutons Excel, PDF, Imprimer</li>
+                                <li><strong>Pagination :</strong> Changez le nombre d'éléments par page</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <!-- Notre script personnalisé -->
+    <script src="js/datatables-init.js"></script>
+
+    <script>
+        // Log des informations pour debug
+        $(document).ready(function() {
+            console.log('✅ Page de test DataTables chargée');
+            console.log('📊 Tableaux initialisés:', $('.dataTable').length);
+
+            // Test des icônes
+            const icons = document.querySelectorAll('.fas');
+            console.log(`🔍 ${icons.length} icônes FontAwesome détectées`);
+
+            let oversizedIcons = 0;
+            icons.forEach(icon => {
+                const computed = window.getComputedStyle(icon);
+                const fontSize = parseFloat(computed.fontSize);
+                if (fontSize > 40) {
+                    oversizedIcons++;
+                    console.warn('⚠️ Icône surdimensionnée détectée:', icon, fontSize + 'px');
+                }
+            });
+
+            if (oversizedIcons === 0) {
+                console.log('✅ Toutes les icônes sont dans les limites normales');
+            } else {
+                console.warn(`⚠️ ${oversizedIcons} icônes surdimensionnées détectées`);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,563 @@
+/* ============================================
+   HAJJ MANAGEMENT - TABLES RESPONSIVE CSS
+   Amélioration des tables Bootstrap sans DataTables
+   ============================================ */
+
+:root {
+    --table-border-color: #dee2e6;
+    --table-hover-bg: rgba(13, 110, 253, 0.05);
+    --table-stripe-bg: rgba(248, 249, 250, 0.5);
+}
+
+/* ============================================
+   TABLE RESPONSIVE CONTAINER
+   ============================================ */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+    border-radius: 0.375rem;
+}
+
+/* Scrollbar personnalisée */
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #6c757d;
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #0d6efd;
+}
+
+/* ============================================
+   TABLE BASE STYLES
+   ============================================ */
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    vertical-align: middle;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    padding: 0.75rem;
+    border-bottom: 2px solid var(--table-border-color);
+}
+
+.table tbody td {
+    vertical-align: middle;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--table-border-color);
+}
+
+/* ============================================
+   TABLE HOVER & STRIPED
+   ============================================ */
+.table-hover tbody tr:hover {
+    background-color: var(--table-hover-bg);
+    transition: background-color 0.15s ease-in-out;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--table-stripe-bg);
+}
+
+/* ============================================
+   TABLE DARK HEADER
+   ============================================ */
+.table thead.table-dark th {
+    background: linear-gradient(135deg, #212529, #343a40);
+    color: white;
+    border-color: #343a40;
+}
+
+/* ============================================
+   RESPONSIVE MOBILE OPTIMIZATIONS
+   ============================================ */
+
+/* Mobile: < 576px */
+@media (max-width: 575.98px) {
+    .table {
+        font-size: 0.75rem;
+    }
+
+    .table thead th,
+    .table tbody td {
+        padding: 0.5rem 0.25rem;
+    }
+
+    /* Cacher certaines colonnes secondaires sur mobile */
+    .table thead th.d-none.d-md-table-cell,
+    .table tbody td.d-none.d-md-table-cell {
+        display: none !important;
+    }
+
+    /* Actions compactes sur mobile */
+    .btn-group-sm .btn {
+        padding: 0.125rem 0.25rem;
+        font-size: 0.75rem;
+    }
+
+    .btn-group-sm .btn i {
+        font-size: 0.875rem;
+    }
+
+    /* Avatars plus petits sur mobile */
+    .avatar {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.75rem !important;
+    }
+
+    /* Badge plus petits */
+    .badge {
+        font-size: 0.65rem;
+        padding: 0.25em 0.4em;
+    }
+
+    /* Dropdown menu actions */
+    .dropdown-menu {
+        font-size: 0.813rem;
+    }
+}
+
+/* Tablet: 576px - 767px */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .table {
+        font-size: 0.813rem;
+    }
+
+    .table thead th,
+    .table tbody td {
+        padding: 0.625rem 0.5rem;
+    }
+}
+
+/* Desktop: >= 768px */
+@media (min-width: 768px) {
+    .table thead th,
+    .table tbody td {
+        padding: 0.75rem;
+    }
+}
+
+/* ============================================
+   SPECIFIC COLUMN WIDTHS RESPONSIVE
+   ============================================ */
+
+/* Colonnes de sélection (checkbox) */
+.table th:first-child:has(.form-check-input),
+.table td:first-child:has(.form-check-input) {
+    width: 40px !important;
+    min-width: 40px;
+    max-width: 40px;
+    text-align: center;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+/* Colonnes d'actions - réduire la largeur */
+.table thead th:last-child,
+.table tbody td:last-child {
+    width: 100px !important;
+    min-width: 100px;
+    max-width: 100px;
+    text-align: center;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    white-space: nowrap;
+}
+
+/* Colonnes statut */
+.table td .badge {
+    white-space: nowrap;
+}
+
+/* Sur mobile, réduire encore plus */
+@media (max-width: 767.98px) {
+    .table th:first-child:has(.form-check-input),
+    .table td:first-child:has(.form-check-input) {
+        width: 35px !important;
+        min-width: 35px;
+    }
+
+    .table thead th:last-child,
+    .table tbody td:last-child {
+        width: 80px !important;
+        min-width: 80px;
+        max-width: 80px;
+    }
+}
+
+/* ============================================
+   CHECKBOXES IN TABLES
+   ============================================ */
+.table .form-check-input {
+    width: 1.125rem;
+    height: 1.125rem;
+    cursor: pointer;
+    margin: 0;
+}
+
+.table .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* ============================================
+   BUTTONS IN TABLES
+   ============================================ */
+.table .btn-group {
+    display: inline-flex;
+    gap: 0.125rem;
+    flex-wrap: nowrap;
+}
+
+.table .btn-sm {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+    line-height: 1.2;
+    min-width: 30px;
+}
+
+.table .btn-sm i {
+    margin: 0 !important;
+}
+
+/* Dropdown dans les tables */
+.table .dropdown-toggle {
+    padding: 0.25rem 0.5rem;
+    min-width: 32px;
+}
+
+.table .dropdown-toggle::after {
+    display: none;
+}
+
+/* Bouton ellipsis vertical compact */
+.table .btn .fa-ellipsis-v {
+    font-size: 0.875rem;
+}
+
+/* Réduire espacement des groupes de boutons */
+.table .btn-group-sm .btn {
+    padding: 0.2rem 0.35rem;
+}
+
+/* Actions sur mobile encore plus compactes */
+@media (max-width: 575.98px) {
+    .table .btn-sm {
+        padding: 0.15rem 0.3rem;
+        font-size: 0.7rem;
+        min-width: 26px;
+    }
+
+    .table .btn-group {
+        gap: 0.1rem;
+    }
+}
+
+/* ============================================
+   BADGES IN TABLES
+   ============================================ */
+.table .badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+    font-weight: 500;
+}
+
+/* ============================================
+   AVATAR IN TABLES
+   ============================================ */
+.table .avatar {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* ============================================
+   EMPTY STATE IN TABLES
+   ============================================ */
+.table tbody tr.empty-state td {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.table tbody tr.empty-state .fa-3x {
+    font-size: 3rem;
+    opacity: 0.3;
+    margin-bottom: 1rem;
+}
+
+/* ============================================
+   PAGINATION RESPONSIVE
+   ============================================ */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-top: 1rem;
+}
+
+.pagination .page-link {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    min-width: 2.5rem;
+    text-align: center;
+    border-radius: 0.375rem;
+    border: 1px solid var(--table-border-color);
+    color: #0d6efd;
+    transition: all 0.15s ease-in-out;
+}
+
+.pagination .page-link:hover {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+    transform: translateY(-1px);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+    font-weight: 600;
+}
+
+.pagination .page-item.disabled .page-link {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Mobile pagination */
+@media (max-width: 575.98px) {
+    .pagination .page-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        min-width: 2rem;
+    }
+
+    /* Cacher les numéros intermédiaires sur mobile */
+    .pagination .page-item:not(:first-child):not(:last-child):not(.active) {
+        display: none;
+    }
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+.table-loading {
+    position: relative;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.table-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #0d6efd;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ============================================
+   PROGRESS BARS IN TABLES
+   ============================================ */
+.table .progress {
+    height: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.table .progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* ============================================
+   FORMS IN TABLES
+   ============================================ */
+.table form {
+    margin: 0;
+}
+
+.table .form-select,
+.table .form-control {
+    font-size: 0.813rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* ============================================
+   ICONS IN TABLES
+   ============================================ */
+.table i.fa,
+.table i.fas,
+.table i.far,
+.table i.fab {
+    font-size: 0.875rem;
+    width: auto;
+    min-width: 1rem;
+    text-align: center;
+}
+
+/* Icônes dans les boutons */
+.table .btn i.fa,
+.table .btn i.fas,
+.table .btn i.far,
+.table .btn i.fab {
+    font-size: 0.75rem;
+    margin: 0;
+    width: auto;
+}
+
+/* Icônes dans les boutons sm */
+.table .btn-sm i {
+    font-size: 0.7rem !important;
+}
+
+/* Icônes dans les dropdown */
+.table .dropdown-item i {
+    font-size: 0.813rem;
+    width: 1.25rem;
+    margin-right: 0.5rem;
+}
+
+/* Réduire les icônes sur mobile */
+@media (max-width: 575.98px) {
+    .table i.fa,
+    .table i.fas,
+    .table i.far,
+    .table i.fab {
+        font-size: 0.75rem;
+    }
+
+    .table .btn i {
+        font-size: 0.65rem !important;
+    }
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+/* Afficher sur mobile uniquement */
+@media (max-width: 767.98px) {
+    .mobile-only {
+        display: block !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-only {
+        display: none !important;
+    }
+}
+
+/* Cacher sur mobile */
+@media (max-width: 767.98px) {
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .desktop-only {
+        display: block !important;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .table {
+        font-size: 10pt;
+        border: 1px solid #000;
+    }
+
+    .table thead th {
+        background: #000 !important;
+        color: #fff !important;
+        border: 1px solid #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .table tbody td {
+        border: 1px solid #000;
+        padding: 4pt;
+    }
+
+    /* Cacher les actions en impression */
+    .table .btn-group,
+    .table .dropdown,
+    .table .form-check-input,
+    .pagination {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus visible pour les éléments interactifs */
+.table .btn:focus-visible,
+.table .form-check-input:focus-visible,
+.table .dropdown-toggle:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+/* Améliorer le contraste pour l'accessibilité */
+@media (prefers-contrast: high) {
+    .table {
+        border: 2px solid #000;
+    }
+
+    .table thead th,
+    .table tbody td {
+        border: 1px solid #000;
+    }
+}
+
+/* Réduire les animations pour ceux qui le préfèrent */
+@media (prefers-reduced-motion: reduce) {
+    .table-hover tbody tr,
+    .pagination .page-link,
+    .progress-bar {
+        transition: none !important;
+    }
+}

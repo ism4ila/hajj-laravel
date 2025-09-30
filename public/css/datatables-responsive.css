@@ -1,0 +1,620 @@
+/* ============================================
+   HAJJ MANAGEMENT - DATATABLES RESPONSIVE CSS
+   Configuration DataTables responsive avec Bootstrap 5
+   ============================================ */
+
+/* ============================================
+   VARIABLES DATATABLES
+   ============================================ */
+:root {
+    /* DataTables Colors */
+    --dt-primary: #0d6efd;
+    --dt-secondary: #6c757d;
+    --dt-success: #198754;
+    --dt-info: #0dcaf0;
+    --dt-warning: #ffc107;
+    --dt-danger: #dc3545;
+    --dt-light: #f8f9fa;
+    --dt-dark: #212529;
+
+    /* DataTables Spacing */
+    --dt-padding-sm: 0.5rem;
+    --dt-padding-md: 0.75rem;
+    --dt-padding-lg: 1rem;
+
+    /* DataTables Border */
+    --dt-border-color: #dee2e6;
+    --dt-border-radius: 0.375rem;
+}
+
+/* ============================================
+   DATATABLES CONTAINER RESPONSIVE
+   ============================================ */
+.dataTables_wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    margin: var(--dt-padding-sm) 0;
+}
+
+/* Container responsive pour les contrôles */
+.dt-controls-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--dt-padding-md);
+    margin-bottom: var(--dt-padding-lg);
+    padding: var(--dt-padding-md);
+    background: var(--dt-light);
+    border-radius: var(--dt-border-radius);
+    border: 1px solid var(--dt-border-color);
+}
+
+@media (max-width: 768px) {
+    .dt-controls-responsive {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* ============================================
+   DATATABLES TABLE RESPONSIVE
+   ============================================ */
+.dataTable {
+    width: 100% !important;
+    margin: 0 !important;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    border-radius: var(--dt-border-radius);
+    overflow: hidden;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.dataTable thead th {
+    background: linear-gradient(135deg, var(--dt-primary), #4dabf7);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: var(--dt-padding-md);
+    border-bottom: 2px solid var(--dt-border-color);
+    position: relative;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.dataTable thead th:hover {
+    background: linear-gradient(135deg, #0b5ed7, #339af0);
+    cursor: pointer;
+}
+
+.dataTable tbody td {
+    padding: var(--dt-padding-md);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--dt-border-color);
+    transition: background-color 0.15s ease-in-out;
+}
+
+.dataTable tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.dataTable tbody tr:nth-child(even) {
+    background-color: rgba(248, 249, 250, 0.5);
+}
+
+/* ============================================
+   DATATABLES SORTING ICONS FIX
+   ============================================ */
+
+/* Reset des icônes de tri par défaut */
+.dataTable thead th.sorting:after,
+.dataTable thead th.sorting_asc:after,
+.dataTable thead th.sorting_desc:after {
+    content: '' !important;
+    display: none !important;
+}
+
+.dataTable thead th.sorting:before,
+.dataTable thead th.sorting_asc:before,
+.dataTable thead th.sorting_desc:before {
+    content: '' !important;
+    display: none !important;
+}
+
+/* Nouvelles icônes de tri FontAwesome */
+.dataTable thead th.sorting {
+    position: relative;
+    padding-right: 2rem !important;
+}
+
+.dataTable thead th.sorting::after {
+    content: '\f0dc' !important; /* fa-sort */
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 900 !important;
+    position: absolute !important;
+    right: 0.75rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 0.75rem !important;
+    opacity: 0.7 !important;
+    display: inline-block !important;
+}
+
+.dataTable thead th.sorting_asc::after {
+    content: '\f0de' !important; /* fa-sort-up */
+    opacity: 1 !important;
+    color: #ffc107 !important;
+}
+
+.dataTable thead th.sorting_desc::after {
+    content: '\f0dd' !important; /* fa-sort-down */
+    opacity: 1 !important;
+    color: #ffc107 !important;
+}
+
+/* ============================================
+   DATATABLES PAGINATION RESPONSIVE
+   ============================================ */
+.dataTables_paginate {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 0.25rem !important;
+    margin-top: var(--dt-padding-lg) !important;
+}
+
+.dataTables_paginate .paginate_button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.375rem 0.75rem !important;
+    margin: 0.125rem !important;
+    font-size: 0.875rem !important;
+    border: 1px solid var(--dt-border-color) !important;
+    border-radius: var(--dt-border-radius) !important;
+    background: white !important;
+    color: var(--dt-primary) !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease-in-out !important;
+    min-width: 2.5rem !important;
+    height: 2.5rem !important;
+}
+
+.dataTables_paginate .paginate_button:hover {
+    background: var(--dt-primary) !important;
+    color: white !important;
+    border-color: var(--dt-primary) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+.dataTables_paginate .paginate_button.current {
+    background: var(--dt-primary) !important;
+    color: white !important;
+    border-color: var(--dt-primary) !important;
+    font-weight: 600 !important;
+}
+
+.dataTables_paginate .paginate_button.disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+}
+
+/* Responsive pagination sur mobile */
+@media (max-width: 576px) {
+    .dataTables_paginate .paginate_button {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.75rem !important;
+        min-width: 2rem !important;
+        height: 2rem !important;
+    }
+
+    /* Cacher les numéros intermédiaires sur mobile */
+    .dataTables_paginate .paginate_button:not(.previous):not(.next):not(.current) {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   DATATABLES SEARCH RESPONSIVE
+   ============================================ */
+.dataTables_filter {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--dt-padding-sm) !important;
+}
+
+.dataTables_filter label {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--dt-padding-sm) !important;
+    font-weight: 600 !important;
+    color: var(--dt-dark) !important;
+    margin: 0 !important;
+}
+
+.dataTables_filter input {
+    padding: 0.375rem 0.75rem !important;
+    border: 2px solid var(--dt-border-color) !important;
+    border-radius: var(--dt-border-radius) !important;
+    font-size: 0.875rem !important;
+    transition: border-color 0.15s ease-in-out !important;
+    min-width: 200px !important;
+}
+
+.dataTables_filter input:focus {
+    outline: none !important;
+    border-color: var(--dt-primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+}
+
+@media (max-width: 576px) {
+    .dataTables_filter input {
+        min-width: 150px !important;
+        width: 100% !important;
+    }
+}
+
+/* ============================================
+   DATATABLES LENGTH RESPONSIVE
+   ============================================ */
+.dataTables_length {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--dt-padding-sm) !important;
+}
+
+.dataTables_length label {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--dt-padding-sm) !important;
+    font-weight: 600 !important;
+    color: var(--dt-dark) !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+}
+
+.dataTables_length select {
+    padding: 0.375rem 2rem 0.375rem 0.75rem !important;
+    border: 2px solid var(--dt-border-color) !important;
+    border-radius: var(--dt-border-radius) !important;
+    font-size: 0.875rem !important;
+    background: white url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e") no-repeat right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    appearance: none !important;
+    min-width: 70px !important;
+}
+
+.dataTables_length select:focus {
+    outline: none !important;
+    border-color: var(--dt-primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* ============================================
+   DATATABLES INFO RESPONSIVE
+   ============================================ */
+.dataTables_info {
+    font-size: 0.875rem !important;
+    color: var(--dt-secondary) !important;
+    font-weight: 500 !important;
+    padding: var(--dt-padding-sm) 0 !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 576px) {
+    .dataTables_info {
+        font-size: 0.75rem !important;
+        text-align: center !important;
+    }
+}
+
+/* ============================================
+   DATATABLES RESPONSIVE EXTENSION
+   ============================================ */
+
+/* Colonnes cachées responsive */
+.dtr-hidden {
+    display: none !important;
+}
+
+/* Contrôle d'expansion */
+.dtr-control {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    padding: 0.5rem !important;
+}
+
+.dtr-control:before {
+    content: '\f067' !important; /* fa-plus */
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 900 !important;
+    color: var(--dt-primary) !important;
+    font-size: 0.875rem !important;
+}
+
+.dtr-control.dtr-data:before {
+    content: '\f068' !important; /* fa-minus */
+    color: var(--dt-danger) !important;
+}
+
+/* Détails responsive */
+.dtr-details {
+    background: rgba(13, 110, 253, 0.05) !important;
+    border-left: 3px solid var(--dt-primary) !important;
+}
+
+.dtr-details ul {
+    list-style: none !important;
+    padding: var(--dt-padding-md) !important;
+    margin: 0 !important;
+}
+
+.dtr-details li {
+    padding: 0.25rem 0 !important;
+    border-bottom: 1px solid var(--dt-border-color) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.dtr-details li:last-child {
+    border-bottom: none !important;
+}
+
+.dtr-title {
+    font-weight: 600 !important;
+    color: var(--dt-dark) !important;
+    min-width: 120px !important;
+}
+
+.dtr-data {
+    color: var(--dt-secondary) !important;
+}
+
+/* ============================================
+   DATATABLES LOADING STATE
+   ============================================ */
+.dataTables_processing {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid var(--dt-border-color) !important;
+    border-radius: var(--dt-border-radius) !important;
+    padding: var(--dt-padding-lg) !important;
+    font-weight: 600 !important;
+    color: var(--dt-primary) !important;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1) !important;
+    z-index: 1001 !important;
+}
+
+.dataTables_processing::before {
+    content: '\f110' !important; /* fa-spinner */
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 900 !important;
+    margin-right: 0.5rem !important;
+    animation: fa-spin 2s infinite linear !important;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================
+   DATATABLES BUTTONS RESPONSIVE
+   ============================================ */
+.dt-buttons {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.25rem !important;
+    margin-bottom: var(--dt-padding-md) !important;
+}
+
+.dt-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    border: 1px solid var(--dt-border-color) !important;
+    border-radius: var(--dt-border-radius) !important;
+    background: white !important;
+    color: var(--dt-dark) !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease-in-out !important;
+    cursor: pointer !important;
+    gap: 0.375rem !important;
+}
+
+.dt-button:hover {
+    background: var(--dt-primary) !important;
+    color: white !important;
+    border-color: var(--dt-primary) !important;
+    transform: translateY(-1px) !important;
+}
+
+.dt-button::before {
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 900 !important;
+    font-size: 0.75rem !important;
+}
+
+.dt-button.buttons-excel::before { content: '\f1c3' !important; } /* fa-file-excel */
+.dt-button.buttons-pdf::before { content: '\f1c1' !important; } /* fa-file-pdf */
+.dt-button.buttons-print::before { content: '\f02f' !important; } /* fa-print */
+.dt-button.buttons-copy::before { content: '\f0c5' !important; } /* fa-copy */
+
+@media (max-width: 576px) {
+    .dt-buttons {
+        justify-content: center !important;
+    }
+
+    .dt-button {
+        font-size: 0.75rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+}
+
+/* ============================================
+   DATATABLES EMPTY STATE
+   ============================================ */
+.dataTables_empty {
+    text-align: center !important;
+    padding: 3rem 1rem !important;
+    color: var(--dt-secondary) !important;
+    font-style: italic !important;
+}
+
+.dataTables_empty::before {
+    content: '\f15b' !important; /* fa-file */
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 400 !important;
+    font-size: 3rem !important;
+    display: block !important;
+    margin-bottom: 1rem !important;
+    opacity: 0.3 !important;
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 767px) {
+    /* Table scroll horizontal sur mobile */
+    .dataTables_scrollX {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .dataTable {
+        font-size: 0.75rem !important;
+        min-width: 600px !important;
+    }
+
+    .dataTable thead th,
+    .dataTable tbody td {
+        padding: 0.5rem 0.25rem !important;
+        white-space: nowrap !important;
+    }
+
+    /* Contrôles empilés sur mobile */
+    .dataTables_wrapper .row {
+        flex-direction: column !important;
+    }
+
+    .dataTables_wrapper .col-sm-12 {
+        width: 100% !important;
+        margin-bottom: var(--dt-padding-sm) !important;
+    }
+}
+
+/* ============================================
+   TABLET OPTIMIZATIONS
+   ============================================ */
+@media (min-width: 768px) and (max-width: 991px) {
+    .dataTable {
+        font-size: 0.813rem !important;
+    }
+
+    .dataTable thead th,
+    .dataTable tbody td {
+        padding: 0.625rem 0.5rem !important;
+    }
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR POUR DATATABLES
+   ============================================ */
+.dataTables_scrollBody::-webkit-scrollbar {
+    height: 8px !important;
+    width: 8px !important;
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-track {
+    background: var(--dt-light) !important;
+    border-radius: 4px !important;
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-thumb {
+    background: var(--dt-secondary) !important;
+    border-radius: 4px !important;
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-thumb:hover {
+    background: var(--dt-primary) !important;
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dt-light: #2d3748;
+        --dt-dark: #f7fafc;
+        --dt-border-color: #4a5568;
+    }
+
+    .dataTable {
+        background-color: #2d3748 !important;
+        color: #f7fafc !important;
+    }
+
+    .dataTable thead th {
+        background: linear-gradient(135deg, #2b6cb0, #3182ce) !important;
+        border-bottom-color: #4a5568 !important;
+    }
+
+    .dataTable tbody td {
+        border-bottom-color: #4a5568 !important;
+    }
+
+    .dataTable tbody tr:hover {
+        background-color: rgba(45, 55, 72, 0.8) !important;
+    }
+
+    .dataTable tbody tr:nth-child(even) {
+        background-color: rgba(74, 85, 104, 0.3) !important;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .dataTables_wrapper .dataTables_paginate,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dt-buttons {
+        display: none !important;
+    }
+
+    .dataTable {
+        font-size: 10pt !important;
+        border: 1px solid #000 !important;
+    }
+
+    .dataTable thead th {
+        background: #000 !important;
+        color: #fff !important;
+        border: 1px solid #000 !important;
+    }
+
+    .dataTable tbody td {
+        border: 1px solid #000 !important;
+        padding: 4pt !important;
+    }
+}

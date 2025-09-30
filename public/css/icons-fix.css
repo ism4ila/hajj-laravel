@@ -1,0 +1,393 @@
+/* ============================================
+   HAJJ MANAGEMENT SYSTEM - ICONS FIX CSS
+   Correction des problèmes d'icônes surdimensionnées
+   ============================================ */
+
+/* ============================================
+   RESET FONTAWESOME GLOBAL
+   ============================================ */
+
+/* Reset de toutes les icônes FontAwesome */
+.fas, .far, .fal, .fab, .fa {
+    /* Taille de base sécurisée */
+    font-size: 1rem !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+    vertical-align: baseline !important;
+
+    /* Éviter les débordements */
+    max-width: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+
+    /* Display inline par défaut */
+    display: inline-block !important;
+    text-align: center !important;
+}
+
+/* ============================================
+   TAILLES CONTRÔLÉES DES ICÔNES
+   ============================================ */
+
+/* Très petites icônes */
+.fa-xs, .fas.fa-xs, .far.fa-xs {
+    font-size: 0.75rem !important;
+}
+
+/* Petites icônes */
+.fa-sm, .fas.fa-sm, .far.fa-sm {
+    font-size: 0.875rem !important;
+}
+
+/* Icônes moyennes (par défaut) */
+.fa, .fas, .far {
+    font-size: 1rem !important;
+}
+
+/* Grandes icônes */
+.fa-lg, .fas.fa-lg, .far.fa-lg {
+    font-size: 1.33rem !important;
+}
+
+/* Icônes extra-larges CONTRÔLÉES */
+.fa-xl, .fas.fa-xl, .far.fa-xl {
+    font-size: 1.5rem !important;
+}
+
+/* Icônes 2x SÉCURISÉES */
+.fa-2x, .fas.fa-2x, .far.fa-2x {
+    font-size: 2rem !important;
+    max-width: 2rem !important;
+    max-height: 2rem !important;
+}
+
+/* Icônes 3x LIMITÉES */
+.fa-3x, .fas.fa-3x, .far.fa-3x {
+    font-size: 2.5rem !important;
+    max-width: 2.5rem !important;
+    max-height: 2.5rem !important;
+}
+
+/* BLOCAGE des icônes trop grandes */
+.fa-4x, .fa-5x, .fa-6x, .fa-7x, .fa-8x, .fa-9x, .fa-10x,
+.fas.fa-4x, .fas.fa-5x, .fas.fa-6x, .fas.fa-7x, .fas.fa-8x, .fas.fa-9x, .fas.fa-10x {
+    font-size: 2.5rem !important;
+    max-width: 2.5rem !important;
+    max-height: 2.5rem !important;
+}
+
+/* ============================================
+   CORRECTIONS SPÉCIFIQUES PAR CONTEXTE
+   ============================================ */
+
+/* Icônes dans les boutons */
+.btn .fas, .btn .far, .btn .fa,
+.btn-primary .fas, .btn-secondary .fas, .btn-success .fas,
+.btn-warning .fas, .btn-danger .fas, .btn-info .fas {
+    font-size: 0.875rem !important;
+    margin-right: 0.375rem !important;
+    margin-left: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    vertical-align: middle !important;
+}
+
+/* Icônes dans les petits boutons */
+.btn-sm .fas, .btn-sm .far, .btn-sm .fa {
+    font-size: 0.75rem !important;
+    margin-right: 0.25rem !important;
+}
+
+/* Icônes dans les grands boutons */
+.btn-lg .fas, .btn-lg .far, .btn-lg .fa {
+    font-size: 1rem !important;
+    margin-right: 0.5rem !important;
+}
+
+/* Icônes dans les cartes de statistiques */
+.card .fas.fa-2x, .card .far.fa-2x, .card .fa.fa-2x {
+    font-size: 1.8rem !important;
+    max-width: 1.8rem !important;
+    max-height: 1.8rem !important;
+    opacity: 0.8 !important;
+}
+
+/* Icônes dans la navigation */
+.nav-link .fas, .nav-link .far, .nav-link .fa,
+.navbar .fas, .navbar .far, .navbar .fa {
+    font-size: 1rem !important;
+    margin-right: 0.5rem !important;
+    width: 1rem !important;
+    text-align: center !important;
+}
+
+/* Icônes dans la sidebar */
+.sidebar .fas, .sidebar .far, .sidebar .fa {
+    font-size: 1rem !important;
+    width: 1.25rem !important;
+    text-align: center !important;
+    margin-right: 0.75rem !important;
+}
+
+/* Icônes dans les tableaux */
+.table .fas, .table .far, .table .fa {
+    font-size: 0.813rem !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Icônes dans les boutons de tableaux */
+.table .btn .fas, .table .btn .far, .table .btn .fa {
+    font-size: 0.75rem !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* Icônes dans les petits boutons de tableaux */
+.table .btn-sm .fas, .table .btn-sm .far, .table .btn-sm .fa {
+    font-size: 0.7rem !important;
+}
+
+/* Icônes dans les dropdown items de tableaux */
+.table .dropdown-item .fas, .table .dropdown-item .far, .table .dropdown-item .fa {
+    font-size: 0.813rem !important;
+    width: 1.25rem !important;
+    margin-right: 0.5rem !important;
+}
+
+/* Icônes ellipsis dans les tables */
+.table .fa-ellipsis-v {
+    font-size: 0.875rem !important;
+}
+
+/* Icônes dans les alerts */
+.alert .fas, .alert .far, .alert .fa {
+    font-size: 1rem !important;
+    margin-right: 0.5rem !important;
+    vertical-align: middle !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR RESPONSIVE
+   ============================================ */
+
+/* Mobile - icônes plus petites */
+@media (max-width: 576px) {
+    .fas, .far, .fa {
+        font-size: 0.875rem !important;
+    }
+
+    .fa-lg, .fas.fa-lg, .far.fa-lg {
+        font-size: 1.1rem !important;
+    }
+
+    .fa-2x, .fas.fa-2x, .far.fa-2x {
+        font-size: 1.5rem !important;
+        max-width: 1.5rem !important;
+        max-height: 1.5rem !important;
+    }
+
+    .btn .fas, .btn .far, .btn .fa {
+        font-size: 0.75rem !important;
+        margin-right: 0.25rem !important;
+    }
+}
+
+/* Tablette - tailles intermédiaires */
+@media (min-width: 577px) and (max-width: 991px) {
+    .fa-2x, .fas.fa-2x, .far.fa-2x {
+        font-size: 1.75rem !important;
+        max-width: 1.75rem !important;
+        max-height: 1.75rem !important;
+    }
+}
+
+/* ============================================
+   CORRECTIONS POUR AVATARS
+   ============================================ */
+
+/* Pas d'icônes dans les avatars */
+.avatar .fas, .avatar .far, .avatar .fa,
+[class*="avatar"] .fas, [class*="avatar"] .far, [class*="avatar"] .fa {
+    display: none !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR LOADING/SPINNER
+   ============================================ */
+
+/* Icônes de loading contrôlées */
+.spinner-border .fas, .spinner-border .far, .spinner-border .fa,
+.loading .fas, .loading .far, .loading .fa {
+    font-size: 1rem !important;
+    width: 1rem !important;
+    height: 1rem !important;
+    animation: none !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR DROPDOWNS
+   ============================================ */
+
+/* Icônes dans les dropdowns */
+.dropdown-menu .fas, .dropdown-menu .far, .dropdown-menu .fa,
+.dropdown-item .fas, .dropdown-item .far, .dropdown-item .fa {
+    font-size: 0.875rem !important;
+    margin-right: 0.5rem !important;
+    width: 1rem !important;
+    text-align: center !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR MODALS
+   ============================================ */
+
+/* Icônes dans les modals */
+.modal .fas, .modal .far, .modal .fa {
+    font-size: 1rem !important;
+    margin-right: 0.5rem !important;
+}
+
+.modal-header .fas, .modal-header .far, .modal-header .fa {
+    font-size: 1.1rem !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR BADGES
+   ============================================ */
+
+/* Icônes dans les badges */
+.badge .fas, .badge .far, .badge .fa {
+    font-size: 0.75rem !important;
+    margin-right: 0.25rem !important;
+    vertical-align: baseline !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR BREADCRUMBS
+   ============================================ */
+
+/* Icônes dans les breadcrumbs */
+.breadcrumb .fas, .breadcrumb .far, .breadcrumb .fa {
+    font-size: 0.875rem !important;
+    margin-right: 0.375rem !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR PAGINATION
+   ============================================ */
+
+/* Icônes dans la pagination */
+.pagination .fas, .pagination .far, .pagination .fa,
+.page-link .fas, .page-link .far, .page-link .fa {
+    font-size: 0.875rem !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR FORMULAIRES
+   ============================================ */
+
+/* Icônes dans les input groups */
+.input-group .fas, .input-group .far, .input-group .fa,
+.input-group-text .fas, .input-group-text .far, .input-group-text .fa {
+    font-size: 0.875rem !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Icônes dans les labels */
+.form-label .fas, .form-label .far, .form-label .fa {
+    font-size: 0.875rem !important;
+    margin-right: 0.375rem !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR CONTAINERS VIDES
+   ============================================ */
+
+/* Éviter les icônes orphelines */
+.container:empty .fas, .container:empty .far, .container:empty .fa,
+.row:empty .fas, .row:empty .far, .row:empty .fa,
+.col:empty .fas, .col:empty .far, .col:empty .fa {
+    display: none !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR PRINT
+   ============================================ */
+
+@media print {
+    .fas, .far, .fa {
+        font-size: 10pt !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 12pt !important;
+        max-height: 12pt !important;
+    }
+
+    /* Cacher les icônes décoratives en impression */
+    .fa-2x, .fa-3x, .fa-4x, .fa-5x {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   RESET GLOBAL DE SÉCURITÉ
+   ============================================ */
+
+/* Protection ultime contre les icônes géantes */
+* [class*="fa-"]:not(.fa-xs):not(.fa-sm):not(.fa-lg):not(.fa-xl):not(.fa-2x):not(.fa-3x) {
+    font-size: 1rem !important;
+    max-width: 2rem !important;
+    max-height: 2rem !important;
+}
+
+/* Reset des transformations CSS problématiques */
+.fas, .far, .fa {
+    transform: none !important;
+    transform-origin: center !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Éviter les positions absolues problématiques */
+.fas:not(.positioned), .far:not(.positioned), .fa:not(.positioned) {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+}
+
+/* ============================================
+   CORRECTIONS POUR ACCESSIBILITÉ
+   ============================================ */
+
+/* Icônes avec aria-hidden */
+.fas[aria-hidden="true"], .far[aria-hidden="true"], .fa[aria-hidden="true"] {
+    font-size: 1rem !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Icônes décoratives */
+.fas:empty, .far:empty, .fa:empty {
+    font-size: 1rem !important;
+    max-width: 1.5rem !important;
+    max-height: 1.5rem !important;
+}
+
+/* ============================================
+   DEBUG MODE (optionnel)
+   ============================================ */
+
+/* Décommenter pour debug - contour rouge sur icônes problématiques */
+/*
+.fas, .far, .fa {
+    border: 1px solid red !important;
+    background: rgba(255, 0, 0, 0.1) !important;
+}
+*/

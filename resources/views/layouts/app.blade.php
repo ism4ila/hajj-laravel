@@ -17,6 +17,27 @@
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Responsive Framework CSS -->
+    <link href="{{ asset('css/responsive-framework.css') }}" rel="stylesheet">
+
+    <!-- Icons Fix CSS - IMPORTANT: Doit être chargé après FontAwesome -->
+    <link href="{{ asset('css/icons-fix.css') }}" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.7.0/css/select.bootstrap5.min.css" rel="stylesheet">
+
+    <!-- DataTables Custom CSS -->
+    <link href="{{ asset('css/datatables-responsive.css') }}" rel="stylesheet">
+
+    <!-- Tables Responsive CSS (pour tables Bootstrap sans DataTables) -->
+    <link href="{{ asset('css/tables-responsive.css') }}" rel="stylesheet">
+
+    <!-- Table Icons Compact CSS (réduction icônes dans les tables) -->
+    <link href="{{ asset('css/table-icons-compact.css') }}" rel="stylesheet">
+
     <!-- Custom Responsive Styles -->
     <style>
         /* Responsive Layout Variables */
@@ -121,6 +142,9 @@
         </div>
     </div>
 
+    <!-- jQuery (Required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <!-- Mobile Menu Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -160,6 +184,23 @@
             });
         });
     </script>
+
+    <!-- DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <!-- DataTables Custom JavaScript -->
+    <script src="{{ asset('js/datatables-init.js') }}"></script>
 
     <!-- Additional Scripts -->
     @stack('scripts')

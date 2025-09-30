@@ -49,6 +49,14 @@
                     <i class="fas fa-lock me-2"></i>
                     Changer le Mot de Passe
                 </a>
+                <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                    <i class="fas fa-camera me-2"></i>
+                    Changer Avatar
+                </button>
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#preferencesModal">
+                    <i class="fas fa-cog me-2"></i>
+                    Préférences
+                </button>
             </div>
         </x-card>
     </div>
@@ -213,6 +221,125 @@
         </x-card>
     </div>
 </div>
+
+<!-- Avatar Change Modal -->
+<div class="modal fade" id="avatarModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Changer Avatar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <div class="avatar-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
+                         style="width: 120px; height: 120px; border-radius: 50%; font-size: 3rem; font-weight: bold;">
+                        {{ substr($user->name, 0, 1) }}{{ substr(explode(' ', $user->name)[1] ?? '', 0, 1) }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="avatarUpload" class="form-label">Télécharger une nouvelle photo</label>
+                    <input type="file" class="form-control" id="avatarUpload" accept="image/*">
+                    <div class="form-text">Formats supportés: JPG, PNG, GIF. Taille max: 2MB</div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-muted">Ou choisissez une couleur de fond:</p>
+                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                        <button type="button" class="btn p-0 color-option" style="width: 40px; height: 40px; background-color: #007bff; border-radius: 50%;" data-color="#007bff"></button>
+                        <button type="button" class="btn p-0 color-option" style="width: 40px; height: 40px; background-color: #28a745; border-radius: 50%;" data-color="#28a745"></button>
+                        <button type="button" class="btn p-0 color-option" style="width: 40px; height: 40px; background-color: #dc3545; border-radius: 50%;" data-color="#dc3545"></button>
+                        <button type="button" class="btn p-0 color-option" style="width: 40px; height: 40px; background-color: #ffc107; border-radius: 50%;" data-color="#ffc107"></button>
+                        <button type="button" class="btn p-0 color-option" style="width: 40px; height: 40px; background-color: #6f42c1; border-radius: 50%;" data-color="#6f42c1"></button>
+                        <button type="button" class="btn p-0 color-option" style="width: 40px; height: 40px; background-color: #fd7e14; border-radius: 50%;" data-color="#fd7e14"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="saveAvatarChanges">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preferences Modal -->
+<div class="modal fade" id="preferencesModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Préférences Utilisateur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="preferencesForm">
+                    <div class="mb-3">
+                        <label class="form-label">Notifications</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                            <label class="form-check-label" for="emailNotifications">
+                                Recevoir les notifications par email
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="pushNotifications" checked>
+                            <label class="form-check-label" for="pushNotifications">
+                                Notifications push dans le navigateur
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="paymentNotifications" checked>
+                            <label class="form-check-label" for="paymentNotifications">
+                                Notifications de paiements
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Langue</label>
+                        <select class="form-select" id="language">
+                            <option value="fr" selected>Français</option>
+                            <option value="en">English</option>
+                            <option value="ar">العربية</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="timezone" class="form-label">Fuseau horaire</label>
+                        <select class="form-select" id="timezone">
+                            <option value="Africa/Douala" selected>Afrique/Douala (WAT)</option>
+                            <option value="Europe/Paris">Europe/Paris (CET)</option>
+                            <option value="America/New_York">America/New_York (EST)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="currency" class="form-label">Devise préférée</label>
+                        <select class="form-select" id="currency">
+                            <option value="XAF" selected>Franc CFA (FCFA)</option>
+                            <option value="EUR">Euro (€)</option>
+                            <option value="USD">Dollar US ($)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="theme" class="form-label">Thème</label>
+                        <select class="form-select" id="theme">
+                            <option value="light" selected>Clair</option>
+                            <option value="dark">Sombre</option>
+                            <option value="auto">Automatique</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="savePreferences">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('styles')
@@ -241,5 +368,188 @@
 .table tr:hover {
     background-color: rgba(0,123,255,0.05);
 }
+
+.color-option {
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.color-option:hover, .color-option.selected {
+    border-color: #fff;
+    box-shadow: 0 0 0 2px #007bff;
+}
+
+.modal-avatar-preview {
+    transition: background-color 0.3s ease;
+}
 </style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let selectedColor = '#007bff';
+
+    // Avatar color selection
+    document.querySelectorAll('.color-option').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove selected class from all options
+            document.querySelectorAll('.color-option').forEach(b => b.classList.remove('selected'));
+
+            // Add selected class to clicked option
+            this.classList.add('selected');
+
+            // Store selected color
+            selectedColor = this.dataset.color;
+
+            // Update avatar preview
+            const avatarPreview = document.querySelector('#avatarModal .avatar-circle');
+            if (avatarPreview) {
+                avatarPreview.style.backgroundColor = selectedColor;
+            }
+        });
+    });
+
+    // Avatar file upload preview
+    document.getElementById('avatarUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const avatarPreview = document.querySelector('#avatarModal .avatar-circle');
+                if (avatarPreview) {
+                    avatarPreview.style.backgroundImage = `url(${e.target.result})`;
+                    avatarPreview.style.backgroundSize = 'cover';
+                    avatarPreview.style.backgroundPosition = 'center';
+                    avatarPreview.innerHTML = ''; // Remove initials
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Save avatar changes
+    document.getElementById('saveAvatarChanges').addEventListener('click', function() {
+        // Update main avatar
+        const mainAvatar = document.querySelector('.profile-avatar .avatar-circle');
+        if (mainAvatar) {
+            const modalAvatar = document.querySelector('#avatarModal .avatar-circle');
+            if (modalAvatar.style.backgroundImage) {
+                // File uploaded
+                mainAvatar.style.backgroundImage = modalAvatar.style.backgroundImage;
+                mainAvatar.style.backgroundSize = 'cover';
+                mainAvatar.style.backgroundPosition = 'center';
+                mainAvatar.innerHTML = '';
+            } else {
+                // Color selected
+                mainAvatar.style.backgroundColor = selectedColor;
+            }
+        }
+
+        // Close modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('avatarModal'));
+        modal.hide();
+
+        // Show success message
+        showNotification('Avatar mis à jour avec succès!', 'success');
+    });
+
+    // Save preferences
+    document.getElementById('savePreferences').addEventListener('click', function() {
+        const preferences = {
+            emailNotifications: document.getElementById('emailNotifications').checked,
+            pushNotifications: document.getElementById('pushNotifications').checked,
+            paymentNotifications: document.getElementById('paymentNotifications').checked,
+            language: document.getElementById('language').value,
+            timezone: document.getElementById('timezone').value,
+            currency: document.getElementById('currency').value,
+            theme: document.getElementById('theme').value
+        };
+
+        // Save to localStorage (in a real app, this would be sent to server)
+        localStorage.setItem('userPreferences', JSON.stringify(preferences));
+
+        // Apply theme immediately
+        applyTheme(preferences.theme);
+
+        // Close modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('preferencesModal'));
+        modal.hide();
+
+        // Show success message
+        showNotification('Préférences sauvegardées avec succès!', 'success');
+    });
+
+    // Load saved preferences
+    function loadPreferences() {
+        const saved = localStorage.getItem('userPreferences');
+        if (saved) {
+            const preferences = JSON.parse(saved);
+
+            document.getElementById('emailNotifications').checked = preferences.emailNotifications !== false;
+            document.getElementById('pushNotifications').checked = preferences.pushNotifications !== false;
+            document.getElementById('paymentNotifications').checked = preferences.paymentNotifications !== false;
+            document.getElementById('language').value = preferences.language || 'fr';
+            document.getElementById('timezone').value = preferences.timezone || 'Africa/Douala';
+            document.getElementById('currency').value = preferences.currency || 'XAF';
+            document.getElementById('theme').value = preferences.theme || 'light';
+
+            applyTheme(preferences.theme || 'light');
+        }
+    }
+
+    // Apply theme
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else if (theme === 'auto') {
+            // Check system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        } else {
+            document.body.classList.remove('dark-theme');
+        }
+    }
+
+    // Show notification
+    function showNotification(message, type = 'info') {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+        alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 1060; min-width: 300px;';
+        alertDiv.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+
+        document.body.appendChild(alertDiv);
+
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.remove();
+            }
+        }, 3000);
+    }
+
+    // Load preferences on page load
+    loadPreferences();
+
+    // Listen for system theme changes
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const saved = localStorage.getItem('userPreferences');
+            if (saved) {
+                const preferences = JSON.parse(saved);
+                if (preferences.theme === 'auto') {
+                    applyTheme('auto');
+                }
+            }
+        });
+    }
+});
+</script>
 @endpush

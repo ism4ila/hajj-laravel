@@ -1,0 +1,125 @@
+/* ============================================
+   HAJJ MANAGEMENT - TABLE ICONS COMPACT
+   Style pour rendre les icônes encore plus compactes dans les tables
+   ============================================ */
+
+/* Force la réduction de TOUTES les icônes dans les tables */
+.table i,
+.table .fa,
+.table .fas,
+.table .far,
+.table .fab {
+    font-size: 0.75rem !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+}
+
+/* Icônes dans les boutons - encore plus petit */
+.table .btn i,
+.table .btn .fa,
+.table .btn .fas,
+.table .btn .far,
+.table .btn .fab {
+    font-size: 0.7rem !important;
+    margin: 0 !important;
+}
+
+/* Boutons petits dans les tables */
+.table .btn-sm,
+.table .btn-outline-info,
+.table .btn-outline-warning,
+.table .btn-outline-danger,
+.table .btn-outline-primary,
+.table .btn-outline-success,
+.table .btn-outline-secondary {
+    padding: 0.25rem 0.4rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1.2 !important;
+}
+
+.table .btn-sm i {
+    font-size: 0.65rem !important;
+}
+
+/* Groupe de boutons compact */
+.table .btn-group,
+.table .btn-group-sm {
+    gap: 0.1rem !important;
+}
+
+/* Bouton dropdown dans les tables */
+.table .dropdown-toggle {
+    padding: 0.25rem 0.35rem !important;
+    min-width: auto !important;
+}
+
+.table .dropdown-toggle i {
+    font-size: 0.75rem !important;
+}
+
+/* Icons dans les dropdown items */
+.table .dropdown-menu i,
+.table .dropdown-item i {
+    font-size: 0.75rem !important;
+    width: 1rem !important;
+    margin-right: 0.5rem !important;
+}
+
+/* Colonnes actions - width fixe */
+.table thead th:last-child,
+.table tbody td:last-child {
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+}
+
+/* Mobile - encore plus compact */
+@media (max-width: 767px) {
+    .table i,
+    .table .fa,
+    .table .fas,
+    .table .far,
+    .table .fab {
+        font-size: 0.65rem !important;
+    }
+
+    .table .btn {
+        padding: 0.2rem 0.3rem !important;
+        font-size: 0.7rem !important;
+    }
+
+    .table .btn i {
+        font-size: 0.6rem !important;
+    }
+
+    .table thead th:last-child,
+    .table tbody td:last-child {
+        width: 75px !important;
+        min-width: 75px !important;
+        max-width: 75px !important;
+    }
+}
+
+/* Forcer la réduction des icônes genre (male/female) */
+.table .fa-male,
+.table .fa-female {
+    font-size: 0.875rem !important;
+}
+
+/* Icônes de statut */
+.table .fa-check,
+.table .fa-times,
+.table .fa-clock,
+.table .fa-exclamation-triangle {
+    font-size: 0.75rem !important;
+}
+
+/* Icônes dans les badges */
+.table .badge i {
+    font-size: 0.7rem !important;
+    margin-right: 0.25rem !important;
+}

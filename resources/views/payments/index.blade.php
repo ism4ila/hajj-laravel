@@ -139,6 +139,7 @@
 @if($payments->count() > 0)
     <x-card>
         <x-table.table
+            id="paymentsTable"
             :headers="[
                 ['label' => 'Client / Pèlerin', 'width' => '25%'],
                 ['label' => 'Montant', 'width' => '15%'],
@@ -245,11 +246,28 @@
                             </a>
                             
                             
-                            <a href="{{ route('payments.receipt', $payment) }}"
-                               class="btn btn-sm btn-outline-success"
-                               title="Reçu">
-                                <i class="fas fa-receipt"></i>
-                            </a>
+                            <div class="btn-group" role="group">
+                                <a href="{{ route('payments.receipt', ['payment' => $payment, 'template' => 'compact']) }}"
+                                   class="btn btn-sm btn-outline-success"
+                                   title="Télécharger Reçu">
+                                    <i class="fas fa-receipt"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Templates</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{{ route('payments.receipt', ['payment' => $payment, 'template' => 'compact']) }}">
+                                        <i class="fas fa-file-pdf me-2 text-danger"></i>Compact
+                                    </a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ route('payments.receipt', ['payment' => $payment, 'template' => 'premium']) }}">
+                                        <i class="fas fa-star me-2 text-warning"></i>Premium
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="{{ route('payments.receipt', ['payment' => $payment, 'template' => 'receipt']) }}">
+                                        <i class="fas fa-file-alt me-2 text-info"></i>Standard
+                                    </a></li>
+                                </ul>
+                            </div>
                             
                             
                             <form method="POST" action="{{ route('payments.destroy', $payment) }}"

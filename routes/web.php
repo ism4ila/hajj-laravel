@@ -31,6 +31,13 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Global search
+    Route::get('/search', [DashboardController::class, 'globalSearch'])->name('global.search');
+
+    // Notifications
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('notifications.index');
+    Route::get('/api/notifications', [DashboardController::class, 'getNotifications'])->name('notifications.api');
+
     // Campaign management
     Route::prefix('campaigns')->name('campaigns.')->group(function () {
         Route::get('/', [CampaignController::class, 'index'])->name('index');
@@ -51,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pilgrims/{pilgrim}/payments', [ExportController::class, 'pilgrimPayments'])->name('pilgrim.payments');
         Route::get('/campaigns', [ExportController::class, 'allCampaigns'])->name('all.campaigns');
         Route::get('/clients', [ExportController::class, 'allClients'])->name('clients');
+        Route::get('/pilgrims', [ExportController::class, 'allPilgrims'])->name('pilgrims');
     });
 
     // Client management

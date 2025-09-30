@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Correction Icônes - Hajj Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- AVANT correction -->
+    <style>
+        .before-fix {
+            border: 2px solid red;
+            padding: 2rem;
+            margin: 1rem 0;
+            background: #ffe6e6;
+        }
+        .after-fix {
+            border: 2px solid green;
+            padding: 2rem;
+            margin: 1rem 0;
+            background: #e6ffe6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-5">Test Correction des Icônes FontAwesome</h1>
+
+        <!-- AVANT Correction -->
+        <div class="before-fix">
+            <h3>⚠️ AVANT Correction (Problématique)</h3>
+            <p>Ces icônes peuvent être surdimensionnées :</p>
+
+            <div class="row">
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-users fa-2x"></i>
+                            <h6>fa-2x Normal</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-credit-card fa-3x"></i>
+                            <h6>fa-3x (Problème)</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-flag fa-5x"></i>
+                            <h6>fa-5x (Énorme)</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-exclamation-triangle fa-10x"></i>
+                            <h6>fa-10x (Gigantesque)</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chargement du CSS de correction -->
+        <link href="css/icons-fix.css" rel="stylesheet">
+
+        <!-- APRÈS Correction -->
+        <div class="after-fix">
+            <h3>✅ APRÈS Correction (Normalisé)</h3>
+            <p>Les mêmes icônes sont maintenant contrôlées :</p>
+
+            <div class="row">
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-users fa-2x"></i>
+                            <h6>fa-2x Contrôlé</h6>
+                            <small class="text-muted">Max 2rem</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-credit-card fa-3x"></i>
+                            <h6>fa-3x Limité</h6>
+                            <small class="text-muted">Max 2.5rem</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-flag fa-5x"></i>
+                            <h6>fa-5x Bloqué</h6>
+                            <small class="text-muted">Forcé à 2.5rem</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-exclamation-triangle fa-10x"></i>
+                            <h6>fa-10x Sécurisé</h6>
+                            <small class="text-muted">Forcé à 2.5rem</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tests par contexte -->
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h4>🔘 Test Boutons</h4>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save fa-2x"></i> Enregistrer
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-check fa-3x"></i> Valider
+                    </button>
+                    <button class="btn btn-warning">
+                        <i class="fas fa-edit fa-5x"></i> Modifier
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h4>📊 Test Cartes Stats</h4>
+                <div class="card bg-primary text-white mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4>1,234</h4>
+                                <small>Total Clients</small>
+                            </div>
+                            <i class="fas fa-users fa-2x text-white-25"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4>567</h4>
+                                <small>Pèlerins</small>
+                            </div>
+                            <i class="fas fa-flag fa-3x text-white-25"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Navigation -->
+        <div class="mt-5">
+            <h4>🧭 Test Navigation</h4>
+            <nav class="navbar navbar-expand navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <i class="fas fa-home fa-2x"></i> Hajj System
+                    </a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-users fa-2x"></i> Clients
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-credit-card fa-3x"></i> Paiements
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Test Tableau -->
+        <div class="mt-5">
+            <h4>📋 Test Tableau</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user fa-2x"></i> Nom</th>
+                        <th><i class="fas fa-envelope fa-3x"></i> Email</th>
+                        <th><i class="fas fa-cog fa-5x"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ahmed Ben</td>
+                        <td>ahmed@example.com</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary">
+                                <i class="fas fa-eye fa-2x"></i>
+                            </button>
+                            <button class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit fa-3x"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Test Responsive -->
+        <div class="mt-5">
+            <h4>📱 Test Responsive</h4>
+            <div class="alert alert-info">
+                <h5><i class="fas fa-info-circle fa-2x"></i> Instructions</h5>
+                <ul>
+                    <li>Redimensionnez la fenêtre pour tester le comportement responsive</li>
+                    <li>Sur mobile (< 576px), les icônes sont encore plus petites</li>
+                    <li>Toutes les icônes restent proportionnelles et lisibles</li>
+                    <li>Aucune icône ne dépasse ses limites de conteneur</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Informations techniques -->
+        <div class="mt-5 p-3 bg-light rounded">
+            <h4>🔧 Informations Techniques</h4>
+            <ul>
+                <li><strong>CSS Chargé :</strong> <code>css/icons-fix.css</code></li>
+                <li><strong>Règles Appliquées :</strong>
+                    <ul>
+                        <li>fa-2x : Maximum 2rem</li>
+                        <li>fa-3x : Maximum 2.5rem</li>
+                        <li>fa-4x+ : Forcé à 2.5rem</li>
+                        <li>Mobile : Tailles réduites de 25%</li>
+                    </ul>
+                </li>
+                <li><strong>Protection :</strong> !important utilisé pour forcer les corrections</li>
+                <li><strong>Breakpoints :</strong> Adaptatif selon la taille d'écran</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Log des tailles d'icônes pour debug
+        document.addEventListener('DOMContentLoaded', function() {
+            const icons = document.querySelectorAll('.fas, .far, .fa');
+            console.log(`🔍 ${icons.length} icônes détectées`);
+
+            icons.forEach((icon, index) => {
+                const computed = window.getComputedStyle(icon);
+                const fontSize = computed.fontSize;
+                const classes = icon.className;
+
+                if (parseFloat(fontSize) > 40) {
+                    console.warn(`⚠️ Icône ${index + 1} trop grande:`, classes, fontSize);
+                } else {
+                    console.log(`✅ Icône ${index + 1} OK:`, classes, fontSize);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

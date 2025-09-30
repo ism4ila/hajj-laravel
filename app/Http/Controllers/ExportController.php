@@ -246,4 +246,48 @@ class ExportController extends Controller
 
         return $output;
     }
+
+    public function allPilgrims(Request $request)
+    {
+        $format = $request->get('format', 'pdf');
+        $fromDate = $request->get('from_date');
+        $toDate = $request->get('to_date');
+
+        $query = Pilgrim::with(['client', 'campaign', 'payments']);
+
+        if ($fromDate) {
+            $query->whereDate('created_at', '>=', $fromDate);
+        }
+
+        if ($toDate) {
+            $query->whereDate('created_at', '<=', $toDate);
+        }
+
+        $pilgrims = $query->orderBy('firstname')->orderBy('lastname')->get();
+
+        $data = [
+            'pilgrims' => $pilgrims,
+            'filters' => [
+                'from_date' => $fromDate,
+                'to_date' => $toDate,
+            ],
+            'stats' => [
+                'total_pilgrims' => $pilgrims->count(),
+                'classic_pilgrims' => $pilgrims->where('category', 'classic')->count(),
+                'vip_pilgrims' => $pilgrims->where('category', 'vip')->count(),
+                'active_pilgrims' => $pilgrims->where('status', 'active')->count(),
+                'total_revenue' => $pilgrims->sum('paid_amount'),
+                'expected_revenue' => $pilgrims->sum('total_amount'),
+                'remaining_revenue' => $pilgrims->sum('remaining_amount'),
+                'completion_rate' => $pilgrims->count() > 0 ?
+                    round(($pilgrims->sum('paid_amount') / $pilgrims->sum('total_amount')) * 100, 2) : 0,
+            ]
+        ];
+
+        if ($format === 'excel') {
+            return $this->exportToExcel($data, 'pilgrims_export');
+        }
+
+        return $this->exportToPdf($data, 'exports.pilgrims', 'Rapport_Tous_Pelerins');
+    }
 }

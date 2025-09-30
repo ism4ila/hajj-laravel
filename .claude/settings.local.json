@@ -4,7 +4,18 @@
       "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, name, email, is_admin, created_at FROM users ORDER BY id DESC LIMIT 7;\")",
       "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"UPDATE users SET is_admin = 1 WHERE id IN (3, 4, 5, 6, 7);\")",
       "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, name, email, is_admin, created_at FROM users WHERE id IN (3, 4, 5, 6, 7) ORDER BY id;\")",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\n🚀 Major System Update: Complete Responsive Overhaul & User Management\n\n✨ New Features:\n• Complete responsive framework for all devices (320px-1400px+)\n• 5 test administrator accounts created for system testing\n• Professional user guide (HTML/PDF ready) for client presentation\n• Comprehensive system documentation with all features\n\n🎨 UI/UX Improvements:\n• Mobile-first responsive design for entire client management system\n• Enhanced receipt templates with multiple formats (v1, v2, client-summary)\n• Modern CSS Grid and Flexbox layouts with fluid typography\n• Touch-friendly interfaces with 44px minimum touch targets\n• Animated statistics and smooth transitions\n\n🔧 Technical Enhancements:\n• Auto-save functionality with localStorage integration\n• Real-time form validation and change detection\n• AJAX search with instant results\n• Responsive tables with horizontal scrolling\n• CSS custom properties for consistent theming\n\n📱 Responsive Features:\n• Adaptive navigation with collapsible sidebar\n• Responsive statistics cards with CSS Grid\n• Mobile-optimized forms with progressive sections\n• Touch gestures and swipe navigation support\n• Print-optimized layouts for receipts\n\n📚 Documentation:\n• Complete system documentation (DOCUMENTATION_SYSTEME.md)\n• Professional user guide (GUIDE_UTILISATEUR.html) \n• Responsive implementation guides\n• Test user accounts with credentials\n\n🔐 User Management:\n• 5 new administrator test accounts created\n• Secure authentication with Laravel sessions\n• User profile management with password changes\n\n🎯 Files Updated:\n• Enhanced all client management views (index, create, edit, show)\n• New responsive CSS framework (responsive-framework.css)\n• Updated app.css with modern components\n• Multiple receipt templates for different use cases\n• Service classes for payment and receipt management\n\n🤖 Generated with Claude Code\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, name, email, is_admin, created_at FROM users ORDER BY id DESC;\")",
+      "Bash(php artisan:*)",
+      "Bash(npm run dev:*)",
+      "Bash(php:*)",
+      "Bash(curl:*)",
+      "Read(//c/Users/DELL/Downloads/**)",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, name, email, is_admin, created_at FROM users ORDER BY id;\")",
+      "Bash(\"C:\\xampp\\mysql\\bin\\mysql.exe\" -u root hajj_management -e \"SELECT id, pilgrim_id, amount, payment_date, payment_method, status FROM payments ORDER BY id DESC LIMIT 5;\")",
+      "Bash(composer:*)"
     ],
     "deny": [],
     "ask": []

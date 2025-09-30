@@ -150,6 +150,7 @@
 @if($pilgrims->count() > 0)
     <x-card>
         <x-table.table
+            id="pilgrimsTable"
             :headers="[
                 ['label' => 'Client / Pèlerin', 'width' => '25%'],
                 ['label' => 'Campagne', 'width' => '20%'],
